@@ -1,13 +1,13 @@
-package com.sabilogistics.api.controllers;
+package com.sabi.logistics.api.controllers;
 
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabilogistics.service.services.ClientService;
-import com.sabilogisticscore.dto.request.ClientDto;
-import com.sabilogisticscore.dto.response.ClientResponseDto;
-import com.sabilogisticscore.models.Client;
+import com.sabi.logistics.core.dto.request.PartnerCategoriesDto;
+import com.sabi.logistics.core.dto.response.PartnerCategoriesResponseDto;
+import com.sabi.logistics.core.models.PartnerCategories;
+import com.sabi.logistics.service.services.PartnerCategoriesService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -19,21 +19,21 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"partnerCategories")
-public class ClientController {
+@RequestMapping(Constants.APP_CONTENT +"partnercategories")
+public class PartnerCategoriesController {
 
-    private final ClientService service;
+    private final PartnerCategoriesService service;
 
-    public ClientController(ClientService service) {
+    public PartnerCategoriesController(PartnerCategoriesService service) {
         this.service = service;
     }
 
     @PostMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> createClient(@Validated @RequestBody ClientDto request){
+    public ResponseEntity<Response> createPartnerCategory(@Validated @RequestBody PartnerCategoriesDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        ClientResponseDto response = service.createClient(request);
+        PartnerCategoriesResponseDto response = service.createPartnerCategory(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -44,10 +44,10 @@ public class ClientController {
 
     @PutMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> updateClient(@Validated @RequestBody  ClientDto request){
+    public ResponseEntity<Response> updatePartnerCategory(@Validated @RequestBody  PartnerCategoriesDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        ClientResponseDto response = service.updateClient(request);
+        PartnerCategoriesResponseDto response = service.updatePartnerCategory(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -57,10 +57,10 @@ public class ClientController {
 
     @GetMapping("/{id}")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> getClientById(@PathVariable Long id){
+    public ResponseEntity<Response> getPartnerCategoryById(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        ClientResponseDto response = service.findByClientId(id);
+        PartnerCategoriesResponseDto response = service.findById(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -71,12 +71,13 @@ public class ClientController {
 
 
     @GetMapping("")
-    public ResponseEntity<Response> getClients(@RequestParam(value = "id",required = false)Long id,
-                                                         @RequestParam(value = "page") int page,
-                                                         @RequestParam(value = "pageSize") int pageSize){
+    public ResponseEntity<Response> getPartnerCategories(@RequestParam(value = "partnerId",required = false)Long partnerId,
+                                                         @RequestParam(value = "categoryId") Long categoryId,
+                                                  @RequestParam(value = "page") int page,
+                                                  @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Client> response = service.findAll(id, PageRequest.of(page, pageSize));
+        Page<PartnerCategories> response = service.findAll(partnerId,categoryId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -102,7 +103,7 @@ public class ClientController {
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<Client> response = service.getAll(isActive);
+        List<PartnerCategories> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

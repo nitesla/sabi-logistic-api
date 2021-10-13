@@ -1,14 +1,13 @@
-package com.sabilogistics.api.controllers;
-
+package com.sabi.logistics.api.controllers;
 
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabilogistics.service.services.AssetTypePropertiesService;
-import com.sabilogisticscore.dto.request.AssetTypePropertiesDto;
-import com.sabilogisticscore.dto.response.AssetTypePropertiesResponseDto;
-import com.sabilogisticscore.models.AssetTypeProperties;
+import com.sabi.logistics.core.dto.request.BlockTypeDto;
+import com.sabi.logistics.core.dto.response.BlockTypeResponseDto;
+import com.sabi.logistics.core.models.BlockType;
+import com.sabi.logistics.service.services.BlockTypeService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -20,23 +19,21 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"assettypeproperties")
-public class AssetTypePropertiesController {
+@RequestMapping(Constants.APP_CONTENT +"blocktype")
+public class BlockTypeController {
 
-    private final AssetTypePropertiesService service;
+    private final BlockTypeService service;
 
-    public AssetTypePropertiesController(AssetTypePropertiesService service) {
+    public BlockTypeController(BlockTypeService service) {
         this.service = service;
     }
 
-
-
     @PostMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> createAssetType(@Validated @RequestBody AssetTypePropertiesDto request){
+    public ResponseEntity<Response> createBlockType(@Validated @RequestBody BlockTypeDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        AssetTypePropertiesResponseDto response = service.createAssetTypeProperties(request);
+        BlockTypeResponseDto response = service.createBlockType(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -47,10 +44,10 @@ public class AssetTypePropertiesController {
 
     @PutMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> updateAssetType(@Validated @RequestBody  AssetTypePropertiesDto request){
+    public ResponseEntity<Response> updateBlockType(@Validated @RequestBody  BlockTypeDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        AssetTypePropertiesResponseDto response = service.updateAssetTypeProperties(request);
+        BlockTypeResponseDto response = service.updateBlockType(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -58,14 +55,23 @@ public class AssetTypePropertiesController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
-
-
     @GetMapping("/{id}")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> getAssetType(@PathVariable Long id){
+    public ResponseEntity<Response> getBlockTypeById(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        AssetTypePropertiesResponseDto response = service.findAsstType(id);
+        BlockTypeResponseDto response = service.findByBlockTypeId(id);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    public ResponseEntity<Response> getBlockTypeByName(@PathVariable String name){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        BlockTypeResponseDto response = service.findBlockTypeByName(name);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -76,12 +82,16 @@ public class AssetTypePropertiesController {
 
 
     @GetMapping("")
-    public ResponseEntity<Response> getAssetTypes(@RequestParam(value = "name",required = false)String name,
-                                                         @RequestParam(value = "page") int page,
-                                                         @RequestParam(value = "pageSize") int pageSize){
+    public ResponseEntity<Response> getBlockTypes(@RequestParam(value = "name",required = false)String name,
+                                               @RequestParam(value = "length",required = false)double length,
+                                               @RequestParam(value = "width",required = false)double width,
+                                               @RequestParam(value = "heigth",required = false)double heigth,
+                                               @RequestParam(value = "price",required = false)double price,
+                                               @RequestParam(value = "page") int page,
+                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<AssetTypeProperties> response = service.findAll(name, PageRequest.of(page, pageSize));
+        Page<BlockType> response = service.findAll(name,length,width,heigth,price, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -107,7 +117,7 @@ public class AssetTypePropertiesController {
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<AssetTypeProperties> response = service.getAll(isActive);
+        List<BlockType> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

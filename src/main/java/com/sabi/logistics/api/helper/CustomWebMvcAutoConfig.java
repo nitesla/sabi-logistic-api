@@ -1,4 +1,4 @@
-package com.sabilogistics.api.helper;
+package com.sabi.logistics.api.helper;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

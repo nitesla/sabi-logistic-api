@@ -1,4 +1,4 @@
-package com.sabilogistics.api.controllers;
+package com.sabi.logistics.api.controllers;
 
 
 
@@ -6,10 +6,10 @@ import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabilogistics.service.services.LGAService;
-import com.sabilogisticscore.dto.request.LGADto;
-import com.sabilogisticscore.dto.response.LGAResponseDto;
-import com.sabilogisticscore.models.LGA;
+import com.sabi.logistics.core.dto.request.StateDto;
+import com.sabi.logistics.core.dto.response.StateResponseDto;
+import com.sabi.logistics.core.models.State;
+import com.sabi.logistics.service.services.StateService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -19,29 +19,32 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"lga")
-public class LGAController {
+@RequestMapping(Constants.APP_CONTENT +"state")
+public class StateController {
 
 
-    private final LGAService service;
+    private final StateService service;
 
-    public LGAController(LGAService service) {
+    public StateController(StateService service) {
         this.service = service;
     }
 
+
     /** <summary>
-     * LGA creation endpoint
+     * State creation endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for creation of new lga</remarks>
+     * <remarks>this endpoint is responsible for creation of new states</remarks>
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createLga(@Validated @RequestBody LGADto request){
+    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
+    public ResponseEntity<Response> createState(@Validated @RequestBody StateDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        LGAResponseDto response = service.createLga(request);
+        StateResponseDto response = service.createState(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -52,16 +55,17 @@ public class LGAController {
 
 
     /** <summary>
-     * LGA update endpoint
+     * State update endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for updating lga</remarks>
+     * <remarks>this endpoint is responsible for updating states</remarks>
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateLga(@Validated @RequestBody  LGADto request){
+    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
+    public ResponseEntity<Response> updateState(@Validated @RequestBody  StateDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        LGAResponseDto response = service.updateLga(request);
+        StateResponseDto response = service.updateState(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -70,16 +74,18 @@ public class LGAController {
     }
 
 
+
     /** <summary>
      * Get single record endpoint
      * </summary>
      * <remarks>this endpoint is responsible for getting a single record</remarks>
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Response> getLga(@PathVariable Long id){
+    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
+    public ResponseEntity<Response> getState(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        LGAResponseDto response = service.findLga(id);
+        StateResponseDto response = service.findState(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -95,19 +101,18 @@ public class LGAController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getLgas(@RequestParam(value = "name",required = false)String name,
-                                              @RequestParam(value = "page") int page,
-                                              @RequestParam(value = "pageSize") int pageSize){
+    public ResponseEntity<Response> getStates(@RequestParam(value = "name",required = false)String name,
+                                             @RequestParam(value = "page") int page,
+                                             @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<LGA> response = service.findAll(name, PageRequest.of(page, pageSize));
+        Page<State> response = service.findAll(name,PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
-
 
 
     /** <summary>
@@ -132,12 +137,13 @@ public class LGAController {
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<LGA> response = service.getAll(isActive);
+        List<State> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
+
 
 }

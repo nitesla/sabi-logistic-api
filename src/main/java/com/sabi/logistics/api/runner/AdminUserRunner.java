@@ -1,4 +1,4 @@
-package com.sabilogistics.api.runner;
+package com.sabi.logistics.api.runner;
 
 import com.sabi.framework.models.User;
 import com.sabi.framework.repositories.UserRepository;

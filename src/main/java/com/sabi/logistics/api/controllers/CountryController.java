@@ -1,42 +1,46 @@
-package com.sabilogistics.api.controllers;
+package com.sabi.logistics.api.controllers;
+
 
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
-import com.sabi.framework.utils.Constants;
-import com.sabilogistics.service.services.PartnerCategoriesService;
-import com.sabilogisticscore.dto.request.PartnerCategoriesDto;
-import com.sabilogisticscore.dto.response.PartnerCategoriesResponseDto;
-import com.sabilogisticscore.models.PartnerCategories;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.sabi.framework.dto.responseDto.Response;
+import com.sabi.framework.utils.Constants;
+import com.sabi.framework.utils.CustomResponseCode;
+import com.sabi.logistics.core.dto.request.CountryDto;
+import com.sabi.logistics.core.dto.response.CountryResponseDto;
+import com.sabi.logistics.core.models.Country;
+import com.sabi.logistics.service.services.CountryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import com.sabi.framework.utils.CustomResponseCode;
 
 import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"partnerCategories")
-public class PartnerCategoriesController {
+@RequestMapping(Constants.APP_CONTENT +"country")
+public class CountryController {
 
-    private final PartnerCategoriesService service;
+    private final CountryService service;
 
-    public PartnerCategoriesController(PartnerCategoriesService service) {
+    public CountryController(CountryService service) {
         this.service = service;
     }
 
+
+    /** <summary>
+     * Country creation endpoint
+     * </summary>
+     * <remarks>this endpoint is responsible for creation of new country</remarks>
+     */
+
     @PostMapping("")
-    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> createPartnerCategory(@Validated @RequestBody PartnerCategoriesDto request){
+    public ResponseEntity<Response> createCountry(@Validated @RequestBody CountryDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        PartnerCategoriesResponseDto response = service.createPartnerCategory(request);
+        CountryResponseDto response = service.createCountry(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -45,12 +49,18 @@ public class PartnerCategoriesController {
     }
 
 
+
+    /** <summary>
+     * Country update endpoint
+     * </summary>
+     * <remarks>this endpoint is responsible for updating countries</remarks>
+     */
+
     @PutMapping("")
-    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> updatePartnerCategory(@Validated @RequestBody  PartnerCategoriesDto request){
+    public ResponseEntity<Response> updateCountry(@Validated @RequestBody  CountryDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        PartnerCategoriesResponseDto response = service.updatePartnerCategory(request);
+        CountryResponseDto response = service.updateCountry(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -58,12 +68,18 @@ public class PartnerCategoriesController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+
+
+    /** <summary>
+     * Get single record endpoint
+     * </summary>
+     * <remarks>this endpoint is responsible for getting a single record</remarks>
+     */
     @GetMapping("/{id}")
-    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> getPartnerCategoryById(@PathVariable Long id){
+    public ResponseEntity<Response> getCountry(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        PartnerCategoriesResponseDto response = service.findById(id);
+        CountryResponseDto response = service.findCountry(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -73,14 +89,19 @@ public class PartnerCategoriesController {
 
 
 
+    /** <summary>
+     * Get all records endpoint
+     * </summary>
+     * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
+     */
     @GetMapping("")
-    public ResponseEntity<Response> getPartnerCategories(@RequestParam(value = "partnerId",required = false)Long partnerId,
-                                                         @RequestParam(value = "categoryId") Long categoryId,
-                                                  @RequestParam(value = "page") int page,
-                                                  @RequestParam(value = "pageSize") int pageSize){
+    public ResponseEntity<Response> getCountries(@RequestParam(value = "name",required = false)String name,
+                                              @RequestParam(value = "code",required = false)String code,
+                                              @RequestParam(value = "page") int page,
+                                              @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<PartnerCategories> response = service.findAll(partnerId,categoryId, PageRequest.of(page, pageSize));
+        Page<Country> response = service.findAll(name,code, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -89,12 +110,17 @@ public class PartnerCategoriesController {
     }
 
 
+    /** <summary>
+     * Enable disenable
+     * </summary>
+     * <remarks>this endpoint is responsible for enabling and disenabling a State</remarks>
+     */
 
     @PutMapping("/enabledisenable")
     public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.enableDisEnable(request);
+        service.enableDisEnableState(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;
@@ -106,11 +132,12 @@ public class PartnerCategoriesController {
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<PartnerCategories> response = service.getAll(isActive);
+        List<Country> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
+
 }

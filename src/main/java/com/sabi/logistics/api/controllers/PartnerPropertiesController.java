@@ -1,14 +1,14 @@
-package com.sabilogistics.api.controllers;
+package com.sabi.logistics.api.controllers;
 
 
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabilogistics.service.services.PartnerPropertiesService;
-import com.sabilogisticscore.dto.request.PartnerPropertiesDto;
-import com.sabilogisticscore.dto.response.PartnerPropertiesResponseDto;
-import com.sabilogisticscore.models.PartnerProperties;
+import com.sabi.logistics.core.dto.request.PartnerPropertiesDto;
+import com.sabi.logistics.core.dto.response.PartnerPropertiesResponseDto;
+import com.sabi.logistics.core.models.PartnerProperties;
+import com.sabi.logistics.service.services.PartnerPropertiesService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;

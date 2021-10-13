@@ -1,15 +1,13 @@
-package com.sabilogistics.api.controllers;
+package com.sabi.logistics.api.controllers;
 
 
-
-import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
+import com.sabi.framework.dto.requestDto.RoleDto;
 import com.sabi.framework.dto.responseDto.Response;
+import com.sabi.framework.dto.responseDto.RoleResponseDto;
+import com.sabi.framework.models.Role;
+import com.sabi.framework.service.RoleService;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabilogistics.service.services.CountryService;
-import com.sabilogisticscore.dto.request.CountryDto;
-import com.sabilogisticscore.dto.response.CountryResponseDto;
-import com.sabilogisticscore.models.Country;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -19,29 +17,30 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"country")
-public class CountryController {
+@RequestMapping(Constants.APP_CONTENT +"role")
+public class RoleController {
 
-    private final CountryService service;
 
-    public CountryController(CountryService service) {
+
+    private final RoleService service;
+
+    public RoleController(RoleService service) {
         this.service = service;
     }
 
 
     /** <summary>
-     * Country creation endpoint
+     * Role creation endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for creation of new country</remarks>
+     * <remarks>this endpoint is responsible for creation of new Role</remarks>
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createCountry(@Validated @RequestBody CountryDto request){
+    public ResponseEntity<Response> createRole(@Validated @RequestBody RoleDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        CountryResponseDto response = service.createCountry(request);
+        RoleResponseDto response = service.createRole(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -50,18 +49,17 @@ public class CountryController {
     }
 
 
-
     /** <summary>
-     * Country update endpoint
+     * Role update endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for updating countries</remarks>
+     * <remarks>this endpoint is responsible for updating role</remarks>
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateCountry(@Validated @RequestBody  CountryDto request){
+    public ResponseEntity<Response> updateRole(@Validated @RequestBody  RoleDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        CountryResponseDto response = service.updateCountry(request);
+        RoleResponseDto response = service.updateRole(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -70,24 +68,22 @@ public class CountryController {
     }
 
 
-
     /** <summary>
      * Get single record endpoint
      * </summary>
      * <remarks>this endpoint is responsible for getting a single record</remarks>
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Response> getCountry(@PathVariable Long id){
+    public ResponseEntity<Response> getRole(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        CountryResponseDto response = service.findCountry(id);
+        RoleResponseDto response = service.findRole(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
-
 
 
     /** <summary>
@@ -96,13 +92,13 @@ public class CountryController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getCountries(@RequestParam(value = "name",required = false)String name,
-                                              @RequestParam(value = "code",required = false)String code,
-                                              @RequestParam(value = "page") int page,
-                                              @RequestParam(value = "pageSize") int pageSize){
+    public ResponseEntity<Response> getRoles(@RequestParam(value = "name",required = false)String name,
+                                             @RequestParam(value = "isActive",required = false)Boolean isActive,
+                                                       @RequestParam(value = "page") int page,
+                                                       @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Country> response = service.findAll(name,code, PageRequest.of(page, pageSize));
+        Page<Role> response = service.findAll(name,isActive, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -111,29 +107,12 @@ public class CountryController {
     }
 
 
-    /** <summary>
-     * Enable disenable
-     * </summary>
-     * <remarks>this endpoint is responsible for enabling and disenabling a State</remarks>
-     */
-
-    @PutMapping("/enabledisenable")
-    public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request){
-        HttpStatus httpCode ;
-        Response resp = new Response();
-        service.enableDisEnableState(request);
-        resp.setCode(CustomResponseCode.SUCCESS);
-        resp.setDescription("Successful");
-        httpCode = HttpStatus.OK;
-        return new ResponseEntity<>(resp, httpCode);
-    }
-
 
     @GetMapping("/list")
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<Country> response = service.getAll(isActive);
+        List<Role> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

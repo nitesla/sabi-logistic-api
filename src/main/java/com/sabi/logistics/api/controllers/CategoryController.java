@@ -1,14 +1,14 @@
-package com.sabilogistics.api.controllers;
+package com.sabi.logistics.api.controllers;
 
 
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabilogistics.service.services.CategoryService;
-import com.sabilogisticscore.dto.request.CategoryDto;
-import com.sabilogisticscore.dto.response.CategoryResponseDto;
-import com.sabilogisticscore.models.Category;
+import com.sabi.logistics.core.dto.request.CategoryDto;
+import com.sabi.logistics.core.dto.response.CategoryResponseDto;
+import com.sabi.logistics.core.models.Category;
+import com.sabi.logistics.service.services.CategoryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @SuppressWarnings("All")
 @RestController
