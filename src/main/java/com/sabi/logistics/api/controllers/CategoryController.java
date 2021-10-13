@@ -47,7 +47,7 @@ public class CategoryController {
 
 
     @PutMapping("")
-    public ResponseEntity<Response> updateCountry(@Validated @RequestBody CategoryDto request){
+    public ResponseEntity<Response> updateCategory(@Validated @RequestBody CategoryDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
         CategoryResponseDto response = service.updateCategory(request);
@@ -73,7 +73,7 @@ public class CategoryController {
 
 
     @GetMapping("")
-    public ResponseEntity<Response> getCountries(@RequestParam(value = "name",required = false)String name,
+    public ResponseEntity<Response> getCategories(@RequestParam(value = "name",required = false)String name,
                                                  @RequestParam(value = "page") int page,
                                                  @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
