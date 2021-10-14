@@ -8,6 +8,8 @@ import com.sabi.logistics.core.dto.request.PartnerLocationDto;
 import com.sabi.logistics.core.dto.response.PartnerLocationResponseDto;
 import com.sabi.logistics.core.models.PartnerLocation;
 import com.sabi.logistics.service.services.PartnerLocationService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -53,35 +55,35 @@ public class PartnerLocationController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
-//    @GetMapping("/{id}")
-//    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-//    public ResponseEntity<Response> getPartnerCategoryById(@PathVariable Long id){
-//        HttpStatus httpCode ;
-//        Response resp = new Response();
-//        PartnerLocationResponseDto response = service.findByPartnerLocationId(id);
-//        resp.setCode(CustomResponseCode.SUCCESS);
-//        resp.setDescription("Record fetched successfully !");
-//        resp.setData(response);
-//        httpCode = HttpStatus.OK;
-//        return new ResponseEntity<>(resp, httpCode);
-//    }
+    @GetMapping("/{id}")
+    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
+    public ResponseEntity<Response> getPartnerCategoryById(@PathVariable Long id){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        PartnerLocationResponseDto response = service.findByPartnerLocationId(id);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
 
 
 
-//    @GetMapping("")
-//    public ResponseEntity<Response> getPartnerCategories(@RequestParam(value = "partnerId",required = false)Long partnerId,
+    @GetMapping("")
+    public ResponseEntity<Response> getPartnerCategories(@RequestParam(value = "id",required = false)Long id,
 //                                                         @RequestParam(value = "categoryId") Long categoryId,
-//                                                         @RequestParam(value = "page") int page,
-//                                                         @RequestParam(value = "pageSize") int pageSize){
-//        HttpStatus httpCode ;
-//        Response resp = new Response();
-//        Page<PartnerLocation> response = service.findAll(partnerId,categoryId, PageRequest.of(page, pageSize));
-//        resp.setCode(CustomResponseCode.SUCCESS);
-//        resp.setDescription("Record fetched successfully !");
-//        resp.setData(response);
-//        httpCode = HttpStatus.OK;
-//        return new ResponseEntity<>(resp, httpCode);
-//    }
+                                                         @RequestParam(value = "page") int page,
+                                                         @RequestParam(value = "pageSize") int pageSize){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        Page<PartnerLocation> response = service.findAll(id, PageRequest.of(page, pageSize));
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
 
 
 

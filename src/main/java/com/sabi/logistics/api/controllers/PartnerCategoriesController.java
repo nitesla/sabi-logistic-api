@@ -6,8 +6,11 @@ import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.PartnerCategoriesDto;
 import com.sabi.logistics.core.dto.response.PartnerCategoriesResponseDto;
+import com.sabi.logistics.core.dto.response.PartnerPropertiesResponseDto;
 import com.sabi.logistics.core.models.PartnerCategories;
+import com.sabi.logistics.core.models.PartnerProperties;
 import com.sabi.logistics.service.services.PartnerCategoriesService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -20,6 +23,7 @@ import java.util.List;
 @SuppressWarnings("All")
 @RestController
 @RequestMapping(Constants.APP_CONTENT +"partnercategories")
+@Slf4j
 public class PartnerCategoriesController {
 
     private final PartnerCategoriesService service;
@@ -33,7 +37,9 @@ public class PartnerCategoriesController {
     public ResponseEntity<Response> createPartnerCategory(@Validated @RequestBody PartnerCategoriesDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
+//        log.info("Request f********rom controller *****************" + request);
         PartnerCategoriesResponseDto response = service.createPartnerCategory(request);
+        log.info("Request f********rom controller *****************" + response);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -68,11 +74,22 @@ public class PartnerCategoriesController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
-
+    @GetMapping("partnerId/{id}")
+    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
+    public ResponseEntity<Response> getPartnerCategoryByPartnerId(@PathVariable Long id){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        PartnerProperties response = service.findByCategoryId(id);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
 
     @GetMapping("")
     public ResponseEntity<Response> getPartnerCategories(@RequestParam(value = "partnerId",required = false)Long partnerId,
-                                                         @RequestParam(value = "categoryId") Long categoryId,
+                                                         @RequestParam(value = "categoryId", required = false) Long categoryId,
                                                   @RequestParam(value = "page") int page,
                                                   @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
