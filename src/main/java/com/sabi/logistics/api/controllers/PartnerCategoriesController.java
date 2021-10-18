@@ -6,7 +6,6 @@ import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.PartnerCategoriesDto;
 import com.sabi.logistics.core.dto.response.PartnerCategoriesResponseDto;
-import com.sabi.logistics.core.dto.response.PartnerPropertiesResponseDto;
 import com.sabi.logistics.core.models.PartnerCategories;
 import com.sabi.logistics.core.models.PartnerProperties;
 import com.sabi.logistics.service.services.PartnerCategoriesService;
@@ -22,7 +21,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"partnercategories")
+@RequestMapping(Constants.APP_CONTENT+"logistics/" +"partnercategories")
 @Slf4j
 public class PartnerCategoriesController {
 

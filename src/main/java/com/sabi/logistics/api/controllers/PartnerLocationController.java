@@ -19,7 +19,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"partnerlocation")
+@RequestMapping(Constants.APP_CONTENT+"logistics/" +"partnerlocation")
 public class PartnerLocationController {
 
     private final PartnerLocationService service;

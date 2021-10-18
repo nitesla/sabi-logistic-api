@@ -21,7 +21,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"lga")
+@RequestMapping(Constants.APP_CONTENT+"logistics/" +"lga")
 public class LGAController {
 
 
