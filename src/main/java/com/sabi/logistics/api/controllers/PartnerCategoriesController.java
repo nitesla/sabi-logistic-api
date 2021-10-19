@@ -2,6 +2,7 @@ package com.sabi.logistics.api.controllers;
 
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
+import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.PartnerCategoriesDto;
 import com.sabi.logistics.core.dto.response.PartnerCategoriesResponseDto;
@@ -20,7 +21,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping("partnercategories")
+@RequestMapping(Constants.APP_CONTENT+"partnercategories")
 @Slf4j
 public class PartnerCategoriesController {
 

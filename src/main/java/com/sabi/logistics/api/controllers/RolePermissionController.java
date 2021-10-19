@@ -6,6 +6,7 @@ import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.dto.responseDto.RolePermissionResponseDto;
 import com.sabi.framework.models.RolePermission;
 import com.sabi.framework.service.RolePermissionService;
+import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("RolePermission")
+@RequestMapping(Constants.APP_CONTENT+"RolePermission")
 public class RolePermissionController {
     private final RolePermissionService service;
 

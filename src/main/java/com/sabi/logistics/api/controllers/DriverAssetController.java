@@ -3,6 +3,7 @@ package com.sabi.logistics.api.controllers;
 
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
+import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.DriverAssetDto;
 import com.sabi.logistics.core.dto.response.DriverAssetResponseDto;
@@ -19,7 +20,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping("driverasset")
+@RequestMapping(Constants.APP_CONTENT+"driverasset")
 public class DriverAssetController {
 
     private final DriverAssetService service;

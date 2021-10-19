@@ -2,6 +2,7 @@ package com.sabi.logistics.api.controllers;
 
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
+import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.PartnerLocationDto;
 import com.sabi.logistics.core.dto.response.PartnerLocationResponseDto;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping("partnerlocation")
+@RequestMapping(Constants.APP_CONTENT+"partnerlocation")
 public class PartnerLocationController {
 
     private final PartnerLocationService service;

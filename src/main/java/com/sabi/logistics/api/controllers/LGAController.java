@@ -3,6 +3,7 @@ package com.sabi.logistics.api.controllers;
 
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
+import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.LGADto;
 import com.sabi.logistics.core.dto.response.LGAResponseDto;
@@ -19,7 +20,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping("lga")
+@RequestMapping(Constants.APP_CONTENT+"lga")
 public class LGAController {
 
 
