@@ -19,7 +19,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"logistics/" +"clients")
+@RequestMapping(Constants.APP_CONTENT+"clients")
 public class ClientController {
 
     private final ClientService service;

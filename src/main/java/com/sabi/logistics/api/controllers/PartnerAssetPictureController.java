@@ -20,7 +20,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"logistics/" +"assetpicture")
+@RequestMapping(Constants.APP_CONTENT+"assetpicture")
 public class PartnerAssetPictureController {
 
     private final PartnerAssetPictureService service;

@@ -20,7 +20,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"logistics/" +"driverasset")
+@RequestMapping(Constants.APP_CONTENT+"driverasset")
 public class DriverAssetController {
 
     private final DriverAssetService service;

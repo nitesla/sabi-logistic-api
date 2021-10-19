@@ -1,7 +1,6 @@
 package com.sabi.logistics.api.controllers;
 
 
-
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
@@ -22,7 +21,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"logistics/" +"state")
+@RequestMapping(Constants.APP_CONTENT+"state")
 public class StateController {
 
 

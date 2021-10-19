@@ -1,7 +1,6 @@
 package com.sabi.logistics.api.controllers;
 
 
-
 import com.sabi.framework.dto.requestDto.LoginRequest;
 import com.sabi.framework.dto.responseDto.AccessTokenWithUserDetails;
 import com.sabi.framework.dto.responseDto.Response;
@@ -33,7 +32,7 @@ import javax.validation.Valid;
 @Slf4j
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"logistics/"+ "authenticate")
+@RequestMapping(Constants.APP_CONTENT+"authenticate")
 public class AuthenticationController {
     private  static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 

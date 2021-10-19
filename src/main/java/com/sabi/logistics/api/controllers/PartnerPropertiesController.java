@@ -20,7 +20,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"logistics/"+"partnerproperties")
+@RequestMapping(Constants.APP_CONTENT+"partnerproperties")
 public class PartnerPropertiesController {
 
     private final PartnerPropertiesService service;

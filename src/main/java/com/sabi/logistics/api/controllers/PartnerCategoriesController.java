@@ -21,7 +21,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"logistics/" +"partnercategories")
+@RequestMapping(Constants.APP_CONTENT+"partnercategories")
 @Slf4j
 public class PartnerCategoriesController {
 
@@ -36,9 +36,7 @@ public class PartnerCategoriesController {
     public ResponseEntity<Response> createPartnerCategory(@Validated @RequestBody PartnerCategoriesDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-//        log.info("Request f********rom controller *****************" + request);
         PartnerCategoriesResponseDto response = service.createPartnerCategory(request);
-        log.info("Request f********rom controller *****************" + response);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);

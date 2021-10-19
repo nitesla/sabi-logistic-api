@@ -19,7 +19,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"logistics/" +"blocktypes")
+@RequestMapping(Constants.APP_CONTENT+"blocktypes")
 public class BlockTypeController {
 
     private final BlockTypeService service;
