@@ -2,7 +2,6 @@ package com.sabi.logistics.api.controllers;
 
 
 import com.sabi.framework.dto.responseDto.Response;
-import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"ping")
+@RequestMapping("ping")
 public class PingController {
 
 

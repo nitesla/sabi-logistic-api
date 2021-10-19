@@ -2,7 +2,6 @@ package com.sabi.logistics.api.controllers;
 
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
-import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.PartnerCategoriesDto;
 import com.sabi.logistics.core.dto.response.PartnerCategoriesResponseDto;
@@ -21,7 +20,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"logistics/" +"partnercategories")
+@RequestMapping("partnercategories")
 @Slf4j
 public class PartnerCategoriesController {
 
@@ -36,9 +35,7 @@ public class PartnerCategoriesController {
     public ResponseEntity<Response> createPartnerCategory(@Validated @RequestBody PartnerCategoriesDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-//        log.info("Request f********rom controller *****************" + request);
         PartnerCategoriesResponseDto response = service.createPartnerCategory(request);
-        log.info("Request f********rom controller *****************" + response);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);

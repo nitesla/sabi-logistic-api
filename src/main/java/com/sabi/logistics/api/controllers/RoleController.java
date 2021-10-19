@@ -6,7 +6,6 @@ import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.dto.responseDto.RoleResponseDto;
 import com.sabi.framework.models.Role;
 import com.sabi.framework.service.RoleService;
-import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"logistics/" +"role")
+@RequestMapping("role")
 public class RoleController {
 
 

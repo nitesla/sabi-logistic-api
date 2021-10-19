@@ -3,7 +3,6 @@ package com.sabi.logistics.api.controllers;
 
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
-import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.PartnerAssetPictureDto;
 import com.sabi.logistics.core.dto.response.PartnerAssetPictureResponseDto;
@@ -20,7 +19,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"logistics/" +"assetpicture")
+@RequestMapping("assetpicture")
 public class PartnerAssetPictureController {
 
     private final PartnerAssetPictureService service;

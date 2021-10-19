@@ -6,7 +6,6 @@ import com.sabi.framework.dto.responseDto.PermissionResponseDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.models.Permission;
 import com.sabi.framework.service.PermissionService;
-import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"logistics/" +"permission")
+@RequestMapping("permission")
 public class PermissionController {
 
 

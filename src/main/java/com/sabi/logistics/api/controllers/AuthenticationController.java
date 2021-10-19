@@ -1,7 +1,6 @@
 package com.sabi.logistics.api.controllers;
 
 
-
 import com.sabi.framework.dto.requestDto.LoginRequest;
 import com.sabi.framework.dto.responseDto.AccessTokenWithUserDetails;
 import com.sabi.framework.dto.responseDto.Response;
@@ -13,7 +12,6 @@ import com.sabi.framework.security.AuthenticationWithToken;
 import com.sabi.framework.service.ExternalTokenService;
 import com.sabi.framework.service.TokenService;
 import com.sabi.framework.service.UserService;
-import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.framework.utils.Utility;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +31,7 @@ import javax.validation.Valid;
 @Slf4j
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"logistics/"+ "authenticate")
+@RequestMapping("authenticate")
 public class AuthenticationController {
     private  static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 

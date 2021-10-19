@@ -6,7 +6,6 @@ import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.dto.responseDto.UserResponse;
 import com.sabi.framework.models.User;
 import com.sabi.framework.service.UserService;
-import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -22,7 +21,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"logistics/" +"user")
+@RequestMapping("user")
 public class UserController {
 
     private  static final Logger logger = LoggerFactory.getLogger(UserController.class);
