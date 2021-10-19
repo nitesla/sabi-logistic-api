@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"role")
+@RequestMapping(Constants.APP_CONTENT+"logistics/" +"role")
 public class RoleController {
 
 

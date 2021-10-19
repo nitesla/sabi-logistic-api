@@ -22,7 +22,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"state")
+@RequestMapping(Constants.APP_CONTENT+"logistics/" +"state")
 public class StateController {
 
 

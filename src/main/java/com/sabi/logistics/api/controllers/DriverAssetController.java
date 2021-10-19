@@ -1,13 +1,14 @@
 package com.sabi.logistics.api.controllers;
 
+
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabi.logistics.core.dto.request.ClientDto;
-import com.sabi.logistics.core.dto.response.ClientResponseDto;
-import com.sabi.logistics.core.models.Client;
-import com.sabi.logistics.service.services.ClientService;
+import com.sabi.logistics.core.dto.request.DriverAssetDto;
+import com.sabi.logistics.core.dto.response.DriverAssetResponseDto;
+import com.sabi.logistics.core.models.DriverAsset;
+import com.sabi.logistics.service.services.DriverAssetService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -19,21 +20,21 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"logistics/" +"clients")
-public class ClientController {
+@RequestMapping(Constants.APP_CONTENT+"logistics/" +"driverasset")
+public class DriverAssetController {
 
-    private final ClientService service;
+    private final DriverAssetService service;
 
-    public ClientController(ClientService service) {
+    public DriverAssetController(DriverAssetService service) {
         this.service = service;
     }
 
+
     @PostMapping("")
-    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> createClient(@Validated @RequestBody ClientDto request){
+    public ResponseEntity<Response> createDriverAsset(@Validated @RequestBody DriverAssetDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        ClientResponseDto response = service.createClient(request);
+        DriverAssetResponseDto response = service.createDriverAsset(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -43,11 +44,10 @@ public class ClientController {
 
 
     @PutMapping("")
-    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> updateClient(@Validated @RequestBody  ClientDto request){
+    public ResponseEntity<Response> updateDriverAsset(@Validated @RequestBody DriverAssetDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        ClientResponseDto response = service.updateClient(request);
+        DriverAssetResponseDto response = service.updateDriverAsset(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -55,42 +55,40 @@ public class ClientController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+
     @GetMapping("/{id}")
-    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> getClientById(@PathVariable Long id){
+    public ResponseEntity<Response> getDriverAsset(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        ClientResponseDto response = service.findByClientId(id);
+        DriverAssetResponseDto response = service.findDriverAsset(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
-
 
 
     @GetMapping("")
-    public ResponseEntity<Response> getClients(@RequestParam(value = "id",required = false)Long id,
-                                                         @RequestParam(value = "page") int page,
-                                                         @RequestParam(value = "pageSize") int pageSize){
+    public ResponseEntity<Response> getDriversAssets(@RequestParam(value = "name",required = false)String name,
+                                               @RequestParam(value = "page") int page,
+                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Client> response = service.findAll(id, PageRequest.of(page, pageSize));
+        Page<DriverAsset> response = service.findAll(name, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
-
 
 
     @PutMapping("/enabledisenable")
     public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.enableDisEnable(request);
+        service.enableDisEnableState(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;
@@ -98,11 +96,12 @@ public class ClientController {
     }
 
 
+
     @GetMapping("/list")
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<Client> response = service.getAll(isActive);
+        List<DriverAsset> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

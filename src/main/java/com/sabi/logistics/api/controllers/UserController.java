@@ -22,7 +22,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"user")
+@RequestMapping(Constants.APP_CONTENT+"logistics/" +"user")
 public class UserController {
 
     private  static final Logger logger = LoggerFactory.getLogger(UserController.class);

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"RolePermission")
+@RequestMapping(Constants.APP_CONTENT+"logistics/" +"RolePermission")
 public class RolePermissionController {
     private final RolePermissionService service;
 
