@@ -6,8 +6,8 @@ import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.PartnerCategoriesDto;
 import com.sabi.logistics.core.dto.response.PartnerCategoriesResponseDto;
+import com.sabi.logistics.core.models.Partner;
 import com.sabi.logistics.core.models.PartnerCategories;
-import com.sabi.logistics.core.models.PartnerProperties;
 import com.sabi.logistics.service.services.PartnerCategoriesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -76,7 +76,7 @@ public class PartnerCategoriesController {
     public ResponseEntity<Response> getPartnerCategoryByPartnerId(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        PartnerProperties response = service.findByCategoryId(id);
+        Partner response = service.findByCategoryId(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
