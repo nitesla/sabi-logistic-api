@@ -39,7 +39,7 @@ public class PartnerController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<Response> agentSignUp(@Validated @RequestBody PartnerSignUpDto request){
+    public ResponseEntity<Response> partnerSignUp(@Validated @RequestBody PartnerSignUpDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
         PartnerSignUpResponseDto response = service.partnerSignUp(request);
