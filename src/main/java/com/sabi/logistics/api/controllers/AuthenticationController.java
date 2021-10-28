@@ -1,7 +1,6 @@
 package com.sabi.logistics.api.controllers;
 
 
-
 import com.sabi.framework.dto.requestDto.LoginRequest;
 import com.sabi.framework.dto.responseDto.AccessTokenWithUserDetails;
 import com.sabi.framework.dto.responseDto.Response;
@@ -33,7 +32,7 @@ import javax.validation.Valid;
 @Slf4j
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"logistics/"+ "authenticate")
+@RequestMapping(Constants.APP_CONTENT+"authenticate")
 public class AuthenticationController {
     private  static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
@@ -63,13 +62,13 @@ public class AuthenticationController {
         if (user != null) {
             if (user.isLoginStatus()) {
                 //FIRST TIME LOGIN
-                if (user.getPasswordChangedOn() == null || user.isActive()==false) {
+                if (user.getPasswordChangedOn() == null || user.getIsActive()==false) {
                     Response resp = new Response();
                     resp.setCode(CustomResponseCode.CHANGE_P_REQUIRED);
                     resp.setDescription("Change password Required, account has not been activated");
                     return new ResponseEntity<>(resp, HttpStatus.ACCEPTED);//202
                 }
-                if (user.isActive()==false) {
+                if (user.getIsActive()==false) {
                     Response resp = new Response();
                     resp.setCode(CustomResponseCode.FAILED);
                     resp.setDescription("User Account Deactivated, please contact Administrator");

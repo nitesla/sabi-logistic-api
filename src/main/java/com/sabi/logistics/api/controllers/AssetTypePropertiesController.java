@@ -20,7 +20,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"logistics/" +"assettypeproperties")
+@RequestMapping(Constants.APP_CONTENT+"assettypeproperties")
 public class AssetTypePropertiesController {
 
     private final AssetTypePropertiesService service;
