@@ -6,10 +6,10 @@ import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
+import com.sabi.logistics.core.dto.request.CompleteSignupRequest;
 import com.sabi.logistics.core.dto.request.PartnerDto;
 import com.sabi.logistics.core.dto.request.PartnerSignUpDto;
-import com.sabi.logistics.core.dto.request.ResendOTP;
-import com.sabi.logistics.core.dto.request.ValidateOTPRequest;
+import com.sabi.logistics.core.dto.response.CompleteSignUpResponse;
 import com.sabi.logistics.core.dto.response.PartnerActivationResponse;
 import com.sabi.logistics.core.dto.response.PartnerResponseDto;
 import com.sabi.logistics.core.dto.response.PartnerSignUpResponseDto;
@@ -51,29 +51,19 @@ public class PartnerController {
     }
 
 
-
-    @PutMapping("/resendotp")
-    public ResponseEntity<Response> reSendOtp(@Validated @RequestBody ResendOTP request){
+    @PutMapping("/completesignup")
+    public ResponseEntity<Response> completeSignUp(@Validated @RequestBody CompleteSignupRequest request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.resendPartnerOTP(request);
-        resp.setCode(CustomResponseCode.SUCCESS);
-        resp.setDescription("OTP sent successfully");
-        httpCode = HttpStatus.OK;
-        return new ResponseEntity<>(resp, httpCode);
-    }
-
-
-    @PutMapping("/validateotp")
-    public ResponseEntity<Response> validateOTP(@Validated @RequestBody ValidateOTPRequest request){
-        HttpStatus httpCode ;
-        Response resp = new Response();
-        service.validateOTP(request);
+        CompleteSignUpResponse response = service.completeSignUp(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
-        httpCode = HttpStatus.OK;
+        resp.setData(response);
+        httpCode = HttpStatus.CREATED;
         return new ResponseEntity<>(resp, httpCode);
     }
+
+
 
     @PutMapping("/passwordactivation")
     public ResponseEntity<Response> partnerPasswordActivation(@Validated @RequestBody ChangePasswordDto request){
