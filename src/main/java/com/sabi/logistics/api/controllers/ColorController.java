@@ -21,29 +21,30 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(Constants.APP_CONTENT+"color")
 public class ColorController {
-    private final ColorService ColorService;
 
     @Autowired
     private ResponseHelper responseHelper;
+    private final ColorService colorService;
 
-    public ColorController(ColorService ColorService) {
-        this.ColorService = ColorService;
+    public ColorController(ColorService colorService) {
+        this.colorService = colorService;
     }
 
     @PostMapping
     public ResponseEntity<Response> createColor(@RequestBody @Valid ColorRequestDto request){
-        return responseHelper.buildResponse( ColorService.createColor(request), HttpStatus.CREATED, "Successful");
+        return responseHelper.buildResponse( colorService.createColor(request), HttpStatus.CREATED, "Successful");
     }
 
     @PutMapping
     public ResponseEntity<Response> updateColor(@RequestBody @Valid ColorRequestDto request){
-        if(request.getId() == null || request.getId() < 0) throw new BadRequestException(CustomResponseCode.BAD_REQUEST, "Id Can not be empty");
-        return responseHelper.buildResponse(ColorService.updateColor(request), HttpStatus.OK, "Update Successful");
+        if(request.getId() == null || request.getId() < 0)
+            throw new BadRequestException(CustomResponseCode.BAD_REQUEST, "Id Can not be empty");
+        return responseHelper.buildResponse(colorService.updateColor(request), HttpStatus.OK, "Update Successful");
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Response> getColorById(@PathVariable long id){
-        return responseHelper.buildResponse(ColorService.findColor(id), HttpStatus.OK, "Record fetched successfully !");
+        return responseHelper.buildResponse(colorService.findColor(id), HttpStatus.OK, "Record fetched successfully !");
     }
 
     @GetMapping
@@ -51,18 +52,18 @@ public class ColorController {
                                                  @RequestParam(value = "page") int page,
                                                  @RequestParam(value = "pageSize") int pageSize){
         return responseHelper
-                .buildResponse(ColorService.findAll(name, PageRequest.of(page, pageSize)),
+                .buildResponse(colorService.findAll(name, PageRequest.of(page, pageSize)),
                         HttpStatus.OK, "Record fetched successfully !");
     }
 
     @PutMapping("/enabledisenable")
     public ResponseEntity<Response> enableDisEnable(@RequestBody EnableDisEnableDto request){
-        ColorService.enableDisEnableState(request);
+        colorService.enableDisEnableState(request);
         return responseHelper.buildEnableDisable();
     }
 
     @GetMapping("/list")
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
-        return responseHelper.buildResponse(ColorService.getAll(isActive), HttpStatus.OK, "Record fetched successfully !");
+        return responseHelper.buildResponse(colorService.getAll(isActive), HttpStatus.OK, "Record fetched successfully !");
     }
 }
