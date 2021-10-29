@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@SuppressWarnings("All")
 @Validated
 @RestController
 @RequestMapping(Constants.APP_CONTENT+"brand")
