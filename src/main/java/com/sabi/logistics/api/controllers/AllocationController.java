@@ -5,9 +5,12 @@ import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.AllocationHistoryDto;
+import com.sabi.logistics.core.dto.request.AllocationsDto;
 import com.sabi.logistics.core.dto.response.AllocationHistoryResponseDto;
+import com.sabi.logistics.core.dto.response.AllocationResponseDto;
 import com.sabi.logistics.core.models.AllocationHistory;
-import com.sabi.logistics.service.services.AllocationHistoryService;
+import com.sabi.logistics.core.models.Allocations;
+import com.sabi.logistics.service.services.AllocationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -20,22 +23,21 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"logistics/" +"allocationHistory")
-public class AllocationHistoryController {
+@RequestMapping(Constants.APP_CONTENT+"logistics/" +"allocations")
+public class AllocationController {
 
-    private final AllocationHistoryService service;
+    private final AllocationService service;
 
-    public AllocationHistoryController(AllocationHistoryService service) {
+    public AllocationController(AllocationService service) {
         this.service = service;
     }
 
-
     @PostMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> createAssetType(@Validated @RequestBody AllocationHistoryDto request){
+    public ResponseEntity<Response> createAllocation(@Validated @RequestBody AllocationsDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        AllocationHistoryResponseDto response = service.createAllocationHistory(request);
+        AllocationResponseDto response = service.createAllocation(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -46,10 +48,10 @@ public class AllocationHistoryController {
 
     @PutMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> updateAssetType(@Validated @RequestBody  AllocationHistoryDto request){
+    public ResponseEntity<Response> updateAllocation(@Validated @RequestBody  AllocationsDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        AllocationHistoryResponseDto response = service.updateAllocationHistory(request);
+        AllocationResponseDto response = service.updateAllocations(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -61,10 +63,10 @@ public class AllocationHistoryController {
 
     @GetMapping("/{id}")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> getAssetType(@PathVariable Long id){
+    public ResponseEntity<Response> getAllocation(@PathVariable Long  id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        AllocationHistoryResponseDto response = service.findAllocationHistory(id);
+        AllocationResponseDto response = service.findAllocations(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -75,13 +77,13 @@ public class AllocationHistoryController {
 
 
     @GetMapping("")
-    public ResponseEntity<Response> getAssetTypes(@RequestParam(value = "allocationId",required = false)Long allocationId,
-                                                  @RequestParam(value = "clientId",required = false)Long clientId,
+    public ResponseEntity<Response> getAllocation(@RequestParam(value = "name",required = false)String name,
+//                                                  @RequestParam(value = "startDate",required = false)LocalDateTime startDate,
                                                   @RequestParam(value = "page") int page,
                                                   @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<AllocationHistory> response = service.findAll(allocationId,clientId, PageRequest.of(page, pageSize));
+        Page<Allocations> response = service.findAll(name, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -107,7 +109,7 @@ public class AllocationHistoryController {
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<AllocationHistory> response = service.getAll(isActive);
+        List<Allocations> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
