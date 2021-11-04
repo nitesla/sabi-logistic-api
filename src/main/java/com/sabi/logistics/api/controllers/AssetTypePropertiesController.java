@@ -75,7 +75,7 @@ public class AssetTypePropertiesController {
 
 
 
-    @GetMapping("")
+    @GetMapping("/page")
     public ResponseEntity<Response> getAssetTypes(@RequestParam(value = "name",required = false)String name,
                                                          @RequestParam(value = "page") int page,
                                                          @RequestParam(value = "pageSize") int pageSize){

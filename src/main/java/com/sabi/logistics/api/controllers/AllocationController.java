@@ -4,11 +4,8 @@ import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabi.logistics.core.dto.request.AllocationHistoryDto;
 import com.sabi.logistics.core.dto.request.AllocationsDto;
-import com.sabi.logistics.core.dto.response.AllocationHistoryResponseDto;
 import com.sabi.logistics.core.dto.response.AllocationResponseDto;
-import com.sabi.logistics.core.models.AllocationHistory;
 import com.sabi.logistics.core.models.Allocations;
 import com.sabi.logistics.service.services.AllocationService;
 import org.springframework.data.domain.Page;
@@ -18,12 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"logistics/" +"allocations")
+@RequestMapping(Constants.APP_CONTENT +"allocations")
 public class AllocationController {
 
     private final AllocationService service;

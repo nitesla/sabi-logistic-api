@@ -15,12 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"logistics/" +"allocationHistory")
+@RequestMapping(Constants.APP_CONTENT +"allocationHistory")
 public class AllocationHistoryController {
 
     private final AllocationHistoryService service;
