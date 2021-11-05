@@ -104,11 +104,13 @@ public class OrderController {
                                               @RequestParam(value = "customerName",required = false)String customerName,
                                               @RequestParam(value = "customerPhone",required = false)String customerPhone,
                                               @RequestParam(value = "deliveryAddress",required = false) String deliveryAddress,
+                                              @RequestParam(value = "barCode",required = false)String barCode,
+                                              @RequestParam(value = "QRcode",required = false) String QRcode,
                                               @RequestParam(value = "page") int page,
                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Order> response = service.findAll(wareHouseID, deliveryPartnerID, referenceNo, deliveryStatus, customerName, customerPhone, deliveryAddress, PageRequest.of(page, pageSize));
+        Page<Order> response = service.findAll(wareHouseID, deliveryPartnerID, referenceNo, deliveryStatus, customerName, customerPhone, deliveryAddress, barCode, QRcode,PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
