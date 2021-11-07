@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @SuppressWarnings("All")
@@ -76,11 +77,14 @@ public class AllocationHistoryController {
     @GetMapping("")
     public ResponseEntity<Response> getAssetTypes(@RequestParam(value = "allocationId",required = false)Long allocationId,
                                                   @RequestParam(value = "clientId",required = false)Long clientId,
+                                                  @RequestParam(value = "amountPaid",required = false)BigDecimal amountPaid,
+                                                  @RequestParam(value = "totalAmount",required = false)BigDecimal totalAmount,
+                                                  @RequestParam(value = "balance",required = false)BigDecimal balance,
                                                   @RequestParam(value = "page") int page,
                                                   @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<AllocationHistory> response = service.findAll(allocationId,clientId, PageRequest.of(page, pageSize));
+        Page<AllocationHistory> response = service.findAll(allocationId,clientId,amountPaid, totalAmount, balance, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
