@@ -98,7 +98,6 @@ public class OrderController {
      */
     @GetMapping("")
     public ResponseEntity<Response> getOrders(@RequestParam(value = "wareHouseID",required = false)Long wareHouseID,
-                                              @RequestParam(value = "deliveryPartnerID",required = false) Long deliveryPartnerID,
                                               @RequestParam(value = "referenceNo",required = false)String referenceNo,
                                               @RequestParam(value = "deliveryStatus",required = false) String deliveryStatus,
                                               @RequestParam(value = "customerName",required = false)String customerName,
@@ -110,7 +109,7 @@ public class OrderController {
                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Order> response = service.findAll(wareHouseID, deliveryPartnerID, referenceNo, deliveryStatus, customerName, customerPhone, deliveryAddress, barCode, QRcode,PageRequest.of(page, pageSize));
+        Page<Order> response = service.findAll(wareHouseID, referenceNo, deliveryStatus, customerName, customerPhone, deliveryAddress, barCode, QRcode,PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -120,9 +119,9 @@ public class OrderController {
 
 
     /** <summary>
-     * Enable disenable
+     * Enable disable
      * </summary>
-     * <remarks>this endpoint is responsible for enabling and disenabling a Orders</remarks>
+     * <remarks>this endpoint is responsible for enabling and disabling a Orders</remarks>
      */
 
     @PutMapping("/enabledisable")
