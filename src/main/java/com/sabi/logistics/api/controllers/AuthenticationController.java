@@ -1,6 +1,7 @@
 package com.sabi.logistics.api.controllers;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sabi.framework.dto.requestDto.LoginRequest;
 import com.sabi.framework.dto.responseDto.AccessTokenWithUserDetails;
 import com.sabi.framework.dto.responseDto.Response;
@@ -15,6 +16,10 @@ import com.sabi.framework.service.UserService;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.framework.utils.Utility;
+import com.sabi.logistics.core.models.Partner;
+import com.sabi.logistics.core.models.PartnerCategories;
+import com.sabi.logistics.service.repositories.PartnerCategoriesRepository;
+import com.sabi.logistics.service.repositories.PartnerRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +33,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 @Slf4j
 @SuppressWarnings("All")
@@ -46,14 +55,19 @@ public class AuthenticationController {
     private ExternalTokenService externalTokenService;
 
     private final UserService userService;
+    private final PartnerRepository partnerRepository;
+    private final PartnerCategoriesRepository partnerCategoriesRepository;
 
 
-    public AuthenticationController(UserService userService) {
+    public AuthenticationController(UserService userService,PartnerRepository partnerRepository,
+                                    PartnerCategoriesRepository partnerCategoriesRepository) {
         this.userService = userService;
+        this.partnerRepository = partnerRepository;
+        this.partnerCategoriesRepository = partnerCategoriesRepository;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody @Valid LoginRequest loginRequest, HttpServletRequest request)  {
+    public ResponseEntity<?> loginUser(@RequestBody @Valid LoginRequest loginRequest, HttpServletRequest request) throws JsonProcessingException {
 
         log.info(":::::::::: login Request %s:::::::::::::" + loginRequest.getUsername());
         String loginStatus;
@@ -102,9 +116,23 @@ public class AuthenticationController {
         String agentId= "";
         String referralCode="";
         String isEmailVerified="";
+        String partnerCategory = "";
+        if (user.getUserCategory().equals(Constants.AGENT_USER)) {
+            Partner partner = partnerRepository.findByUserId(user.getId());
+            if(partner !=null){
+                log.info(":::: partner details ::::" +partner);
+                List<PartnerCategories> partnerCategories = partnerCategoriesRepository.findAllByPartnerId(partner.getId());
+
+
+                List<PartnerCategories> langList = new ArrayList(Arrays.asList(partnerCategories));
+                log.info("::::  details ::::" +langList);
+                partnerCategory = String.valueOf(langList);
+
+            }
+        }
 
         AccessTokenWithUserDetails details = new AccessTokenWithUserDetails(newToken, user,
-                accessList,userService.getSessionExpiry(),agentId,referralCode,isEmailVerified);
+                accessList,userService.getSessionExpiry(),agentId,referralCode,isEmailVerified, partnerCategory);
         return new ResponseEntity<>(details, HttpStatus.OK);
     }
 

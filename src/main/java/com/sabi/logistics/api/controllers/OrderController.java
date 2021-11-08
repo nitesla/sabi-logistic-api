@@ -5,10 +5,10 @@ import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabi.logistics.core.dto.request.LGADto;
-import com.sabi.logistics.core.dto.response.LGAResponseDto;
-import com.sabi.logistics.core.models.LGA;
-import com.sabi.logistics.service.services.LGAService;
+import com.sabi.logistics.core.dto.request.OrderRequestDto;
+import com.sabi.logistics.core.dto.response.OrderResponseDto;
+import com.sabi.logistics.core.models.Order;
+import com.sabi.logistics.service.services.OrderService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -18,29 +18,31 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"lga")
-public class LGAController {
+@RequestMapping(Constants.APP_CONTENT+"order")
+public class OrderController {
 
 
-    private final LGAService service;
+    private final OrderService service;
 
-    public LGAController(LGAService service) {
+    public OrderController(OrderService service) {
         this.service = service;
     }
 
+
     /** <summary>
-     * LGA creation endpoint
+     * Order creation endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for creation of new lga</remarks>
+     * <remarks>this endpoint is responsible for creation of new Orders</remarks>
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createLga(@Validated @RequestBody LGADto request){
+    public ResponseEntity<Response> createOrder(@Validated @RequestBody OrderRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        LGAResponseDto response = service.createLga(request);
+        OrderResponseDto response = service.createOrder(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -51,16 +53,16 @@ public class LGAController {
 
 
     /** <summary>
-     * LGA update endpoint
+     * Order update endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for updating lga</remarks>
+     * <remarks>this endpoint is responsible for updating orders</remarks>
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateLga(@Validated @RequestBody  LGADto request){
+    public ResponseEntity<Response> updateOrder(@Validated @RequestBody  OrderRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        LGAResponseDto response = service.updateLga(request);
+        OrderResponseDto response = service.updateOrder(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -69,16 +71,17 @@ public class LGAController {
     }
 
 
+
     /** <summary>
      * Get single record endpoint
      * </summary>
      * <remarks>this endpoint is responsible for getting a single record</remarks>
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Response> getLga(@PathVariable Long id){
+    public ResponseEntity<Response> getOrder(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        LGAResponseDto response = service.findLga(id);
+        OrderResponseDto response = service.findOrder(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -93,13 +96,19 @@ public class LGAController {
      * </summary>
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
-    @GetMapping("/page")
-    public ResponseEntity<Response> getLgas(@RequestParam(value = "name",required = false)String name,
+    @GetMapping("")
+    public ResponseEntity<Response> getOrders(@RequestParam(value = "wareHouseID",required = false)Long wareHouseID,
+                                              @RequestParam(value = "deliveryPartnerID",required = false) Long deliveryPartnerID,
+                                              @RequestParam(value = "referenceNo",required = false)String referenceNo,
+                                              @RequestParam(value = "deliveryStatus",required = false) String deliveryStatus,
+                                              @RequestParam(value = "customerName",required = false)String customerName,
+                                              @RequestParam(value = "customerPhone",required = false)String customerPhone,
+                                              @RequestParam(value = "deliveryAddress",required = false) String deliveryAddress,
                                               @RequestParam(value = "page") int page,
                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<LGA> response = service.findAll(name, PageRequest.of(page, pageSize));
+        Page<Order> response = service.findAll(wareHouseID, deliveryPartnerID, referenceNo, deliveryStatus, customerName, customerPhone, deliveryAddress, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -108,18 +117,17 @@ public class LGAController {
     }
 
 
-
     /** <summary>
      * Enable disenable
      * </summary>
-     * <remarks>this endpoint is responsible for enabling and disenabling a State</remarks>
+     * <remarks>this endpoint is responsible for enabling and disenabling a Orders</remarks>
      */
 
-    @PutMapping("/enabledisenable")
-    public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request){
+    @PutMapping("/enabledisable")
+    public ResponseEntity<Response> enableDisable(@Validated @RequestBody EnableDisEnableDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.enableDisEnableState(request);
+        service.enableDisable(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;
@@ -131,12 +139,13 @@ public class LGAController {
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<LGA> response = service.getAll(isActive);
+        List<Order> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
+
 
 }
