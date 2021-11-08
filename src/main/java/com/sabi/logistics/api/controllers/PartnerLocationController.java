@@ -30,7 +30,7 @@ public class PartnerLocationController {
 
     @PostMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> createPartnerCategory(@Validated @RequestBody PartnerLocationDto request){
+    public ResponseEntity<Response> createPartnerLocation(@Validated @RequestBody PartnerLocationDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
         PartnerLocationResponseDto response = service.createPartnerLocation(request);
@@ -44,7 +44,7 @@ public class PartnerLocationController {
 
     @PutMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> updatePartnerCategory(@Validated @RequestBody  PartnerLocationDto request){
+    public ResponseEntity<Response> updatePartnerLocation(@Validated @RequestBody  PartnerLocationDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
         PartnerLocationResponseDto response = service.updatePartnerLocation(request);
@@ -57,7 +57,7 @@ public class PartnerLocationController {
 
     @GetMapping("/{id}")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> getPartnerCategoryById(@PathVariable Long id){
+    public ResponseEntity<Response> getPartnerLocationById(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
         PartnerLocationResponseDto response = service.findByPartnerLocationId(id);
@@ -71,13 +71,15 @@ public class PartnerLocationController {
 
 
     @GetMapping("")
-    public ResponseEntity<Response> getPartnerCategories(@RequestParam(value = "id",required = false)Long id,
-//                                                         @RequestParam(value = "categoryId") Long categoryId,
+    public ResponseEntity<Response> getPartnerLocations(@RequestParam(value = "id",required = false)Long id,
+                                                         @RequestParam(value = "partnerId",required = false) Long partnerId,
+                                                        @RequestParam(value = "stateId",required = false) Long stateId,
+//                                                        @RequestParam(value = "wareHouse",required = false) int wareHouse,
                                                          @RequestParam(value = "page") int page,
                                                          @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<PartnerLocation> response = service.findAll(id, PageRequest.of(page, pageSize));
+        Page<PartnerLocation> response = service.findAll(id,partnerId,stateId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

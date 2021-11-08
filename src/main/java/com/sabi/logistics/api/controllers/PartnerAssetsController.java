@@ -49,10 +49,16 @@ public class PartnerAssetsController {
 
     @GetMapping
     public ResponseEntity<Response> getAllPartnerAssets(@RequestParam(value = "name",required = false)String name,
+                                                        @RequestParam(value = "brandId",required = false)Long brandId,
+                                                        @RequestParam(value = "status",required = false)String status,
+                                                        @RequestParam(value = "driverId",required = false)Long driverId,
+                                                        @RequestParam(value = "partnerAssetTypeId",required = false)Long partnerAssetTypeId,
                                                  @RequestParam(value = "page") int page,
                                                  @RequestParam(value = "pageSize") int pageSize){
+
+//        String name, Long brandId, String status, Long driverId, Long partnerAssetTypeId,
         return responseHelper
-                .buildResponse(partnerAssetService.findAll(name, PageRequest.of(page, pageSize)),
+                .buildResponse(partnerAssetService.findAll(name,brandId,status,driverId,partnerAssetTypeId, PageRequest.of(page, pageSize)),
                         HttpStatus.OK, "Record fetched successfully !");
     }
 

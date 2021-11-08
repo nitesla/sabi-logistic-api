@@ -47,6 +47,7 @@ public class PartnerUserController {
 
     @GetMapping
     public ResponseEntity<Response> getAllPartnerUsers(@RequestParam(value = "partnerId",required = false)Long partnerId,
+                                                       @RequestParam(value = "userId",required = false)Long userId,
                                                  @RequestParam(value = "page") int page,
                                                  @RequestParam(value = "pageSize") int pageSize){
         return responseHelper
