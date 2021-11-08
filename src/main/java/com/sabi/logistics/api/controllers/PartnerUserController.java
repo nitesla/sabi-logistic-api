@@ -51,7 +51,7 @@ public class PartnerUserController {
                                                  @RequestParam(value = "page") int page,
                                                  @RequestParam(value = "pageSize") int pageSize){
         return responseHelper
-                .buildResponse(partnerUserService.findAll(partnerId, PageRequest.of(page, pageSize)),
+                .buildResponse(partnerUserService.findAll(partnerId,userId, PageRequest.of(page, pageSize)),
                         HttpStatus.OK, "Record fetched successfully !");
     }
 
