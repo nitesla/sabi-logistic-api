@@ -98,13 +98,13 @@ public class DeliveryItemController {
      */
     @GetMapping("")
     public ResponseEntity<Response> getDeliveryItems(@RequestParam(value = "deliveryID",required = false)Long deliveryID,
-                                              @RequestParam(value = "deliveryID",required = false) Long tripRequestID,
+                                              @RequestParam(value = "tripRequestID",required = false) Long tripRequestID,
                                               @RequestParam(value = "status",required = false)String status,
                                               @RequestParam(value = "page") int page,
                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<DeliveryItem> response = service.findAll(deliveryID, deliveryID, status, PageRequest.of(page, pageSize));
+        Page<DeliveryItem> response = service.findAll(deliveryID, tripRequestID, status, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
