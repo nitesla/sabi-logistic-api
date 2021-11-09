@@ -99,7 +99,7 @@ public class StateController {
      * </summary>
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
-    @GetMapping("")
+    @GetMapping("/page")
     public ResponseEntity<Response> getStates(@RequestParam(value = "name",required = false)String name,
                                              @RequestParam(value = "page") int page,
                                              @RequestParam(value = "pageSize") int pageSize){

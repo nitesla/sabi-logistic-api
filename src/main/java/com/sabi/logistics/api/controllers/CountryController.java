@@ -94,7 +94,7 @@ public class CountryController {
      * </summary>
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
-    @GetMapping("")
+    @GetMapping("/page")
     public ResponseEntity<Response> getCountries(@RequestParam(value = "name",required = false)String name,
                                               @RequestParam(value = "code",required = false)String code,
                                               @RequestParam(value = "page") int page,
