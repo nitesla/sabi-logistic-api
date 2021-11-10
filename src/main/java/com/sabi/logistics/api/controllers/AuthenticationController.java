@@ -117,7 +117,7 @@ public class AuthenticationController {
         String referralCode="";
         String isEmailVerified="";
         String partnerCategory = "";
-        if (user.getUserCategory().equals(Constants.AGENT_USER)) {
+        if (user.getUserCategory().equals(Constants.OTHER_USER)) {
             Partner partner = partnerRepository.findByUserId(user.getId());
             if(partner !=null){
                 log.info(":::: partner details ::::" +partner);
