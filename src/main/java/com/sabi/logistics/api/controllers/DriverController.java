@@ -76,11 +76,12 @@ public class DriverController {
 
     @GetMapping("")
     public ResponseEntity<Response> getDrivers(@RequestParam(value = "name",required = false)String name,
-                                                 @RequestParam(value = "page") int page,
-                                                 @RequestParam(value = "pageSize") int pageSize){
+                                               @RequestParam(value = "partnerId",required = false)Long partnerId,
+                                               @RequestParam(value = "page") int page,
+                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Driver> response = service.findAll(name, PageRequest.of(page, pageSize));
+        Page<Driver> response = service.findAll(name, partnerId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -103,10 +104,11 @@ public class DriverController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
+    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive,
+                                           @RequestParam(value = "partnerId")Long partnerId){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<Driver> response = service.getAll(isActive);
+        List<Driver> response = service.getAll(partnerId, isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

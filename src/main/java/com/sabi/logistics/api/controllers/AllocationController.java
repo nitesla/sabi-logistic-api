@@ -74,12 +74,15 @@ public class AllocationController {
 
     @GetMapping("")
     public ResponseEntity<Response> getAllocation(@RequestParam(value = "name",required = false)String name,
-//                                                  @RequestParam(value = "startDate",required = false)LocalDateTime startDate,
+                                                  @RequestParam(value = "wareHouseId",required = false)Long wareHouseId,
+                                                  @RequestParam(value = "blockTypeId",required = false)Long blockTypeId,
+                                                  @RequestParam(value = "status",required = false)String status,
+                                                  @RequestParam(value = "clientId",required = false)Long clientId,
                                                   @RequestParam(value = "page") int page,
                                                   @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Allocations> response = service.findAll(name, PageRequest.of(page, pageSize));
+        Page<Allocations> response = service.findAll(name,wareHouseId,blockTypeId,status,clientId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

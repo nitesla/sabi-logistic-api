@@ -42,6 +42,18 @@ public class PartnerAssetPictureController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+    @PostMapping("bulk")
+    public ResponseEntity<Response> createAssetPictures(@Validated @RequestBody List<PartnerAssetPictureDto> request){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        List<PartnerAssetPictureResponseDto> response = service.createPartnerPictures(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Successful");
+        resp.setData(response);
+        httpCode = HttpStatus.CREATED;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
 
     @PutMapping("")
     public ResponseEntity<Response> updateAssetPicture(@Validated @RequestBody PartnerAssetPictureDto request){
