@@ -72,11 +72,12 @@ public class ClientController {
 
     @GetMapping("")
     public ResponseEntity<Response> getClients(@RequestParam(value = "id",required = false)Long id,
+                                               @RequestParam(value = "userId",required = false)Long userId,
                                                          @RequestParam(value = "page") int page,
                                                          @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Client> response = service.findAll(id, PageRequest.of(page, pageSize));
+        Page<Client> response = service.findAll(id,userId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

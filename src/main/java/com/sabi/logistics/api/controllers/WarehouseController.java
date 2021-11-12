@@ -47,10 +47,13 @@ public class WarehouseController {
 
     @GetMapping
     public ResponseEntity<Response> getAllWarehouses(@RequestParam(value = "owner",required = false)String owner,
+                                                 @RequestParam(value = "name", required = false) String name,
+                                                 @RequestParam(value = "partnerId", required = false) Long partnerId,
+                                                 @RequestParam(value = "lagId", required = false) Long lgaId,
                                                  @RequestParam(value = "page") int page,
                                                  @RequestParam(value = "pageSize") int pageSize){
         return responseHelper
-                .buildResponse(warehouseService.findAll(owner, PageRequest.of(page, pageSize)),
+                .buildResponse(warehouseService.findAll(owner, name, partnerId, lgaId, PageRequest.of(page, pageSize)),
                         HttpStatus.OK, "Record fetched successfully !");
     }
 
