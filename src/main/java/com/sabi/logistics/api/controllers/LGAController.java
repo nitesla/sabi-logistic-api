@@ -94,7 +94,7 @@ public class LGAController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("/page")
-    public ResponseEntity<Response> getLgas(@RequestParam(value = "name")String name,
+    public ResponseEntity<Response> getLgas(@RequestParam(value = "name",required = false)String name,
                                             @RequestParam(value = "stateId",required = false)Long stateId,
                                               @RequestParam(value = "page") int page,
                                               @RequestParam(value = "pageSize") int pageSize){
@@ -129,7 +129,7 @@ public class LGAController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive,
+    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive",required = false)Boolean isActive,
                                            @RequestParam(value = "stateId",required = false)Long stateId){
         HttpStatus httpCode ;
         Response resp = new Response();
