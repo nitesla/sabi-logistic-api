@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @SuppressWarnings("ALL")
 @RestController
@@ -67,6 +69,17 @@ public class PartnerUserController {
 
 
 
+    @GetMapping("/list")
+    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive",required = false)Boolean isActive){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        List<User> response = partnerUserService.getAll(isActive);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
 
 
 }
