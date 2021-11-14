@@ -82,7 +82,7 @@ public class AllocationController {
                                                   @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Allocations> response = service.findAll(name,wareHouseId,blockTypeId,status,clientId,PageRequest.of(page, pageSize));
+        Page<Allocations> response = service.findAll(name,wareHouseId,blockTypeId,status,clientId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

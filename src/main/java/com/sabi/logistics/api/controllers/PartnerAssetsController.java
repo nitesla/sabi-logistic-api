@@ -55,8 +55,10 @@ public class PartnerAssetsController {
                                                         @RequestParam(value = "partnerAssetTypeId",required = false)Long partnerAssetTypeId,
                                                  @RequestParam(value = "page") int page,
                                                  @RequestParam(value = "pageSize") int pageSize){
+
+//        String name, Long brandId, String status, Long driverId, Long partnerAssetTypeId,
         return responseHelper
-                .buildResponse(partnerAssetService.findAll(name,brandId,status,driverId,partnerAssetTypeId,PageRequest.of(page, pageSize)),
+                .buildResponse(partnerAssetService.findAll(name,brandId,status,driverId,partnerAssetTypeId, PageRequest.of(page, pageSize)),
                         HttpStatus.OK, "Record fetched successfully !");
     }
 
