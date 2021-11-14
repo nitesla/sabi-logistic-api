@@ -71,13 +71,13 @@ public class PartnerLocationController {
 
 
     @GetMapping("")
-    public ResponseEntity<Response> getPartnerCategories(@RequestParam(value = "id",required = false)Long id,
-//                                                         @RequestParam(value = "categoryId") Long categoryId,
+    public ResponseEntity<Response> getPartnerCategories(@RequestParam(value = "partnerId",required = false) Long partnerId,
+                                                         @RequestParam(value = "stateId",required = false) Long stateId,
                                                          @RequestParam(value = "page") int page,
                                                          @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<PartnerLocation> response = service.findAll(id, PageRequest.of(page, pageSize));
+        Page<PartnerLocation> response = service.findAll(partnerId,stateId,PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
