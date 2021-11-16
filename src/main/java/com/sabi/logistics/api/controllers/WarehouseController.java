@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+
+@SuppressWarnings("All")
 @Validated
 @RestController
 @RequestMapping(Constants.APP_CONTENT+"warehouse")
@@ -26,8 +28,8 @@ public class WarehouseController {
 
     private final ResponseHelper responseHelper;
 
-    public WarehouseController(WarehouseService WarehouseService, ResponseHelper responseHelper) {
-        this.warehouseService = WarehouseService;
+    public WarehouseController(WarehouseService warehouseService, ResponseHelper responseHelper) {
+        this.warehouseService = warehouseService;
         this.responseHelper = responseHelper;
     }
 

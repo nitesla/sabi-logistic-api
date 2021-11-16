@@ -7,6 +7,7 @@ import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.PartnerUserRequestDto;
 import com.sabi.logistics.core.dto.response.PartnerUserResponseDto;
+import com.sabi.logistics.core.models.PartnerUser;
 import com.sabi.logistics.service.services.PartnerUserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -55,30 +56,51 @@ public class PartnerUserController {
                                                    @RequestParam(value = "username",required = false)String username,
                                                    @RequestParam(value = "roleId",required = false)Long roleId,
                                                    @RequestParam(value = "lastName",required = false)String lastName,
+                                                   @RequestParam(value = "userType",required = false)String userType,
                                                   @RequestParam(value = "page") int page,
                                                   @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<User> response = partnerUserService.findByClientId(firstName,phone,email,username,roleId,lastName, PageRequest.of(page, pageSize));
-        resp.setCode(CustomResponseCode.SUCCESS);
-        resp.setDescription("Record fetched successfully !");
-        resp.setData(response);
-        httpCode = HttpStatus.OK;
-        return new ResponseEntity<>(resp, httpCode);
+        if(userType !=null ){
+            Page<PartnerUser> response = partnerUserService.findPartnerUsers(userType, PageRequest.of(page, pageSize));
+            resp.setCode(CustomResponseCode.SUCCESS);
+            resp.setDescription("Record fetched successfully !");
+            resp.setData(response);
+            httpCode = HttpStatus.OK;
+            return new ResponseEntity<>(resp, httpCode);
+        }else {
+            Page<User> response = partnerUserService.findByClientId(firstName, phone, email, username, roleId, lastName, PageRequest.of(page, pageSize));
+            resp.setCode(CustomResponseCode.SUCCESS);
+            resp.setDescription("Record fetched successfully !");
+            resp.setData(response);
+            httpCode = HttpStatus.OK;
+            return new ResponseEntity<>(resp, httpCode);
+        }
     }
 
 
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive",required = false)Boolean isActive){
+    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive",required = false)Boolean isActive,
+                                           @RequestParam(value = "userType",required = false)String userType){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<User> response = partnerUserService.getAll(isActive);
-        resp.setCode(CustomResponseCode.SUCCESS);
-        resp.setDescription("Record fetched successfully !");
-        resp.setData(response);
-        httpCode = HttpStatus.OK;
-        return new ResponseEntity<>(resp, httpCode);
+
+        if(userType !=null ){
+            List<PartnerUser> response = partnerUserService.findPartnerUsersList(userType);
+            resp.setCode(CustomResponseCode.SUCCESS);
+            resp.setDescription("Record fetched successfully !");
+            resp.setData(response);
+            httpCode = HttpStatus.OK;
+            return new ResponseEntity<>(resp, httpCode);
+        }else {
+            List<User> response = partnerUserService.getAll(isActive);
+            resp.setCode(CustomResponseCode.SUCCESS);
+            resp.setDescription("Record fetched successfully !");
+            resp.setData(response);
+            httpCode = HttpStatus.OK;
+            return new ResponseEntity<>(resp, httpCode);
+        }
     }
 
 
