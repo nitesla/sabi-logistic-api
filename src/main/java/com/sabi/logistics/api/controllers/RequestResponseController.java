@@ -5,10 +5,10 @@ import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabi.logistics.core.dto.request.DeliveryItemRequestDto;
-import com.sabi.logistics.core.dto.response.DeliveryItemResponseDto;
-import com.sabi.logistics.core.models.DeliveryItem;
-import com.sabi.logistics.service.services.DeliveryItemService;
+import com.sabi.logistics.core.dto.request.RequestResponseRequestDto;
+import com.sabi.logistics.core.dto.response.RequestResponseDto;
+import com.sabi.logistics.core.models.RequestResponse;
+import com.sabi.logistics.service.services.RequestResponseService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -21,28 +21,28 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"deliveryitem")
-public class DeliveryItemController {
+@RequestMapping(Constants.APP_CONTENT+"requestresponse")
+public class RequestResponseController {
 
 
-    private final DeliveryItemService service;
+    private final RequestResponseService service;
 
-    public DeliveryItemController(DeliveryItemService service) {
+    public RequestResponseController(RequestResponseService service) {
         this.service = service;
     }
 
 
     /** <summary>
-     * Delivery Item creation endpoint
+     * RequestResponse creation endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for creation of new Delivery Item</remarks>
+     * <remarks>this endpoint is responsible for creation of new RequestResponses</remarks>
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createDeliveryItem(@Validated @RequestBody DeliveryItemRequestDto request){
+    public ResponseEntity<Response> createRequestResponse(@Validated @RequestBody RequestResponseRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        DeliveryItemResponseDto response = service.createDeliveryItem(request);
+        RequestResponseDto response = service.createRequestResponse(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -53,16 +53,16 @@ public class DeliveryItemController {
 
 
     /** <summary>
-     * Delivery item update endpoint
+     * RequestResponse update endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for updating delivery item</remarks>
+     * <remarks>this endpoint is responsible for updating RequestResponses</remarks>
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateDeliveryItem(@Validated @RequestBody  DeliveryItemRequestDto request){
+    public ResponseEntity<Response> updateRequestResponse(@Validated @RequestBody  RequestResponseRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        DeliveryItemResponseDto response = service.updateDeliveryItem(request);
+        RequestResponseDto response = service.updateRequestResponse(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -78,10 +78,10 @@ public class DeliveryItemController {
      * <remarks>this endpoint is responsible for getting a single record</remarks>
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Response> getDeliveryItem(@PathVariable Long id){
+    public ResponseEntity<Response> getRequestResponse(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        DeliveryItemResponseDto response = service.findDeliveryItem(id);
+        RequestResponseDto response = service.findRequestResponse(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -97,14 +97,14 @@ public class DeliveryItemController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getDeliveryItems(@RequestParam(value = "deliveryID",required = false)Long deliveryID,
-                                              @RequestParam(value = "tripRequestID",required = false) Long tripRequestID,
+    public ResponseEntity<Response> getRequestResponses(@RequestParam(value = "tripRequest",required = false)Long tripRequest,
+                                              @RequestParam(value = "partnerID",required = false) Long partnerID,
                                               @RequestParam(value = "status",required = false)String status,
                                               @RequestParam(value = "page") int page,
                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<DeliveryItem> response = service.findAll(deliveryID, tripRequestID, status, PageRequest.of(page, pageSize));
+        Page<RequestResponse> response = service.findAll(tripRequest, partnerID, status,PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -116,7 +116,7 @@ public class DeliveryItemController {
     /** <summary>
      * Enable disable
      * </summary>
-     * <remarks>this endpoint is responsible for enabling and disabling a Delivery Item</remarks>
+     * <remarks>this endpoint is responsible for enabling and disabling a RequestResponses</remarks>
      */
 
     @PutMapping("/enabledisable")
@@ -135,7 +135,7 @@ public class DeliveryItemController {
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<DeliveryItem> response = service.getAll(isActive);
+        List<RequestResponse> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

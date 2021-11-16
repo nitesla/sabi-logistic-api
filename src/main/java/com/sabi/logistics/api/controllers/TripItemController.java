@@ -5,10 +5,10 @@ import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabi.logistics.core.dto.request.DeliveryRequestDto;
-import com.sabi.logistics.core.dto.response.DeliveryResponseDto;
-import com.sabi.logistics.core.models.Delivery;
-import com.sabi.logistics.service.services.DeliveryService;
+import com.sabi.logistics.core.dto.request.TripItemRequestDto;
+import com.sabi.logistics.core.dto.response.TripItemResponseDto;
+import com.sabi.logistics.core.models.TripItem;
+import com.sabi.logistics.service.services.TripItemService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -21,28 +21,28 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"delivery")
-public class DeliveryController {
+@RequestMapping(Constants.APP_CONTENT+"tripitem")
+public class TripItemController {
 
 
-    private final DeliveryService service;
+    private final TripItemService service;
 
-    public DeliveryController(DeliveryService service) {
+    public TripItemController(TripItemService service) {
         this.service = service;
     }
 
 
     /** <summary>
-     * Delivery creation endpoint
+     * Trip Item creation endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for creation of new Deliverys</remarks>
+     * <remarks>this endpoint is responsible for creation of new Trip Item</remarks>
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createDelivery(@Validated @RequestBody DeliveryRequestDto request){
+    public ResponseEntity<Response> createTripItem(@Validated @RequestBody TripItemRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        DeliveryResponseDto response = service.createDelivery(request);
+        TripItemResponseDto response = service.createTripItem(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -53,16 +53,16 @@ public class DeliveryController {
 
 
     /** <summary>
-     * Delivery update endpoint
+     * Trip item update endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for updating deliveries</remarks>
+     * <remarks>this endpoint is responsible for updating Trip item</remarks>
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateDelivery(@Validated @RequestBody  DeliveryRequestDto request){
+    public ResponseEntity<Response> updateTripItem(@Validated @RequestBody  TripItemRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        DeliveryResponseDto response = service.updateDelivery(request);
+        TripItemResponseDto response = service.updateTripItem(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -78,10 +78,10 @@ public class DeliveryController {
      * <remarks>this endpoint is responsible for getting a single record</remarks>
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Response> getDelivery(@PathVariable Long id){
+    public ResponseEntity<Response> getTripItem(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        DeliveryResponseDto response = service.findDelivery(id);
+        TripItemResponseDto response = service.findTripItem(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -97,16 +97,14 @@ public class DeliveryController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getDeliverys(@RequestParam(value = "partnerAssetID",required = false)Long partnerAssetID,
-                                              @RequestParam(value = "orderItemID",required = false) Long orderItemID,
+    public ResponseEntity<Response> getTripItems(@RequestParam(value = "orderItemID",required = false)Long orderItemID,
+                                              @RequestParam(value = "tripRequest",required = false) Long tripRequest,
                                               @RequestParam(value = "status",required = false)String status,
-                                              @RequestParam(value = "driverID",required = false) Long driverID,
-                                              @RequestParam(value = "driverAssistantID",required = false)Long driverAssistantID,
                                               @RequestParam(value = "page") int page,
                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Delivery> response = service.findAll(partnerAssetID, orderItemID, status, driverID, driverAssistantID, PageRequest.of(page, pageSize));
+        Page<TripItem> response = service.findAll(orderItemID, tripRequest, status, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -118,7 +116,7 @@ public class DeliveryController {
     /** <summary>
      * Enable disable
      * </summary>
-     * <remarks>this endpoint is responsible for enabling and disabling a Deliveries</remarks>
+     * <remarks>this endpoint is responsible for enabling and disabling a Trip Item</remarks>
      */
 
     @PutMapping("/enabledisable")
@@ -137,7 +135,7 @@ public class DeliveryController {
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<Delivery> response = service.getAll(isActive);
+        List<TripItem> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
