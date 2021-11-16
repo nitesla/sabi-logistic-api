@@ -79,7 +79,7 @@ public class PartnerLocationController {
                                                          @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<PartnerLocation> response = service.findAll(id,partnerId,stateId, PageRequest.of(page, pageSize));
+        Page<PartnerLocation> response = service.findAll(partnerId,stateId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
