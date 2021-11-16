@@ -77,7 +77,7 @@ public class ClientController {
                                                          @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Client> response = service.findAll(id,userId, PageRequest.of(page, pageSize));
+        Page<Client> response = service.findAll(userId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
