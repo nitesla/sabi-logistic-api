@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping(Constants.APP_CONTENT+"RolePermission")
@@ -96,6 +98,19 @@ public class RolePermissionController {
         HttpStatus httpCode ;
         Response resp = new Response();
         Page<RolePermission> response = service.findAll(roleId,isActive, PageRequest.of(page, pageSize));
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<Response> getAll(@RequestParam(value = "roleId",required = false)Long roleId,
+                                           @RequestParam(value = "isActive")Boolean isActive){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        List<RolePermission> response = service.getAll(roleId, isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

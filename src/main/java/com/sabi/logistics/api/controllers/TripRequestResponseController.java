@@ -5,10 +5,10 @@ import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabi.logistics.core.dto.request.RequestResponseRequestDto;
-import com.sabi.logistics.core.dto.response.RequestResponseDto;
-import com.sabi.logistics.core.models.RequestResponse;
-import com.sabi.logistics.service.services.RequestResponseService;
+import com.sabi.logistics.core.dto.request.TripRequestResponseReqDto;
+import com.sabi.logistics.core.dto.response.TripRequestResponseDto;
+import com.sabi.logistics.core.models.TripRequestResponse;
+import com.sabi.logistics.service.services.TripRequestResponseService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -21,28 +21,28 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"requestresponse")
-public class RequestResponseController {
+@RequestMapping(Constants.APP_CONTENT+"triprequestresponse")
+public class TripRequestResponseController {
 
 
-    private final RequestResponseService service;
+    private final TripRequestResponseService service;
 
-    public RequestResponseController(RequestResponseService service) {
+    public TripRequestResponseController(TripRequestResponseService service) {
         this.service = service;
     }
 
 
     /** <summary>
-     * RequestResponse creation endpoint
+     * TripRequestResponse creation endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for creation of new RequestResponses</remarks>
+     * <remarks>this endpoint is responsible for creation of new TripRequestResponses</remarks>
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createRequestResponse(@Validated @RequestBody RequestResponseRequestDto request){
+    public ResponseEntity<Response> createTripRequestResponse(@Validated @RequestBody TripRequestResponseReqDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        RequestResponseDto response = service.createRequestResponse(request);
+        TripRequestResponseDto response = service.createTripRequestResponse(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -53,16 +53,16 @@ public class RequestResponseController {
 
 
     /** <summary>
-     * RequestResponse update endpoint
+     * TripRequestResponse update endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for updating RequestResponses</remarks>
+     * <remarks>this endpoint is responsible for updating TripRequestResponses</remarks>
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateRequestResponse(@Validated @RequestBody  RequestResponseRequestDto request){
+    public ResponseEntity<Response> updateTripRequestResponse(@Validated @RequestBody  TripRequestResponseReqDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        RequestResponseDto response = service.updateRequestResponse(request);
+        TripRequestResponseDto response = service.updateTripRequestResponse(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -78,10 +78,10 @@ public class RequestResponseController {
      * <remarks>this endpoint is responsible for getting a single record</remarks>
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Response> getRequestResponse(@PathVariable Long id){
+    public ResponseEntity<Response> getTripRequestResponse(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        RequestResponseDto response = service.findRequestResponse(id);
+        TripRequestResponseDto response = service.findTripRequestResponse(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -97,14 +97,14 @@ public class RequestResponseController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getRequestResponses(@RequestParam(value = "tripRequest",required = false)Long tripRequest,
+    public ResponseEntity<Response> getTripRequestResponses(@RequestParam(value = "tripRequest",required = false)Long tripRequest,
                                               @RequestParam(value = "partnerID",required = false) Long partnerID,
                                               @RequestParam(value = "status",required = false)String status,
                                               @RequestParam(value = "page") int page,
                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<RequestResponse> response = service.findAll(tripRequest, partnerID, status,PageRequest.of(page, pageSize));
+        Page<TripRequestResponse> response = service.findAll(tripRequest, partnerID, status,PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -116,7 +116,7 @@ public class RequestResponseController {
     /** <summary>
      * Enable disable
      * </summary>
-     * <remarks>this endpoint is responsible for enabling and disabling a RequestResponses</remarks>
+     * <remarks>this endpoint is responsible for enabling and disabling a TripRequestResponses</remarks>
      */
 
     @PutMapping("/enabledisable")
@@ -135,7 +135,7 @@ public class RequestResponseController {
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<RequestResponse> response = service.getAll(isActive);
+        List<TripRequestResponse> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
