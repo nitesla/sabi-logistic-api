@@ -5,6 +5,7 @@ import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.models.User;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
+import com.sabi.logistics.core.dto.request.PartnerUserActivation;
 import com.sabi.logistics.core.dto.request.PartnerUserRequestDto;
 import com.sabi.logistics.core.dto.response.PartnerUserResponseDto;
 import com.sabi.logistics.core.models.PartnerUser;
@@ -43,6 +44,19 @@ public class PartnerUserController {
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
+        httpCode = HttpStatus.CREATED;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+
+
+    @PostMapping("/activatePartnerUser")
+    public ResponseEntity<Response> activatePartnerUser(@Validated @RequestBody PartnerUserActivation request){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        partnerUserService.activatePartnerUser(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Successful");
         httpCode = HttpStatus.CREATED;
         return new ResponseEntity<>(resp, httpCode);
     }

@@ -33,8 +33,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -113,26 +111,21 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(authWithToken);
         userService.updateLogin(user.getId());
 
-        String agentId= "";
+       String clientId= "";
         String referralCode="";
         String isEmailVerified="";
         String partnerCategory = "";
         if (user.getUserCategory().equals(Constants.OTHER_USER)) {
             Partner partner = partnerRepository.findByUserId(user.getId());
             if(partner !=null){
-                log.info(":::: partner details ::::" +partner);
+                clientId = String.valueOf(partner.getId());
                 List<PartnerCategories> partnerCategories = partnerCategoriesRepository.findAllByPartnerId(partner.getId());
-
-
-                List<PartnerCategories> langList = new ArrayList(Arrays.asList(partnerCategories));
-                log.info("::::  details ::::" +langList);
-                partnerCategory = String.valueOf(langList);
+                System.out.println("::::::::::: Partner category :::::: "+partnerCategories);
 
             }
         }
-
         AccessTokenWithUserDetails details = new AccessTokenWithUserDetails(newToken, user,
-                accessList,userService.getSessionExpiry(),agentId,referralCode,isEmailVerified, partnerCategory);
+                accessList,userService.getSessionExpiry(),referralCode,isEmailVerified, partnerCategory,clientId);
         return new ResponseEntity<>(details, HttpStatus.OK);
     }
 
