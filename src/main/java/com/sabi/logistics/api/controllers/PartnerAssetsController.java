@@ -52,13 +52,13 @@ public class PartnerAssetsController {
                                                         @RequestParam(value = "brandId",required = false)Long brandId,
                                                         @RequestParam(value = "status",required = false)String status,
                                                         @RequestParam(value = "driverId",required = false)Long driverId,
+                                                        @RequestParam(value = "partnerId",required = false)Long partnerId,
                                                         @RequestParam(value = "partnerAssetTypeId",required = false)Long partnerAssetTypeId,
                                                  @RequestParam(value = "page") int page,
                                                  @RequestParam(value = "pageSize") int pageSize){
 
-//        String name, Long brandId, String status, Long driverId, Long partnerAssetTypeId,
         return responseHelper
-                .buildResponse(partnerAssetService.findAll(name,brandId,status,driverId,partnerAssetTypeId, PageRequest.of(page, pageSize)),
+                .buildResponse(partnerAssetService.findAll(name,brandId,status,driverId,partnerId,partnerAssetTypeId, PageRequest.of(page, pageSize)),
                         HttpStatus.OK, "Record fetched successfully !");
     }
 
@@ -69,7 +69,8 @@ public class PartnerAssetsController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
-        return responseHelper.buildResponse(partnerAssetService.getAll(isActive), HttpStatus.OK, "Record fetched successfully !");
+    public ResponseEntity<Response> getAll(@RequestParam(value = "partnerId",required = false)Long partnerId,
+                                           @RequestParam(value = "isActive",required = false)Boolean isActive){
+        return responseHelper.buildResponse(partnerAssetService.getAll(partnerId,isActive), HttpStatus.OK, "Record fetched successfully !");
     }
 }
