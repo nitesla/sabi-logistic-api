@@ -101,11 +101,12 @@ public class StateController {
      */
     @GetMapping("/page")
     public ResponseEntity<Response> getStates(@RequestParam(value = "name",required = false)String name,
+                                              @RequestParam(value = "countryId",required = false)Long countryId,
                                              @RequestParam(value = "page") int page,
                                              @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<State> response = service.findAll(name,PageRequest.of(page, pageSize));
+        Page<State> response = service.findAll(name,countryId,PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -133,10 +134,10 @@ public class StateController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive",required = false)Boolean isActive){
+    public ResponseEntity<Response> getAll(@RequestParam(value = "countryId",required = false)Long countryId){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<State> response = service.getAll(isActive);
+        List<State> response = service.getAll(countryId);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

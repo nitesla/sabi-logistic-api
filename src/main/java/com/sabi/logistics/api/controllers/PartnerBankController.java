@@ -1,14 +1,13 @@
 package com.sabi.logistics.api.controllers;
 
-
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabi.logistics.core.dto.request.LGADto;
-import com.sabi.logistics.core.dto.response.LGAResponseDto;
-import com.sabi.logistics.core.models.LGA;
-import com.sabi.logistics.service.services.LGAService;
+import com.sabi.logistics.core.dto.request.PartnerBankDto;
+import com.sabi.logistics.core.dto.response.PartnerBankResponseDto;
+import com.sabi.logistics.core.models.PartnerBank;
+import com.sabi.logistics.service.services.PartnerBankService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -20,27 +19,28 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"lga")
-public class LGAController {
+@RequestMapping(Constants.APP_CONTENT +"partnerbank")
+public class PartnerBankController {
 
 
-    private final LGAService service;
+    private final PartnerBankService service;
 
-    public LGAController(LGAService service) {
+    public PartnerBankController(PartnerBankService service) {
         this.service = service;
     }
 
+
     /** <summary>
-     * LGA creation endpoint
+     * PartnerBank creation endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for creation of new lga</remarks>
+     * <remarks>this endpoint is responsible for creation of new partnerBank</remarks>
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createLga(@Validated @RequestBody LGADto request){
+    public ResponseEntity<Response> createPartnerBank(@Validated @RequestBody PartnerBankDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        LGAResponseDto response = service.createLga(request);
+        PartnerBankResponseDto response = service.createPartnerBank(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -49,18 +49,17 @@ public class LGAController {
     }
 
 
-
     /** <summary>
-     * LGA update endpoint
+     * PartnerBank update endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for updating lga</remarks>
+     * <remarks>this endpoint is responsible for updating partnerBank</remarks>
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateLga(@Validated @RequestBody  LGADto request){
+    public ResponseEntity<Response> updatePartnerBank(@Validated @RequestBody  PartnerBankDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        LGAResponseDto response = service.updateLga(request);
+        PartnerBankResponseDto response = service.updatePartnerBank(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -75,10 +74,10 @@ public class LGAController {
      * <remarks>this endpoint is responsible for getting a single record</remarks>
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Response> getLga(@PathVariable Long id){
+    public ResponseEntity<Response> getPartnerBank(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        LGAResponseDto response = service.findLga(id);
+        PartnerBankResponseDto response = service.findPartnerBank(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -87,20 +86,20 @@ public class LGAController {
     }
 
 
-
     /** <summary>
      * Get all records endpoint
      * </summary>
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
-    @GetMapping("/page")
-    public ResponseEntity<Response> getLgas(@RequestParam(value = "name",required = false)String name,
-                                            @RequestParam(value = "stateId",required = false)Long stateId,
-                                              @RequestParam(value = "page") int page,
-                                              @RequestParam(value = "pageSize") int pageSize){
+    @GetMapping("")
+    public ResponseEntity<Response> getPartnerBanks(@RequestParam(value = "partnerId",required = false)Long partnerId,
+                                                    @RequestParam(value = "bankId",required = false)Long bankId,
+                                                    @RequestParam(value = "accountNumber",required = false)String accountNumber,
+                                                    @RequestParam(value = "page") int page,
+                                                    @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<LGA> response = service.findAll(name,stateId, PageRequest.of(page, pageSize));
+        Page<PartnerBank> response = service.findAll(partnerId, bankId, accountNumber, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -113,14 +112,14 @@ public class LGAController {
     /** <summary>
      * Enable disenable
      * </summary>
-     * <remarks>this endpoint is responsible for enabling and disenabling a State</remarks>
+     * <remarks>this endpoint is responsible for enabling and disenabling a partnerBank</remarks>
      */
 
-    @PutMapping("/enabledisenable")
-    public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request){
+    @PutMapping("/enabledisable")
+    public ResponseEntity<Response> enableDisable(@Validated @RequestBody EnableDisEnableDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.enableDisEnableState(request);
+        service.enableDisable(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;
@@ -128,16 +127,16 @@ public class LGAController {
     }
 
 
+
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "stateId",required = false)Long stateId){
+    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<LGA> response = service.getAll(stateId);
+        List<PartnerBank> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
-
 }

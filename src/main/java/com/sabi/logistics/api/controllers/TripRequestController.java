@@ -98,12 +98,17 @@ public class TripRequestController {
      */
     @GetMapping("")
     public ResponseEntity<Response> getTripRequests(@RequestParam(value = "partnerID",required = false)Long partnerID,
-                                              @RequestParam(value = "status",required = false)String status,
-                                              @RequestParam(value = "page") int page,
-                                              @RequestParam(value = "pageSize") int pageSize){
+                                                    @RequestParam(value = "status",required = false)String status,
+                                                    @RequestParam(value = "referenceNo",required = false)String referenceNo,
+                                                    @RequestParam(value = "driverID",required = false)Long driverID,
+                                                    @RequestParam(value = "wareHouseId",required = false)Long wareHouseId,
+                                                    @RequestParam(value = "wareHouseAddress",required = false)String wareHouseAddress,
+                                                    @RequestParam(value = "partnerAssetID",required = false)Long partnerAssetID,
+                                                    @RequestParam(value = "page") int page,
+                                                    @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<TripRequest> response = service.findAll(partnerID, status, PageRequest.of(page, pageSize));
+        Page<TripRequest> response = service.findAll(partnerID, status, referenceNo, driverID, wareHouseId, wareHouseAddress, partnerAssetID, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

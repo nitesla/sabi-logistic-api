@@ -5,10 +5,10 @@ import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabi.logistics.core.dto.request.LGADto;
-import com.sabi.logistics.core.dto.response.LGAResponseDto;
-import com.sabi.logistics.core.models.LGA;
-import com.sabi.logistics.service.services.LGAService;
+import com.sabi.logistics.core.dto.request.ProductRequestDto;
+import com.sabi.logistics.core.dto.response.ProductResponseDto;
+import com.sabi.logistics.core.models.Product;
+import com.sabi.logistics.service.services.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -20,27 +20,27 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"lga")
-public class LGAController {
+@RequestMapping(Constants.APP_CONTENT+"product")
+public class ProductController {
 
 
-    private final LGAService service;
+    private final ProductService service;
 
-    public LGAController(LGAService service) {
+    public ProductController(ProductService service) {
         this.service = service;
     }
 
     /** <summary>
-     * LGA creation endpoint
+     * Product creation endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for creation of new lga</remarks>
+     * <remarks>this endpoint is responsible for creation of new product</remarks>
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createLga(@Validated @RequestBody LGADto request){
+    public ResponseEntity<Response> createProduct(@Validated @RequestBody ProductRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        LGAResponseDto response = service.createLga(request);
+        ProductResponseDto response = service.createProduct(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -51,16 +51,16 @@ public class LGAController {
 
 
     /** <summary>
-     * LGA update endpoint
+     * Product update endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for updating lga</remarks>
+     * <remarks>this endpoint is responsible for updating product</remarks>
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateLga(@Validated @RequestBody  LGADto request){
+    public ResponseEntity<Response> updateProduct(@Validated @RequestBody  ProductRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        LGAResponseDto response = service.updateLga(request);
+        ProductResponseDto response = service.updateProduct(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -75,10 +75,10 @@ public class LGAController {
      * <remarks>this endpoint is responsible for getting a single record</remarks>
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Response> getLga(@PathVariable Long id){
+    public ResponseEntity<Response> getProduct(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        LGAResponseDto response = service.findLga(id);
+        ProductResponseDto response = service.findProduct(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -94,13 +94,15 @@ public class LGAController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("/page")
-    public ResponseEntity<Response> getLgas(@RequestParam(value = "name",required = false)String name,
-                                            @RequestParam(value = "stateId",required = false)Long stateId,
-                                              @RequestParam(value = "page") int page,
-                                              @RequestParam(value = "pageSize") int pageSize){
+    public ResponseEntity<Response> getProducts(@RequestParam(value = "thirdPartyId",required = false)Long thirdPartyId,
+                                                @RequestParam(value = "name",required = false)String name,
+                                                @RequestParam(value = "totalStock",required = false)Double totalStock,
+                                                @RequestParam(value = "stockSold",required = false)Double stockSold,
+                                                @RequestParam(value = "page") int page,
+                                                @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<LGA> response = service.findAll(name,stateId, PageRequest.of(page, pageSize));
+        Page<Product> response = service.findAll(thirdPartyId,name,totalStock,stockSold, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -120,7 +122,7 @@ public class LGAController {
     public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.enableDisEnableState(request);
+        service.enableDisable(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;
@@ -129,10 +131,11 @@ public class LGAController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "stateId",required = false)Long stateId){
+    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive",required = false)Boolean isActive,
+                                           @RequestParam(value = "thirdPartyId",required = false)Long thirdPartyId){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<LGA> response = service.getAll(stateId);
+        List<Product> response = service.getAll(thirdPartyId, isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
