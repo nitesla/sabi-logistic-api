@@ -50,10 +50,11 @@ public class PartnerAssetTypeController {
 
     @GetMapping
     public ResponseEntity<Response> getAllPartnerAssetTypes(@RequestParam(value = "partnerId",required = false)Long partnerId,
+                                                            @RequestParam(value = "assetTypeId",required = false)Long assetTypeId,
                                                         @RequestParam(value = "page") int page,
                                                         @RequestParam(value = "pageSize") int pageSize){
         return responseHelper
-                .buildResponse(partnerAssetTypeService.findAll(partnerId, PageRequest.of(page, pageSize)),
+                .buildResponse(partnerAssetTypeService.findAll(partnerId, assetTypeId, PageRequest.of(page, pageSize)),
                         HttpStatus.OK, "Record fetched successfully !");
     }
 
