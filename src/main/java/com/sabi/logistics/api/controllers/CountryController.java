@@ -129,10 +129,11 @@ public class CountryController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive",required = false)Boolean isActive){
+    public ResponseEntity<Response> getAll(@RequestParam(value = "name",required = false)String name,
+                                           @RequestParam(value = "code",required = false)String code){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<Country> response = service.getAll(isActive);
+        List<Country> response = service.getAll(name,code);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
