@@ -54,11 +54,12 @@ public class PartnerAssetsController {
                                                         @RequestParam(value = "driverId",required = false)Long driverId,
                                                         @RequestParam(value = "partnerId",required = false)Long partnerId,
                                                         @RequestParam(value = "partnerAssetTypeId",required = false)Long partnerAssetTypeId,
+                                                        @RequestParam(value = "isActive",required = false)Boolean isActive,
                                                  @RequestParam(value = "page") int page,
                                                  @RequestParam(value = "pageSize") int pageSize){
 
         return responseHelper
-                .buildResponse(partnerAssetService.findAll(name,brandId,status,driverId,partnerId,partnerAssetTypeId, PageRequest.of(page, pageSize)),
+                .buildResponse(partnerAssetService.findAll(name,brandId,status,driverId,partnerId,partnerAssetTypeId, isActive, PageRequest.of(page, pageSize)),
                         HttpStatus.OK, "Record fetched successfully !");
     }
 

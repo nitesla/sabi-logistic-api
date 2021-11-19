@@ -125,7 +125,7 @@ public class AuthenticationController {
             }
         }
         AccessTokenWithUserDetails details = new AccessTokenWithUserDetails(newToken, user,
-                accessList,userService.getSessionExpiry(),referralCode,isEmailVerified, partnerCategory,clientId);
+                accessList,userService.getSessionExpiry(),clientId,referralCode,isEmailVerified, partnerCategory);
         return new ResponseEntity<>(details, HttpStatus.OK);
     }
 
