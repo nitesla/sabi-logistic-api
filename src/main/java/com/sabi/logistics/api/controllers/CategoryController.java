@@ -21,7 +21,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"category")
+@RequestMapping(Constants.APP_CONTENT+"partnercategory")
 public class CategoryController {
 
     private final CategoryService service;
