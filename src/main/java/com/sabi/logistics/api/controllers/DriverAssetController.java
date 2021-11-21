@@ -70,15 +70,14 @@ public class DriverAssetController {
 
 
     @GetMapping("")
-    public ResponseEntity<Response> getDriversAssets(@RequestParam(value = "name",required = false)String name,
+    public ResponseEntity<Response> getDriversAssets(
                                                      @RequestParam(value = "driverId",required = false)Long driverId,
-                                                     @RequestParam(value = "partnerId",required = false)Long partnerId,
-                                                     @RequestParam(value = "partnerAssetTypeId",required = false)Long partnerAssetTypeId,
+                                                     @RequestParam(value = "partnerAssetId",required = false)Long partnerAssetId,
                                                @RequestParam(value = "page") int page,
                                                @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<DriverAsset> response = service.findAll(name,driverId,partnerId,partnerAssetTypeId, PageRequest.of(page, pageSize));
+        Page<DriverAsset> response = service.findAll(driverId,partnerAssetId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
