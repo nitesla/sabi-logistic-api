@@ -113,12 +113,12 @@ public class ProductController {
 
 
     /** <summary>
-     * Enable disenable
+     * Enable disable
      * </summary>
-     * <remarks>this endpoint is responsible for enabling and disenabling a State</remarks>
+     * <remarks>this endpoint is responsible for enabling and disabling a Product</remarks>
      */
 
-    @PutMapping("/enabledisenable")
+    @PutMapping("/enabledisable")
     public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
