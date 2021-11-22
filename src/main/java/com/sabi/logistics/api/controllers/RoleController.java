@@ -1,6 +1,7 @@
 package com.sabi.logistics.api.controllers;
 
 
+import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.requestDto.RoleDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.dto.responseDto.RoleResponseDto;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@SuppressWarnings("All")
 @RestController
 @RequestMapping(Constants.APP_CONTENT+"role")
 public class RoleController {
@@ -116,6 +118,23 @@ public class RoleController {
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    /** <summary>
+     * Enable disable
+     * </summary>
+     * <remarks>this endpoint is responsible for enabling and disabling a Product</remarks>
+     */
+
+    @PutMapping("/enabledisable")
+    public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        service.enableDisEnable(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Successful");
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
