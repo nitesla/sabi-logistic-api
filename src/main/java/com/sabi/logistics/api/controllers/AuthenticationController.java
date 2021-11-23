@@ -17,9 +17,9 @@ import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.framework.utils.Utility;
 import com.sabi.logistics.core.models.Partner;
-import com.sabi.logistics.core.models.PartnerCategories;
 import com.sabi.logistics.service.repositories.PartnerCategoriesRepository;
 import com.sabi.logistics.service.repositories.PartnerRepository;
+import com.sabi.logistics.service.services.PartnerCategoriesService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,13 +52,15 @@ public class AuthenticationController {
     @Autowired
     private ExternalTokenService externalTokenService;
 
+    private final PartnerCategoriesService partnerCategoriesService;
     private final UserService userService;
     private final PartnerRepository partnerRepository;
     private final PartnerCategoriesRepository partnerCategoriesRepository;
 
 
-    public AuthenticationController(UserService userService,PartnerRepository partnerRepository,
+    public AuthenticationController(PartnerCategoriesService partnerCategoriesService,UserService userService,PartnerRepository partnerRepository,
                                     PartnerCategoriesRepository partnerCategoriesRepository) {
+        this.partnerCategoriesService = partnerCategoriesService;
         this.userService = userService;
         this.partnerRepository = partnerRepository;
         this.partnerCategoriesRepository = partnerCategoriesRepository;
@@ -114,18 +116,17 @@ public class AuthenticationController {
        String clientId= "";
         String referralCode="";
         String isEmailVerified="";
-        String partnerCategory = "";
+        List<com.sabi.framework.dto.responseDto.PartnersCategoryReturn> partnerCategory= null;
         if (user.getUserCategory().equals(Constants.OTHER_USER)) {
             Partner partner = partnerRepository.findByUserId(user.getId());
             if(partner !=null){
                 clientId = String.valueOf(partner.getId());
-                List<PartnerCategories> partnerCategories = partnerCategoriesRepository.findAllByPartnerId(partner.getId());
-                System.out.println("::::::::::: Partner category :::::: "+partnerCategories);
+                partnerCategory = partnerCategoriesService.partnerCategoryReturn(partner.getId());
 
             }
         }
         AccessTokenWithUserDetails details = new AccessTokenWithUserDetails(newToken, user,
-                accessList,userService.getSessionExpiry(),referralCode,isEmailVerified, partnerCategory,clientId);
+                accessList,userService.getSessionExpiry(),clientId,referralCode,isEmailVerified,partnerCategory);
         return new ResponseEntity<>(details, HttpStatus.OK);
     }
 
