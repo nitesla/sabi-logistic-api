@@ -19,7 +19,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"paymentitems")
+@RequestMapping(Constants.APP_CONTENT +"paymentterms")
 public class PaymentTermsController {
 
 
