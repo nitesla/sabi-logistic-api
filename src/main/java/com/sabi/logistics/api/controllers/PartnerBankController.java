@@ -129,10 +129,11 @@ public class PartnerBankController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
+    public ResponseEntity<Response> getAll(@RequestParam(value = "partnerId",required = false)Long partnerId,
+                                           @RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<PartnerBank> response = service.getAll(isActive);
+        List<PartnerBank> response = service.getAll(partnerId, isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

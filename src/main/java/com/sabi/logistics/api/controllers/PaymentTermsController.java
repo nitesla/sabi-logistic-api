@@ -19,7 +19,7 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT +"paymentitems")
+@RequestMapping(Constants.APP_CONTENT +"paymentterms")
 public class PaymentTermsController {
 
 
@@ -94,11 +94,12 @@ public class PaymentTermsController {
     @GetMapping("")
     public ResponseEntity<Response> getPaymentTerms(@RequestParam(value = "partnerAssetTypeId",required = false)Long partnerAssetTypeId,
                                                     @RequestParam(value = "days",required = false)Integer days,
+                                                    @RequestParam(value = "partnerId",required = false)Long partnerId,
                                                     @RequestParam(value = "page") int page,
                                                     @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<PaymentTerms> response = service.findAll(partnerAssetTypeId, days, PageRequest.of(page, pageSize));
+        Page<PaymentTerms> response = service.findAll(partnerAssetTypeId, days, partnerId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -128,10 +129,11 @@ public class PaymentTermsController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
+    public ResponseEntity<Response> getAll(@RequestParam(value = "partnerId",required = false)Long partnerId,
+                                           @RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<PaymentTerms> response = service.getAll(isActive);
+        List<PaymentTerms> response = service.getAll(partnerId, isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
