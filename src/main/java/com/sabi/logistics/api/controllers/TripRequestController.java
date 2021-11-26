@@ -147,5 +147,26 @@ public class TripRequestController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+    /** <summary>
+     * Get all accepted trip request records endpoint
+     * </summary>
+     * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
+     */
+    @GetMapping("/delivery")
+    public ResponseEntity<Response> getDeliveries(@RequestParam(value = "partnerID",required = false)Long partnerID,
+                                                    @RequestParam(value = "deliveryStatus",required = false)String deliveryStatus,
+                                                    @RequestParam(value = "partnerAssetID",required = false)Long partnerAssetID,
+                                                    @RequestParam(value = "page") int page,
+                                                    @RequestParam(value = "pageSize") int pageSize){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        Page<TripRequest> response = service.getDeliveries(partnerID, deliveryStatus,  partnerAssetID, PageRequest.of(page, pageSize));
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
 
 }
