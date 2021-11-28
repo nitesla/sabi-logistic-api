@@ -8,6 +8,7 @@ import com.sabi.logistics.core.dto.request.PartnerBankDto;
 import com.sabi.logistics.core.dto.response.PartnerBankResponseDto;
 import com.sabi.logistics.core.models.PartnerBank;
 import com.sabi.logistics.service.services.PartnerBankService;
+import lombok.var;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -137,6 +138,18 @@ public class PartnerBankController {
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    @GetMapping("/isDefault/{id}")
+    public ResponseEntity<Response> setDefault(@PathVariable("id") long id){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        var res = service.setDefalult(id);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Successful");
+        resp.setData(res);
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
