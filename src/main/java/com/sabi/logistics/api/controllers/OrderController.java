@@ -97,8 +97,7 @@ public class OrderController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getOrders(@RequestParam(value = "wareHouseID",required = false)Long wareHouseID,
-                                              @RequestParam(value = "referenceNo",required = false)String referenceNo,
+    public ResponseEntity<Response> getOrders(@RequestParam(value = "referenceNo",required = false)String referenceNo,
                                               @RequestParam(value = "deliveryStatus",required = false) String deliveryStatus,
                                               @RequestParam(value = "customerName",required = false)String customerName,
                                               @RequestParam(value = "customerPhone",required = false)String customerPhone,
@@ -109,7 +108,7 @@ public class OrderController {
                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Order> response = service.findAll(wareHouseID, referenceNo, deliveryStatus, customerName, customerPhone, deliveryAddress, barCode, QRcode,PageRequest.of(page, pageSize));
+        Page<Order> response = service.findAll(referenceNo, deliveryStatus, customerName, customerPhone, deliveryAddress, barCode, QRcode,PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
