@@ -137,7 +137,19 @@ public class StateController {
     public ResponseEntity<Response> getAll(@RequestParam(value = "countryId",required = false)Long countryId){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<State> response = service.getAll(countryId);
+        List<State> response = service.getAllByCountryId(countryId);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    @GetMapping("/active/list")
+    public ResponseEntity<Response> getAllByActive(@RequestParam(value = "isActive",required = false)Boolean isActive){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        List<State> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
