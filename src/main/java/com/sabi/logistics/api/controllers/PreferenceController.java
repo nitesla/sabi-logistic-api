@@ -42,23 +42,23 @@ public class PreferenceController {
 
 
 
-//    /** <summary>
-//     * Preference update endpoint
-//     * </summary>
-//     * <remarks>this endpoint is responsible for updating product</remarks>
-//     */
-//
-//    @PutMapping("")
-//    public ResponseEntity<Response> updateProduct(@Validated @RequestBody  ProductRequestDto request){
-//        HttpStatus httpCode ;
-//        Response resp = new Response();
-//        ProductResponseDto response = service.updateProduct(request);
-//        resp.setCode(CustomResponseCode.SUCCESS);
-//        resp.setDescription("Update Successful");
-//        resp.setData(response);
-//        httpCode = HttpStatus.OK;
-//        return new ResponseEntity<>(resp, httpCode);
-//    }
+    /** <summary>
+     * Preference update endpoint
+     * </summary>
+     * <remarks>this endpoint is responsible for updating preference</remarks>
+     */
+
+    @PutMapping("")
+    public ResponseEntity<Response> updatePreference(@Validated @RequestBody  PreferenceDto request){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        PreferenceResponseDto response = service.updatePreference(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Update Successful");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
 
 
     /** <summary>
