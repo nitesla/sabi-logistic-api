@@ -7,13 +7,12 @@ import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.CompleteSignupRequest;
+import com.sabi.logistics.core.dto.request.ExternalPartnerSignUp;
 import com.sabi.logistics.core.dto.request.PartnerDto;
 import com.sabi.logistics.core.dto.request.PartnerSignUpDto;
-import com.sabi.logistics.core.dto.response.CompleteSignUpResponse;
-import com.sabi.logistics.core.dto.response.PartnerActivationResponse;
-import com.sabi.logistics.core.dto.response.PartnerResponseDto;
-import com.sabi.logistics.core.dto.response.PartnerSignUpResponseDto;
+import com.sabi.logistics.core.dto.response.*;
 import com.sabi.logistics.core.models.Partner;
+import com.sabi.logistics.service.services.ExternalSignUpService;
 import com.sabi.logistics.service.services.PartnerService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,9 +30,11 @@ import java.util.List;
 public class PartnerController {
 
     private final PartnerService service;
+    private final ExternalSignUpService externalSignUpService;
 
-    public PartnerController(PartnerService service) {
+    public PartnerController(PartnerService service,ExternalSignUpService externalSignUpService) {
         this.service = service;
+        this.externalSignUpService = externalSignUpService;
     }
 
 
@@ -43,6 +44,19 @@ public class PartnerController {
         HttpStatus httpCode ;
         Response resp = new Response();
         PartnerSignUpResponseDto response = service.partnerSignUp(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Successful");
+        resp.setData(response);
+        httpCode = HttpStatus.CREATED;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+
+    @PostMapping("/externalsignup")
+    public ResponseEntity<Response> externalSignUp(@Validated @RequestBody ExternalPartnerSignUp request){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        ExternalPartnerSignUpResponse response = externalSignUpService.externalSignUp(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
