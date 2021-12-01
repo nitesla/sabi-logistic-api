@@ -77,11 +77,12 @@ public class InventoryController {
                                                   @RequestParam(value = "deliveryPartnerPhone",required = false) String deliveryPartnerPhone,
                                                   @RequestParam(value = "partnerId",required = false) Long partnerId,
                                                   @RequestParam(value = "shippingId",required = false) Long shippingId,
+                                                 @RequestParam(value = "warehouseId",required = false) Long warehouseId,
                                                  @RequestParam(value = "page") int page,
                                                  @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Inventory> response = service.findAll(thirdPartyId,productName,totalAmount,status,deliveryPartnerName,deliveryPartnerEmail,deliveryPartnerPhone,partnerId,shippingId, PageRequest.of(page, pageSize));
+        Page<Inventory> response = service.findAll(thirdPartyId,productName,totalAmount,status,deliveryPartnerName,deliveryPartnerEmail,deliveryPartnerPhone,partnerId,shippingId,warehouseId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
