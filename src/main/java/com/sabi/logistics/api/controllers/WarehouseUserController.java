@@ -33,6 +33,24 @@ public class WarehouseUserController {
     }
 
     /** <summary>
+     * WareHouse User creation endpoint
+     * </summary>
+     * <remarks>this endpoint is responsible for creation of new WareHouse User</remarks>
+     */
+
+    @PostMapping("")
+    public ResponseEntity<Response> createWareHouseUser(@Validated @RequestBody List<WareHouseUserRequestDto> request){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        List<WareHouseUserResponseDto> response = service.createWareHouseUser(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Successful");
+        resp.setData(response);
+        httpCode = HttpStatus.CREATED;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    /** <summary>
      * WarehouseUser update endpoint
      * </summary>
      * <remarks>this endpoint is responsible for updating WarehouseUser</remarks>
