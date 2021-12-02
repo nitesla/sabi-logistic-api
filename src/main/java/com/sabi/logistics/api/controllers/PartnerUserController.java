@@ -50,7 +50,7 @@ public class PartnerUserController {
 
 
 
-    @PostMapping("/activatePartnerUser")
+    @PostMapping("/activatepartneruser")
     public ResponseEntity<Response> activatePartnerUser(@Validated @RequestBody PartnerUserActivation request){
         HttpStatus httpCode ;
         Response resp = new Response();
