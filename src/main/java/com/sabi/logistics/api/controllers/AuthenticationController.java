@@ -18,9 +18,10 @@ import com.sabi.framework.service.UserService;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.framework.utils.Utility;
-import com.sabi.logistics.core.models.Partner;
+import com.sabi.logistics.core.models.PartnerUser;
 import com.sabi.logistics.service.repositories.PartnerCategoriesRepository;
 import com.sabi.logistics.service.repositories.PartnerRepository;
+import com.sabi.logistics.service.repositories.PartnerUserRepository;
 import com.sabi.logistics.service.services.PartnerCategoriesService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -59,14 +60,16 @@ public class AuthenticationController {
     private final UserService userService;
     private final PartnerRepository partnerRepository;
     private final PartnerCategoriesRepository partnerCategoriesRepository;
+    private final PartnerUserRepository partnerUserRepository;
 
 
     public AuthenticationController(PartnerCategoriesService partnerCategoriesService,UserService userService,PartnerRepository partnerRepository,
-                                    PartnerCategoriesRepository partnerCategoriesRepository) {
+                                    PartnerCategoriesRepository partnerCategoriesRepository,PartnerUserRepository partnerUserRepository) {
         this.partnerCategoriesService = partnerCategoriesService;
         this.userService = userService;
         this.partnerRepository = partnerRepository;
         this.partnerCategoriesRepository = partnerCategoriesRepository;
+        this.partnerUserRepository = partnerUserRepository;
     }
 
     @PostMapping("/login")
@@ -122,10 +125,10 @@ public class AuthenticationController {
         String isEmailVerified="";
         List<com.sabi.framework.dto.responseDto.PartnersCategoryReturn> partnerCategory= null;
         if (user.getUserCategory().equals(Constants.OTHER_USER)) {
-            Partner partner = partnerRepository.findByUserId(user.getId());
+            PartnerUser partner = partnerUserRepository.findByUserId(user.getId());
             if(partner !=null){
-                clientId = String.valueOf(partner.getId());
-                partnerCategory = partnerCategoriesService.partnerCategoryReturn(partner.getId());
+                clientId = String.valueOf(partner.getPartnerId());
+                partnerCategory = partnerCategoriesService.partnerCategoryReturn(partner.getPartnerId());
 
             }
         }
