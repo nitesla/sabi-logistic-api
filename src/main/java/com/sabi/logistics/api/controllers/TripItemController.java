@@ -143,5 +143,18 @@ public class TripItemController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+    @GetMapping("/invoice")
+    public ResponseEntity<Response> getInvoice(@RequestParam(value = "tripRequestID")Long tripRequestID,
+                                               @RequestParam(value = "orderID")Long orderID){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        List<TripItem> response = service.getInvoice(tripRequestID, orderID);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
 
 }
