@@ -82,7 +82,7 @@ public class AuthenticationController {
         if (user != null) {
             if (user.isLoginStatus()) {
                 //FIRST TIME LOGIN
-                if (user.getPasswordChangedOn() == null || user.getIsActive()==false) {
+                if (user.getPasswordChangedOn() == null) {
                     Response resp = new Response();
                     resp.setCode(CustomResponseCode.CHANGE_P_REQUIRED);
                     resp.setDescription("Change password Required, account has not been activated");
