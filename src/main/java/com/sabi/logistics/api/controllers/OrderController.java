@@ -160,11 +160,13 @@ public class OrderController {
 //    }
 //
 //    @GetMapping("/date")
-//    public ResponseEntity<Response> getRecordByDateRange(@RequestParam(value = "date",required = false)String startDate,
-//                                                         @RequestParam(value = "endDate",required = false)String endStart){
+//    public ResponseEntity<Response> getRecordByDateRange(@RequestParam(value = "wareHouseId",required = false)Long wareHouseId,
+//                                                         @RequestParam(value = "status",required = false)String status,
+//                                                         @RequestParam(value = "date",required = false)String isActive,
+//                                                         @RequestParam(value = "endDate",required = false)String dateTime){
 //        HttpStatus httpCode ;
 //        Response resp = new Response();
-//        List<Order> response = service.findByPresentDate(startDate,endStart);
+//        double response = service.findByPresentDate(wareHouseId,status,isActive,dateTime);
 //        resp.setCode(CustomResponseCode.SUCCESS);
 //        resp.setDescription("Record fetched successfully !");
 //        resp.setData(response);

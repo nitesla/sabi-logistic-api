@@ -163,4 +163,16 @@ public class OrderItemController {
     }
 
 
+
+//    @GetMapping("/check")
+//    public ResponseEntity<Response> getAll(@RequestParam(value = "wareHosueId")Long wareHosueId){
+//        HttpStatus httpCode ;
+//        Response resp = new Response();
+//        List<OrderItem> response = service.getAllByWareHouse(wareHosueId);
+//        resp.setCode(CustomResponseCode.SUCCESS);
+//        resp.setDescription("Record fetched successfully !");
+//        resp.setData(response);
+//        httpCode = HttpStatus.OK;
+//        return new ResponseEntity<>(resp, httpCode);
+//    }
 }
