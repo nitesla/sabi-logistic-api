@@ -6,6 +6,7 @@ import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.response.DashboardResponseDto;
 import com.sabi.logistics.service.services.DashboardSummaryService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -33,8 +34,8 @@ public class DashboardSummaryController {
 
     @GetMapping("/logistics")
     public ResponseEntity<Response> getDashboardSummary(@RequestParam(value = "partnerId")Long partnerId,
-                                                        @RequestParam(value = "startDate",required = false)LocalDateTime startDate,
-                                                        @RequestParam(value = "endDate",required = false)LocalDateTime endDate){
+                                                        @RequestParam(value = "startDate",required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                                                        @RequestParam(value = "endDate",required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate){
 
         HttpStatus httpCode ;
         Response resp = new Response();
