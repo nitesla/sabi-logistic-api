@@ -53,6 +53,7 @@ public class WarehouseController {
     public ResponseEntity<Response> getAllWarehouses(@RequestParam(value = "owner",required = false)String owner,
                                                  @RequestParam(value = "name", required = false) String name,
                                                  @RequestParam(value = "partnerId", required = false) Long partnerId,
+                                                     @RequestParam(value = "isActive", required = false) boolean isActive,
                                                  @RequestParam(value = "lgaId", required = false) Long lgaId,
                                                  @RequestParam(value = "page") int page,
                                                  @RequestParam(value = "pageSize") int pageSize){
@@ -60,7 +61,7 @@ public class WarehouseController {
         HttpStatus httpCode ;
         Response resp = new Response();
 
-        Page<Warehouse> response = warehouseService.findAll(owner, name, partnerId, lgaId, PageRequest.of(page, pageSize));
+        Page<Warehouse> response = warehouseService.findAll(owner, name, partnerId,isActive, lgaId, PageRequest.of(page, pageSize));
 
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
@@ -77,7 +78,8 @@ public class WarehouseController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
-        return responseHelper.buildResponse(warehouseService.getAll(isActive), HttpStatus.OK, "Record fetched successfully !");
+    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive",required = false)Boolean isActive,
+                                           @RequestParam(value = "partnerId",required = false)Long partnerId){
+        return responseHelper.buildResponse(warehouseService.getAll(isActive,partnerId), HttpStatus.OK, "Record fetched successfully !");
     }
 }
