@@ -67,7 +67,7 @@ public class InventoryController {
     }
 
     @GetMapping("/page")
-    public ResponseEntity<Response> getCountries(@RequestParam(value = "thirdPartyId",required = false) Long thirdPartyId,
+    public ResponseEntity<Response> getInventories(@RequestParam(value = "thirdPartyId",required = false) Long thirdPartyId,
                                                   @RequestParam(value = "productName",required = false) String productName,
 //                                                  @RequestParam(value = "qty",required = false) int qty,
                                                   @RequestParam(value = "totalAmount",required = false) BigDecimal totalAmount,
