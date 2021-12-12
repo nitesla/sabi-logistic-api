@@ -30,7 +30,7 @@ public class WalletTransactionController {
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createDriverWallet(@Validated @RequestBody WalletTransactionDto request){
+    public ResponseEntity<Response> createWalletTransaction(@Validated @RequestBody WalletTransactionDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
         WalletTransactionResponseDto response = service.createWalletTransaction(request);
@@ -68,7 +68,7 @@ public class WalletTransactionController {
      * <remarks>this endpoint is responsible for getting a single record</remarks>
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Response> getDriverWallet(@PathVariable Long id){
+    public ResponseEntity<Response> getWalletTransactionById(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
         WalletTransactionResponseDto response = service.findWalletTransaction(id);
@@ -87,7 +87,7 @@ public class WalletTransactionController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("/page")
-    public ResponseEntity<Response> getDriverWallets(@RequestParam(value = "driverWalletId",required = false)Long driverWalletId,
+    public ResponseEntity<Response> getWalletTransactions(@RequestParam(value = "driverWalletId",required = false)Long driverWalletId,
                                                      @RequestParam(value = "dropOffId",required = false)Long dropOffId,
                                                      @RequestParam(value = "page") int page,
                                                      @RequestParam(value = "pageSize") int pageSize){
