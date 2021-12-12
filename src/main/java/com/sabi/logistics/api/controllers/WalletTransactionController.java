@@ -50,7 +50,7 @@ public class WalletTransactionController {
 //     */
 //
 //    @PutMapping("")
-//    public ResponseEntity<Response> updateDriverWallet(@Validated @RequestBody  WalletTransactionDto request){
+//    public ResponseEntity<Response> updateWalletTransaction(@Validated @RequestBody  WalletTransactionDto request){
 //        HttpStatus httpCode ;
 //        Response resp = new Response();
 //        WalletTransactionResponseDto response = service.updateWalletTransaction(request);
