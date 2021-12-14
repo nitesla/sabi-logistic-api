@@ -5,10 +5,10 @@ import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabi.logistics.core.dto.request.TripItemRequestDto;
-import com.sabi.logistics.core.dto.response.TripItemResponseDto;
-import com.sabi.logistics.core.models.TripItem;
-import com.sabi.logistics.service.services.TripItemService;
+import com.sabi.logistics.core.dto.request.DropOffItemRequestDto;
+import com.sabi.logistics.core.dto.response.DropOffItemResponseDto;
+import com.sabi.logistics.core.models.DropOffItem;
+import com.sabi.logistics.service.services.DropOffItemService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -21,28 +21,28 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"tripitem")
-public class TripItemController {
+@RequestMapping(Constants.APP_CONTENT+"dropoffitem")
+public class DropOffItemController {
 
 
-    private final TripItemService service;
+    private final DropOffItemService service;
 
-    public TripItemController(TripItemService service) {
+    public DropOffItemController(DropOffItemService service) {
         this.service = service;
     }
 
 
     /** <summary>
-     * Trip Item creation endpoint
+     * DropOff Item creation endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for creation of new Trip Item</remarks>
+     * <remarks>this endpoint is responsible for creation of new DropOff Item</remarks>
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createTripItem(@Validated @RequestBody TripItemRequestDto request){
+    public ResponseEntity<Response> createDropOffItem(@Validated @RequestBody DropOffItemRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        TripItemResponseDto response = service.createTripItem(request);
+        DropOffItemResponseDto response = service.createDropOffItem(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -53,16 +53,16 @@ public class TripItemController {
 
 
     /** <summary>
-     * Trip item update endpoint
+     * DropOff Item update endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for updating Trip item</remarks>
+     * <remarks>this endpoint is responsible for updating DropOff Item</remarks>
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateTripItem(@Validated @RequestBody  TripItemRequestDto request){
+    public ResponseEntity<Response> updateDropOffItem(@Validated @RequestBody  DropOffItemRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        TripItemResponseDto response = service.updateTripItem(request);
+        DropOffItemResponseDto response = service.updateDropOffItem(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -78,10 +78,10 @@ public class TripItemController {
      * <remarks>this endpoint is responsible for getting a single record</remarks>
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Response> getTripItem(@PathVariable Long id){
+    public ResponseEntity<Response> getDropOffItem(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        TripItemResponseDto response = service.findTripItem(id);
+        DropOffItemResponseDto response = service.findDropOffItem(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -97,14 +97,14 @@ public class TripItemController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getTripItems(@RequestParam(value = "orderItemID",required = false)Long orderItemID,
-                                              @RequestParam(value = "tripRequest",required = false) Long tripRequest,
+    public ResponseEntity<Response> getDropOffItems(@RequestParam(value = "orderItemId",required = false)Long orderItemId,
+                                              @RequestParam(value = "dropOffId",required = false) Long dropOffId,
                                               @RequestParam(value = "status",required = false)String status,
                                               @RequestParam(value = "page") int page,
                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<TripItem> response = service.findAll(orderItemID, tripRequest, status, PageRequest.of(page, pageSize));
+        Page<DropOffItem> response = service.findAll(orderItemId, dropOffId, status, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -116,7 +116,7 @@ public class TripItemController {
     /** <summary>
      * Enable disable
      * </summary>
-     * <remarks>this endpoint is responsible for enabling and disabling a Trip Item</remarks>
+     * <remarks>this endpoint is responsible for enabling and disabling a DropOff Item</remarks>
      */
 
     @PutMapping("/enabledisable")
@@ -132,10 +132,11 @@ public class TripItemController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
+    public ResponseEntity<Response> getAll(@RequestParam(value = "dropOffId",required = false)Long dropOffId,
+                                           @RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<TripItem> response = service.getAll(isActive);
+        List<DropOffItem> response = service.getAll(dropOffId, isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -144,11 +145,11 @@ public class TripItemController {
     }
 
     @GetMapping("/invoice")
-    public ResponseEntity<Response> getInvoice(@RequestParam(value = "tripRequestID")Long tripRequestID,
-                                               @RequestParam(value = "orderID")Long orderID){
+    public ResponseEntity<Response> getInvoice(@RequestParam(value = "dropOffId")Long dropOffId,
+                                               @RequestParam(value = "orderId")Long orderId){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<TripItem> response = service.getInvoice(tripRequestID, orderID);
+        List<DropOffItem> response = service.getInvoice(dropOffId, orderId);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
