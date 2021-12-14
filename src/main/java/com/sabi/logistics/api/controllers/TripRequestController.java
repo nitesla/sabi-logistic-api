@@ -97,18 +97,18 @@ public class TripRequestController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getTripRequests(@RequestParam(value = "partnerID",required = false)Long partnerID,
+    public ResponseEntity<Response> getTripRequests(@RequestParam(value = "partnerId",required = false)Long partnerId,
                                                     @RequestParam(value = "status",required = false)String status,
                                                     @RequestParam(value = "referenceNo",required = false)String referenceNo,
-                                                    @RequestParam(value = "driverID",required = false)Long driverID,
+                                                    @RequestParam(value = "driverId",required = false)Long driverId,
                                                     @RequestParam(value = "wareHouseId",required = false)Long wareHouseId,
                                                     @RequestParam(value = "wareHouseAddress",required = false)String wareHouseAddress,
-                                                    @RequestParam(value = "partnerAssetID",required = false)Long partnerAssetID,
+                                                    @RequestParam(value = "partnerAssetId",required = false)Long partnerAssetId,
                                                     @RequestParam(value = "page") int page,
                                                     @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<TripRequest> response = service.findAll(partnerID, status, referenceNo, driverID, wareHouseId, wareHouseAddress, partnerAssetID, PageRequest.of(page, pageSize));
+        Page<TripRequest> response = service.findAll(partnerId, status, referenceNo, driverId, wareHouseId, wareHouseAddress, partnerAssetId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -153,14 +153,14 @@ public class TripRequestController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("/delivery")
-    public ResponseEntity<Response> getDeliveries(@RequestParam(value = "partnerID",required = false)Long partnerID,
+    public ResponseEntity<Response> getDeliveries(@RequestParam(value = "partnerId",required = false)Long partnerId,
                                                     @RequestParam(value = "deliveryStatus",required = false)String deliveryStatus,
-                                                    @RequestParam(value = "partnerAssetID",required = false)Long partnerAssetID,
+                                                    @RequestParam(value = "partnerAssetId",required = false)Long partnerAssetId,
                                                     @RequestParam(value = "page") int page,
                                                     @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<TripRequest> response = service.getDeliveries(partnerID, deliveryStatus,  partnerAssetID, PageRequest.of(page, pageSize));
+        Page<TripRequest> response = service.getDeliveries(partnerId, deliveryStatus,  partnerAssetId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

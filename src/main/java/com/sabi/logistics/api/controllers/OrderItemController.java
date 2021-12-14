@@ -97,10 +97,10 @@ public class OrderItemController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getOrderItems(@RequestParam(value = "wareHouseID",required = false)Long wareHouseID,
+    public ResponseEntity<Response> getOrderItems(@RequestParam(value = "wareHouseId",required = false)Long wareHouseId,
                                                   @RequestParam(value = "referenceNo",required = false)String referenceNo,
                                                   @RequestParam(value = "deliveryStatus",required = false) String deliveryStatus,
-                                                  @RequestParam(value = "partnerAssetID",required = false)Long partnerAssetID,
+                                                  @RequestParam(value = "partnerAssetId",required = false)Long partnerAssetId,
                                                   @RequestParam(value = "name",required = false) String name,
                                                   @RequestParam(value = "qty",required = false)Integer qty,
                                                   @RequestParam(value = "page") int page,
@@ -108,7 +108,7 @@ public class OrderItemController {
                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<OrderItem> response = service.findAll(wareHouseID, referenceNo, deliveryStatus, partnerAssetID, name, qty,PageRequest.of(page, pageSize));
+        Page<OrderItem> response = service.findAll(wareHouseId, referenceNo, deliveryStatus, partnerAssetId, name, qty,PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -148,13 +148,13 @@ public class OrderItemController {
     }
 
     @GetMapping("/delivery")
-    public ResponseEntity<Response> getAllDeliveries(@RequestParam(value = "partnerID",required = false)Long partnerID,
+    public ResponseEntity<Response> getAllDeliveries(@RequestParam(value = "partnerId",required = false)Long partnerId,
                                                   @RequestParam(value = "deliveryStatus",required = false)String deliveryStatus,
                                                   @RequestParam(value = "page") int page,
                                                   @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<OrderItem> response = service.getAllDeliveries(partnerID, deliveryStatus, PageRequest.of(page, pageSize));
+        Page<OrderItem> response = service.getAllDeliveries(partnerId, deliveryStatus, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
