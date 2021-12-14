@@ -147,5 +147,32 @@ public class OrderController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+//    @GetMapping("/page")
+//    public ResponseEntity<Response> getRecordByDateRange(@RequestParam(value = "date",required = false)String startDate, String endDate,String status,Long orderId){
+//        HttpStatus httpCode ;
+//        Response resp = new Response();
+//        List<Order> response = service.findRecordByDateRange(startDate,endDate,status);
+//        resp.setCode(CustomResponseCode.SUCCESS);
+//        resp.setDescription("Record fetched successfully !");
+//        resp.setData(response);
+//        httpCode = HttpStatus.OK;
+//        return new ResponseEntity<>(resp, httpCode);
+//    }
+//
+//    @GetMapping("/date")
+//    public ResponseEntity<Response> getRecordByDateRange(@RequestParam(value = "wareHouseId",required = false)Long wareHouseId,
+//                                                         @RequestParam(value = "status",required = false)String status,
+//                                                         @RequestParam(value = "date",required = false)String isActive,
+//                                                         @RequestParam(value = "endDate",required = false)String dateTime){
+//        HttpStatus httpCode ;
+//        Response resp = new Response();
+//        double response = service.findByPresentDate(wareHouseId,status,isActive,dateTime);
+//        resp.setCode(CustomResponseCode.SUCCESS);
+//        resp.setDescription("Record fetched successfully !");
+//        resp.setData(response);
+//        httpCode = HttpStatus.OK;
+//        return new ResponseEntity<>(resp, httpCode);
+//    }
+
 
 }
