@@ -5,10 +5,10 @@ import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabi.logistics.core.dto.request.TripRequestResponseReqDto;
-import com.sabi.logistics.core.dto.response.TripRequestResponseDto;
-import com.sabi.logistics.core.models.TripRequestResponse;
-import com.sabi.logistics.service.services.TripRequestResponseService;
+import com.sabi.logistics.core.dto.request.DropOffRequestDto;
+import com.sabi.logistics.core.dto.response.DropOffResponseDto;
+import com.sabi.logistics.core.models.DropOff;
+import com.sabi.logistics.service.services.DropOffService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -21,28 +21,28 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"triprequestresponse")
-public class TripRequestResponseController {
+@RequestMapping(Constants.APP_CONTENT+"dropoff")
+public class DropOffController {
 
 
-    private final TripRequestResponseService service;
+    private final DropOffService service;
 
-    public TripRequestResponseController(TripRequestResponseService service) {
+    public DropOffController(DropOffService service) {
         this.service = service;
     }
 
 
     /** <summary>
-     * TripRequestResponse creation endpoint
+     * DropOff  creation endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for creation of new TripRequestResponses</remarks>
+     * <remarks>this endpoint is responsible for creation of new DropOff </remarks>
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createTripRequestResponse(@Validated @RequestBody TripRequestResponseReqDto request){
+    public ResponseEntity<Response> createDropOff(@Validated @RequestBody DropOffRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        TripRequestResponseDto response = service.createTripRequestResponse(request);
+        DropOffResponseDto response = service.createDropOff(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -53,16 +53,16 @@ public class TripRequestResponseController {
 
 
     /** <summary>
-     * TripRequestResponse update endpoint
+     * DropOff  update endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for updating TripRequestResponses</remarks>
+     * <remarks>this endpoint is responsible for updating DropOff </remarks>
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateTripRequestResponse(@Validated @RequestBody  TripRequestResponseReqDto request){
+    public ResponseEntity<Response> updateDropOff(@Validated @RequestBody  DropOffRequestDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        TripRequestResponseDto response = service.updateTripRequestResponse(request);
+        DropOffResponseDto response = service.updateDropOff(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -78,10 +78,10 @@ public class TripRequestResponseController {
      * <remarks>this endpoint is responsible for getting a single record</remarks>
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Response> getTripRequestResponse(@PathVariable Long id){
+    public ResponseEntity<Response> getDropOff(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        TripRequestResponseDto response = service.findTripRequestResponse(id);
+        DropOffResponseDto response = service.findDropOff(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -97,14 +97,13 @@ public class TripRequestResponseController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getTripRequestResponses(@RequestParam(value = "tripRequest",required = false)Long tripRequest,
-                                              @RequestParam(value = "partnerId",required = false) Long partnerId,
-                                              @RequestParam(value = "status",required = false)String status,
+    public ResponseEntity<Response> getDropOffs(@RequestParam(value = "orderId",required = false)Long orderId,
+                                              @RequestParam(value = "tripRequestId",required = false) Long tripRequestId,
                                               @RequestParam(value = "page") int page,
                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<TripRequestResponse> response = service.findAll(tripRequest, partnerId, status,PageRequest.of(page, pageSize));
+        Page<DropOff> response = service.findAll(orderId, tripRequestId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -116,7 +115,7 @@ public class TripRequestResponseController {
     /** <summary>
      * Enable disable
      * </summary>
-     * <remarks>this endpoint is responsible for enabling and disabling a TripRequestResponses</remarks>
+     * <remarks>this endpoint is responsible for enabling and disabling a DropOff </remarks>
      */
 
     @PutMapping("/enabledisable")
@@ -132,10 +131,11 @@ public class TripRequestResponseController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
+    public ResponseEntity<Response> getAll(@RequestParam(value = "tripRequestId")Long tripRequestId,
+                                           @RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<TripRequestResponse> response = service.getAll(isActive);
+        List<DropOff> response = service.getAll(isActive, tripRequestId);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

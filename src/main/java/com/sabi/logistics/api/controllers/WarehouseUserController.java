@@ -68,6 +68,19 @@ public class WarehouseUserController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<Response> deleteWarehouseUserById(@PathVariable long id){
+
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        WareHouseUserResponseDto response = service.deleteWareHouseUser(id);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record Deleted !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
     @GetMapping("/page")
     public ResponseEntity<Response> getAllWarehouseUsers(
                                                    @RequestParam(value = "wareHouseId",required = false)Long wareHouseId,
