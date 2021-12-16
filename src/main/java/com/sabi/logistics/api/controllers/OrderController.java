@@ -5,7 +5,9 @@ import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
+import com.sabi.logistics.core.dto.request.OrderOrderItemDto;
 import com.sabi.logistics.core.dto.request.OrderRequestDto;
+import com.sabi.logistics.core.dto.response.OrderOrderItemResponseDto;
 import com.sabi.logistics.core.dto.response.OrderResponseDto;
 import com.sabi.logistics.core.models.Order;
 import com.sabi.logistics.service.services.OrderService;
@@ -43,6 +45,18 @@ public class OrderController {
         HttpStatus httpCode ;
         Response resp = new Response();
         OrderResponseDto response = service.createOrder(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Successful");
+        resp.setData(response);
+        httpCode = HttpStatus.CREATED;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    @PostMapping("orderOrderItems")
+    public ResponseEntity<Response> createOrderOrderItems(@Validated @RequestBody OrderOrderItemDto request){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        OrderOrderItemResponseDto response = service.createOrderOrderItems(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
