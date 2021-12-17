@@ -53,7 +53,7 @@ public class WarehouseController {
     public ResponseEntity<Response> getAllWarehouses(@RequestParam(value = "owner",required = false)String owner,
                                                  @RequestParam(value = "name", required = false) String name,
                                                  @RequestParam(value = "partnerId", required = false) Long partnerId,
-                                                     @RequestParam(value = "isActive", required = false) boolean isActive,
+                                                     @RequestParam(value = "isActive", required = false) Boolean isActive,
                                                  @RequestParam(value = "lgaId", required = false) Long lgaId,
                                                  @RequestParam(value = "page") int page,
                                                  @RequestParam(value = "pageSize") int pageSize){
