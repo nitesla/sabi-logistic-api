@@ -5,7 +5,9 @@ import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
+import com.sabi.logistics.core.dto.request.TripMasterRequestDto;
 import com.sabi.logistics.core.dto.request.TripRequestDto;
+import com.sabi.logistics.core.dto.response.TripMasterResponseDto;
 import com.sabi.logistics.core.dto.response.TripResponseDto;
 import com.sabi.logistics.core.models.TripRequest;
 import com.sabi.logistics.service.services.TripRequestService;
@@ -43,6 +45,18 @@ public class TripRequestController {
         HttpStatus httpCode ;
         Response resp = new Response();
         TripResponseDto response = service.createTripRequest(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Successful");
+        resp.setData(response);
+        httpCode = HttpStatus.CREATED;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    @PostMapping("/mastertriprequest")
+    public ResponseEntity<Response> createMasterTripRequest(@Validated @RequestBody TripMasterRequestDto request){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        TripMasterResponseDto response = service.createMasterTripRequest(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
