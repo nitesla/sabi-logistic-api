@@ -1,7 +1,6 @@
 package com.sabi.logistics.api.helper;
 
 
-
 import net.javacrumbs.shedlock.core.LockProvider;
 import net.javacrumbs.shedlock.provider.jdbctemplate.JdbcTemplateLockProvider;
 import net.javacrumbs.shedlock.spring.annotation.EnableSchedulerLock;
@@ -21,7 +20,7 @@ public class ShedLockConfig {
 
 
     @Bean
-    public LockProvider lockProvider(DataSource dataSource) {
+    public LockProvider lockProvider(@org.springframework.beans.factory.annotation.Qualifier("dataSource") DataSource dataSource) {
         return new JdbcTemplateLockProvider(
                 JdbcTemplateLockProvider.Configuration.builder()
                         .withJdbcTemplate(new JdbcTemplate(dataSource))
