@@ -7,6 +7,7 @@ import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.TripMasterRequestDto;
 import com.sabi.logistics.core.dto.request.TripRequestDto;
+import com.sabi.logistics.core.dto.response.TripRequestStatusCountResponse;
 import com.sabi.logistics.core.dto.response.TripMasterResponseDto;
 import com.sabi.logistics.core.dto.response.TripResponseDto;
 import com.sabi.logistics.core.models.TripRequest;
@@ -183,7 +184,17 @@ public class TripRequestController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
-
+    @GetMapping("/statuscount")
+    public ResponseEntity<Response> getStatusCount(@RequestParam(value = "driverUserId")Long driverUserId){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        TripRequestStatusCountResponse response = service.getStatus(driverUserId);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
 
 
 }
