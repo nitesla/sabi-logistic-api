@@ -52,7 +52,7 @@ public class OrderController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
-    @PostMapping("orderOrderItems")
+    @PostMapping("/orderOrderItems")
     public ResponseEntity<Response> createOrderOrderItems(@Validated @RequestBody OrderOrderItemDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
