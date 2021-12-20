@@ -5,7 +5,10 @@ import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
+import com.sabi.logistics.core.dto.request.TripMasterRequestDto;
 import com.sabi.logistics.core.dto.request.TripRequestDto;
+import com.sabi.logistics.core.dto.response.TripMasterResponseDto;
+import com.sabi.logistics.core.dto.response.TripRequestStatusCountResponse;
 import com.sabi.logistics.core.dto.response.TripResponseDto;
 import com.sabi.logistics.core.models.TripRequest;
 import com.sabi.logistics.service.services.TripRequestService;
@@ -27,6 +30,7 @@ public class TripRequestController {
 
     private final TripRequestService service;
 
+
     public TripRequestController(TripRequestService service) {
         this.service = service;
     }
@@ -43,6 +47,18 @@ public class TripRequestController {
         HttpStatus httpCode ;
         Response resp = new Response();
         TripResponseDto response = service.createTripRequest(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Successful");
+        resp.setData(response);
+        httpCode = HttpStatus.CREATED;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    @PostMapping("/mastertriprequest")
+    public ResponseEntity<Response> createMasterTripRequest(@Validated @RequestBody TripMasterRequestDto request){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        TripMasterResponseDto response = service.createMasterTripRequest(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -100,7 +116,7 @@ public class TripRequestController {
     public ResponseEntity<Response> getTripRequests(@RequestParam(value = "partnerId",required = false)Long partnerId,
                                                     @RequestParam(value = "status",required = false)String status,
                                                     @RequestParam(value = "referenceNo",required = false)String referenceNo,
-                                                    @RequestParam(value = "driverId",required = false)Long driverId,
+                                                    @RequestParam(value = "driverUserId",required = false)Long driverUserId,
                                                     @RequestParam(value = "wareHouseId",required = false)Long wareHouseId,
                                                     @RequestParam(value = "wareHouseAddress",required = false)String wareHouseAddress,
                                                     @RequestParam(value = "partnerAssetId",required = false)Long partnerAssetId,
@@ -108,7 +124,7 @@ public class TripRequestController {
                                                     @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<TripRequest> response = service.findAll(partnerId, status, referenceNo, driverId, wareHouseId, wareHouseAddress, partnerAssetId, PageRequest.of(page, pageSize));
+        Page<TripRequest> response = service.findAll(partnerId, status, referenceNo, driverUserId, wareHouseId, wareHouseAddress, partnerAssetId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -161,6 +177,18 @@ public class TripRequestController {
         HttpStatus httpCode ;
         Response resp = new Response();
         Page<TripRequest> response = service.getDeliveries(partnerId, deliveryStatus,  partnerAssetId, PageRequest.of(page, pageSize));
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    @GetMapping("/statuscount")
+    public ResponseEntity<Response> getStatusCount(@RequestParam(value = "driverUserId")Long driverUserId){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        TripRequestStatusCountResponse response = service.getStatus(driverUserId);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
