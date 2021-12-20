@@ -173,7 +173,7 @@ public class TripRequestController {
     public ResponseEntity<Response> getStatusCount(@RequestParam(value = "driverUserId")Long driverUserId){
         HttpStatus httpCode ;
         Response resp = new Response();
-        TripRequestStatusCountResponse response = service.getStatus(driverUserId,"");
+        TripRequestStatusCountResponse response = service.getStatus(driverUserId);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
