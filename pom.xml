@@ -46,11 +46,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.microsoft.sqlserver</groupId>
-			<artifactId>mssql-jdbc</artifactId>
-			<version>6.1.0.jre7</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>com.microsoft.sqlserver</groupId>-->
+			<!--<artifactId>mssql-jdbc</artifactId>-->
+			<!--<version>6.1.0.jre7</version>-->
+		<!--</dependency>-->
 
 
 
@@ -239,7 +239,17 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>net.javacrumbs.shedlock</groupId>
+			<artifactId>shedlock-spring</artifactId>
+			<version>4.23.0</version>
+		</dependency>
 
+		<dependency>
+			<groupId>net.javacrumbs.shedlock</groupId>
+			<artifactId>shedlock-provider-jdbc-template</artifactId>
+			<version>4.23.0</version>
+		</dependency>
 
 
 	</dependencies>
