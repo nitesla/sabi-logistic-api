@@ -1,6 +1,9 @@
 package com.sabi.logistics.api.runner;
 
 
+import com.sabi.framework.models.User;
+import com.sabi.framework.repositories.UserRepository;
+import com.sabi.framework.utils.Constants;
 import com.sabi.logistics.core.models.Bank;
 import com.sabi.logistics.core.models.Country;
 import com.sabi.logistics.core.models.LGA;
@@ -14,8 +17,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +34,13 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
     private CountryRepository countryRepository;
     @Autowired
     private LGARepository localGovernmentRepository;
-
     @Autowired
     private BankRepository bankRepository;
+    @Autowired
+    private UserRepository userRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
 
 
@@ -46,6 +55,7 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
         seedStates();
         seedLocalGovernments();
         seedBanks();
+        seedAppleUsers();
 
     }
 
@@ -392,6 +402,36 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
             }
         });
     }
+
+
+    private void seedAppleUsers() {
+        User user = userRepo.findByEmail("appleUser@sabi.com");
+        if (user == null) {
+            createUser();
+        }
+    }
+
+
+    private User createUser() {
+        User appleUser = new User();
+        appleUser.setFirstName("appleUser");
+        appleUser.setLastName("appleUser2");
+        appleUser.setPassword(passwordEncoder.encode("000000"));
+        appleUser.setPhone("01156548654");
+        appleUser.setEmail("appleUser@sabi.com");
+        appleUser.setUsername("appleUser@sabi.com");
+        appleUser.setLoginAttempts(0l);
+        appleUser.setUserCategory(Constants.OTHER_USER);
+        appleUser.setIsActive(true);
+        appleUser.setPasswordChangedOn(LocalDateTime.now());
+        appleUser.setCreatedBy(0L);
+        appleUser.setCreatedDate(LocalDateTime.now());
+        appleUser.setUpdatedDate(LocalDateTime.now());
+        userRepo.saveAndFlush(appleUser);
+        return appleUser;
+    }
+
+
 
 
 }
