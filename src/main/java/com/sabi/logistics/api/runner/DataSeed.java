@@ -56,6 +56,7 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
         seedLocalGovernments();
         seedBanks();
         seedAppleUsers();
+        seedSabiUsers();
 
     }
 
@@ -432,6 +433,31 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
     }
 
 
+    private void seedSabiUsers() {
+        User user = userRepo.findByEmail("sabi@sabi.com");
+        if (user == null) {
+            createSabiUser();
+        }
+    }
+
+    private User createSabiUser() {
+        User sabiUser = new User();
+        sabiUser.setFirstName("sabi");
+        sabiUser.setLastName("sabi2");
+        sabiUser.setPassword(passwordEncoder.encode("777777"));
+        sabiUser.setPhone("02163976228");
+        sabiUser.setEmail("sabi@sabi.com");
+        sabiUser.setUsername("sabi@sabi.com");
+        sabiUser.setLoginAttempts(0l);
+        sabiUser.setUserCategory(Constants.ADMIN_USER);
+        sabiUser.setIsActive(true);
+        sabiUser.setPasswordChangedOn(LocalDateTime.now());
+        sabiUser.setCreatedBy(0L);
+        sabiUser.setCreatedDate(LocalDateTime.now());
+        sabiUser.setUpdatedDate(LocalDateTime.now());
+        userRepo.saveAndFlush(sabiUser);
+        return sabiUser;
+    }
 
 
 }
