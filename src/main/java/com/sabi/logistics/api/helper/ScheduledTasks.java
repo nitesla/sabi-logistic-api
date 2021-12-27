@@ -16,16 +16,16 @@ public class ScheduledTasks {
 
 
 //    @Autowired
-//    AsyncService asyncService;
+//    private AsyncService asyncService;
 //
 //
 //
-//
+////    @Scheduled(cron="${cronExpression}")
 //    @Scheduled(fixedRateString = "${name-enquiry-rate}")
-//    @SchedulerLock(name = "nameEnquiry", lockAtMostFor = "50s", lockAtLeastFor = "30s")
-//    public void nameEnquiry() throws Exception {
-//        log.info("name enquiry Scheduler called");
-//        this.asyncService.nameEnquiryRecords();
+//    @SchedulerLock(name = "moveTripRequest", lockAtMostFor = "50s", lockAtLeastFor = "30s")
+//    public void moveTripRequest() throws Exception {
+//        log.info("move trip request Scheduler called");
+//        this.asyncService.moveTripRecordToDashBoard();
 //    }
 
 
