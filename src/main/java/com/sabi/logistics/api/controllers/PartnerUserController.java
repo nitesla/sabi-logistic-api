@@ -69,6 +69,7 @@ public class PartnerUserController {
                                                    @RequestParam(value = "email",required = false)String email,
                                                    @RequestParam(value = "username",required = false)String username,
                                                    @RequestParam(value = "roleId",required = false)Long roleId,
+                                                   @RequestParam(value = "isActive",required = false)Boolean isActive,
                                                    @RequestParam(value = "lastName",required = false)String lastName,
                                                    @RequestParam(value = "userType",required = false)String userType,
                                                   @RequestParam(value = "page") int page,
@@ -83,7 +84,7 @@ public class PartnerUserController {
             httpCode = HttpStatus.OK;
             return new ResponseEntity<>(resp, httpCode);
         }else {
-            Page<User> response = partnerUserService.findByClientId(firstName, phone, email, username, roleId, lastName, PageRequest.of(page, pageSize));
+            Page<User> response = partnerUserService.findByClientId(firstName, phone, email, username, roleId,isActive, lastName, PageRequest.of(page, pageSize));
             resp.setCode(CustomResponseCode.SUCCESS);
             resp.setDescription("Record fetched successfully !");
             resp.setData(response);
