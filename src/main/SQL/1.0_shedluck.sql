@@ -7,18 +7,3 @@ CREATE TABLE shedlock (
 )
 
 
-CREATE  PROCEDURE `GetTrips`()
-BEGIN
-
-SELECT partnerId,
-COUNT(deliveryStatus) as completedTrips,
-SUM(earnings) as totalEarnings ,
-date ,
-partnerAssetTypeId
-FROM sabilogistic.dashboardsummary AS d
-INNER JOIN `partnerasset` AS p ON d.assetTypeId
-where deliveryStatus='pending'
-  GROUP by partnerId,date;
-
-
-END
