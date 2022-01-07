@@ -49,7 +49,6 @@ public class PartnerRoleController {
     @GetMapping("/page")
     public ResponseEntity<Response> getPartnerRole(@RequestParam(value = "name",required = false)String name,
                                                    @RequestParam(value = "isActive",required = false)Boolean isActive,
-
                                                    @RequestParam(value = "page") int page,
                                                    @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
