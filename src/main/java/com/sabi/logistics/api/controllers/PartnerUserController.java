@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -37,10 +38,10 @@ public class PartnerUserController {
 
 
     @PostMapping("")
-    public ResponseEntity<Response> createPartnerUser(@Validated @RequestBody PartnerUserRequestDto request){
+    public ResponseEntity<Response> createPartnerUser(@Validated @RequestBody PartnerUserRequestDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        PartnerUserResponseDto response = partnerUserService.createPartnerUser(request);
+        PartnerUserResponseDto response = partnerUserService.createPartnerUser(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);

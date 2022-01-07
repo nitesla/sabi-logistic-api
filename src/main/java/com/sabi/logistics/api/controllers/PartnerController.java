@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -40,10 +41,10 @@ public class PartnerController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<Response> partnerSignUp(@Validated @RequestBody PartnerSignUpDto request){
+    public ResponseEntity<Response> partnerSignUp(@Validated @RequestBody PartnerSignUpDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        PartnerSignUpResponseDto response = service.partnerSignUp(request);
+        PartnerSignUpResponseDto response = service.partnerSignUp(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -108,10 +109,10 @@ public class PartnerController {
 
     @PutMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> updatePartnerProperties(@Validated @RequestBody  PartnerDto request){
+    public ResponseEntity<Response> updatePartnerProperties(@Validated @RequestBody  PartnerDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        PartnerResponseDto response = service.updatePartnerProperties(request);
+        PartnerResponseDto response = service.updatePartnerProperties(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -151,10 +152,10 @@ public class PartnerController {
 
 
     @PutMapping("/enabledisenable")
-    public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request){
+    public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.enableDisEnable(request);
+        service.enableDisEnable(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;
