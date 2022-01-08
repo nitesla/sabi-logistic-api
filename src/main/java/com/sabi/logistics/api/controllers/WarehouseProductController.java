@@ -136,7 +136,7 @@ public class WarehouseProductController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAllByActive(@RequestParam(value = "isActive",required = false)Boolean isActive){
+    public ResponseEntity<Response> getAllByActive(@RequestParam(value = "isActive",required = true)Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
         List<WarehouseProduct> response = service.getAll(isActive);
