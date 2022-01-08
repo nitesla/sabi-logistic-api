@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -41,10 +42,10 @@ public class OrderController {
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createOrder(@Validated @RequestBody OrderRequestDto request){
+    public ResponseEntity<Response> createOrder(@Validated @RequestBody OrderRequestDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        OrderResponseDto response = service.createOrder(request);
+        OrderResponseDto response = service.createOrder(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -53,10 +54,10 @@ public class OrderController {
     }
 
     @PostMapping("/orderOrderItems")
-    public ResponseEntity<Response> createOrderOrderItems(@Validated @RequestBody OrderOrderItemDto request){
+    public ResponseEntity<Response> createOrderOrderItems(@Validated @RequestBody OrderOrderItemDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        OrderOrderItemResponseDto response = service.createOrderOrderItems(request);
+        OrderOrderItemResponseDto response = service.createOrderOrderItems(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -73,10 +74,10 @@ public class OrderController {
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateOrder(@Validated @RequestBody  OrderRequestDto request){
+    public ResponseEntity<Response> updateOrder(@Validated @RequestBody  OrderRequestDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        OrderResponseDto response = service.updateOrder(request);
+        OrderResponseDto response = service.updateOrder(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);

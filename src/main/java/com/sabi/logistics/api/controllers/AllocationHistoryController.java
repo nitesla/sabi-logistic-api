@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -32,10 +33,10 @@ public class AllocationHistoryController {
 
     @PostMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> createAssetType(@Validated @RequestBody AllocationHistoryDto request){
+    public ResponseEntity<Response> createAssetType(@Validated @RequestBody AllocationHistoryDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        AllocationHistoryResponseDto response = service.createAllocationHistory(request);
+        AllocationHistoryResponseDto response = service.createAllocationHistory(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -46,10 +47,10 @@ public class AllocationHistoryController {
 
     @PutMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> updateAssetType(@Validated @RequestBody  AllocationHistoryDto request){
+    public ResponseEntity<Response> updateAssetType(@Validated @RequestBody  AllocationHistoryDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        AllocationHistoryResponseDto response = service.updateAllocationHistory(request);
+        AllocationHistoryResponseDto response = service.updateAllocationHistory(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);

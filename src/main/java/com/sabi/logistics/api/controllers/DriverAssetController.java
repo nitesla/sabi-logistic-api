@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @SuppressWarnings("All")
@@ -31,10 +32,10 @@ public class DriverAssetController {
 
 
     @PostMapping("")
-    public ResponseEntity<Response> createDriverAsset(@Validated @RequestBody DriverAssetDto request){
+    public ResponseEntity<Response> createDriverAsset(@Validated @RequestBody DriverAssetDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        DriverAssetResponseDto response = service.createDriverAsset(request);
+        DriverAssetResponseDto response = service.createDriverAsset(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -44,10 +45,10 @@ public class DriverAssetController {
 
 
     @PutMapping("")
-    public ResponseEntity<Response> updateDriverAsset(@Validated @RequestBody DriverAssetDto request){
+    public ResponseEntity<Response> updateDriverAsset(@Validated @RequestBody DriverAssetDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        DriverAssetResponseDto response = service.updateDriverAsset(request);
+        DriverAssetResponseDto response = service.updateDriverAsset(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);

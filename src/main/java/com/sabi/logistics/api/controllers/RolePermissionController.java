@@ -16,11 +16,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"RolePermission")
+@RequestMapping(Constants.APP_CONTENT+"rolepermission")
 public class RolePermissionController {
     private final RolePermissionService service;
 
@@ -36,10 +37,10 @@ public class RolePermissionController {
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createRolePermission(@Validated @RequestBody RolePermissionDto request){
+    public ResponseEntity<Response> createRolePermission(@Validated @RequestBody RolePermissionDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        RolePermissionResponseDto response = service.createRolePermission(request);
+        RolePermissionResponseDto response = service.createRolePermission(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -55,10 +56,10 @@ public class RolePermissionController {
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateRolePermission(@Validated @RequestBody  RolePermissionDto request){
+    public ResponseEntity<Response> updateRolePermission(@Validated @RequestBody  RolePermissionDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        RolePermissionResponseDto response = service.updateRolePermission(request);
+        RolePermissionResponseDto response = service.updateRolePermission(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -117,5 +118,20 @@ public class RolePermissionController {
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
+
+
+
+
+//    @GetMapping("/permission/{roleId}")
+//    public ResponseEntity<Response> getPermissionsByRole(@PathVariable Long roleId){
+//        HttpStatus httpCode ;
+//        Response resp = new Response();
+//        List<RolePermission> response = service.getPermissionsByRole(roleId);
+//        resp.setCode(CustomResponseCode.SUCCESS);
+//        resp.setDescription("Record fetched successfully !");
+//        resp.setData(response);
+//        httpCode = HttpStatus.OK;
+//        return new ResponseEntity<>(resp, httpCode);
+//    }
 
 }
