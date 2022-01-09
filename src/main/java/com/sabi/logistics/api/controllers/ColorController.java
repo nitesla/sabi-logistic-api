@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @SuppressWarnings("All")
@@ -32,15 +33,15 @@ public class ColorController {
     }
 
     @PostMapping
-    public ResponseEntity<Response> createColor(@RequestBody @Valid ColorRequestDto request){
-        return responseHelper.buildResponse( colorService.createColor(request), HttpStatus.CREATED, "Successful");
+    public ResponseEntity<Response> createColor(@RequestBody @Valid ColorRequestDto request,HttpServletRequest request1){
+        return responseHelper.buildResponse( colorService.createColor(request,request1), HttpStatus.CREATED, "Successful");
     }
 
     @PutMapping
-    public ResponseEntity<Response> updateColor(@RequestBody @Valid ColorRequestDto request){
+    public ResponseEntity<Response> updateColor(@RequestBody @Valid ColorRequestDto request,HttpServletRequest request1){
         if(request.getId() == null || request.getId() < 0)
             throw new BadRequestException(CustomResponseCode.BAD_REQUEST, "Id Can not be empty");
-        return responseHelper.buildResponse(colorService.updateColor(request), HttpStatus.OK, "Update Successful");
+        return responseHelper.buildResponse(colorService.updateColor(request,request1), HttpStatus.OK, "Update Successful");
     }
 
     @GetMapping("/{id}")
@@ -58,8 +59,8 @@ public class ColorController {
     }
 
     @PutMapping("/enabledisenable")
-    public ResponseEntity<Response> enableDisEnable(@RequestBody EnableDisEnableDto request){
-        colorService.enableDisEnableState(request);
+    public ResponseEntity<Response> enableDisEnable(@RequestBody EnableDisEnableDto request,HttpServletRequest request1){
+        colorService.enableDisEnableState(request,request1);
         return responseHelper.buildEnableDisable();
     }
 

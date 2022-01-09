@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @SuppressWarnings("All")
 @RestController
 @RequestMapping(Constants.APP_CONTENT+"driverwallet")
@@ -30,10 +32,10 @@ public class DriverWalletController {
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createDriverWallet(@Validated @RequestBody DriverWalletDto request){
+    public ResponseEntity<Response> createDriverWallet(@Validated @RequestBody DriverWalletDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        DriverWalletResponseDto response = service.createDriverWallet(request);
+        DriverWalletResponseDto response = service.createDriverWallet(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -50,10 +52,10 @@ public class DriverWalletController {
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateDriverWallet(@Validated @RequestBody  DriverWalletDto request){
+    public ResponseEntity<Response> updateDriverWallet(@Validated @RequestBody  DriverWalletDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        DriverWalletResponseDto response = service.updateDriverWallet(request);
+        DriverWalletResponseDto response = service.updateDriverWallet(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);

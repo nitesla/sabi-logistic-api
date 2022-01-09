@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -39,10 +40,10 @@ public class DropOffItemController {
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createDropOffItem(@Validated @RequestBody DropOffItemRequestDto request){
+    public ResponseEntity<Response> createDropOffItem(@Validated @RequestBody DropOffItemRequestDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        DropOffItemResponseDto response = service.createDropOffItem(request);
+        DropOffItemResponseDto response = service.createDropOffItem(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -59,10 +60,10 @@ public class DropOffItemController {
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateDropOffItem(@Validated @RequestBody  DropOffItemRequestDto request){
+    public ResponseEntity<Response> updateDropOffItem(@Validated @RequestBody  DropOffItemRequestDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        DropOffItemResponseDto response = service.updateDropOffItem(request);
+        DropOffItemResponseDto response = service.updateDropOffItem(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -120,10 +121,10 @@ public class DropOffItemController {
      */
 
     @PutMapping("/enabledisable")
-    public ResponseEntity<Response> enableDisable(@Validated @RequestBody EnableDisEnableDto request){
+    public ResponseEntity<Response> enableDisable(@Validated @RequestBody EnableDisEnableDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.enableDisable(request);
+        service.enableDisable(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;
