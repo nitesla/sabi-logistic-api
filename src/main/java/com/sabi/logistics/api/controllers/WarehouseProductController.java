@@ -91,6 +91,24 @@ public class WarehouseProductController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+    /** <summary>
+     * Get single record endpoint
+     * </summary>
+     * <remarks>this endpoint is responsible for getting a single record</remarks>
+     */
+    @GetMapping("thirdPartyProductId/{thirdPartyProductId}")
+    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
+    public ResponseEntity<Response> getWarehouseProductByThirdPartyProductId(@PathVariable String thirdPartyProductId){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        WarehouseProductResponseDto response = service.findWarehouseProductByThirdPartyProductId(thirdPartyProductId);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
 
 
     /** <summary>
