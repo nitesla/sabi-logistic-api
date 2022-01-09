@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @SuppressWarnings("All")
@@ -33,14 +34,14 @@ public class BrandController {
     }
 
     @PostMapping
-    public ResponseEntity<Response> createBrand(@Valid @RequestBody BrandRequestDto request){
-        return responseHelper.buildResponse( brandService.createBrand(request), HttpStatus.CREATED, "Successful");
+    public ResponseEntity<Response> createBrand(@Valid @RequestBody BrandRequestDto request,HttpServletRequest request1){
+        return responseHelper.buildResponse( brandService.createBrand(request,request1), HttpStatus.CREATED, "Successful");
     }
 
     @PutMapping
-    public ResponseEntity<Response> updateBrand(@Valid @RequestBody BrandRequestDto request){
+    public ResponseEntity<Response> updateBrand(@Valid @RequestBody BrandRequestDto request,HttpServletRequest request1){
         if(request.getId() == null || request.getId() < 0) throw new BadRequestException(CustomResponseCode.BAD_REQUEST, "Id Can not be empty");
-        return responseHelper.buildResponse(brandService.updateBrand(request), HttpStatus.OK, "Update Successful");
+        return responseHelper.buildResponse(brandService.updateBrand(request,request1), HttpStatus.OK, "Update Successful");
     }
 
     @GetMapping("/{id}")
@@ -58,8 +59,8 @@ public class BrandController {
     }
 
     @PutMapping("/enabledisenable")
-    public ResponseEntity<Response> enableDisEnable(@RequestBody EnableDisEnableDto request){
-        brandService.enableDisEnableState(request);
+    public ResponseEntity<Response> enableDisEnable(@RequestBody EnableDisEnableDto request,HttpServletRequest request1){
+        brandService.enableDisEnableState(request,request1);
         return responseHelper.buildEnableDisable();
     }
 

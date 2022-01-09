@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @SuppressWarnings("All")
 @RestController
 @RequestMapping(Constants.APP_CONTENT+"wallettransaction")
@@ -30,10 +32,10 @@ public class WalletTransactionController {
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createWalletTransaction(@Validated @RequestBody WalletTransactionDto request){
+    public ResponseEntity<Response> createWalletTransaction(@Validated @RequestBody WalletTransactionDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        WalletTransactionResponseDto response = service.createWalletTransaction(request);
+        WalletTransactionResponseDto response = service.createWalletTransaction(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);

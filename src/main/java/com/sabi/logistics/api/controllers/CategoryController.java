@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -34,10 +35,10 @@ public class CategoryController {
 
 
     @PostMapping("")
-    public ResponseEntity<Response> createCategory(@Validated @RequestBody CategoryDto request){
+    public ResponseEntity<Response> createCategory(@Validated @RequestBody CategoryDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        CategoryResponseDto response = service.createCategory(request);
+        CategoryResponseDto response = service.createCategory(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -47,10 +48,10 @@ public class CategoryController {
 
 
     @PutMapping("")
-    public ResponseEntity<Response> updateCategory(@Validated @RequestBody CategoryDto request){
+    public ResponseEntity<Response> updateCategory(@Validated @RequestBody CategoryDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        CategoryResponseDto response = service.updateCategory(request);
+        CategoryResponseDto response = service.updateCategory(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -88,10 +89,10 @@ public class CategoryController {
 
 
     @PutMapping("/enabledisenable")
-    public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request){
+    public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.enableDisEnableState(request);
+        service.enableDisEnableState(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;

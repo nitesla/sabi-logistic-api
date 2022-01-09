@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @SuppressWarnings("All")
@@ -30,10 +31,10 @@ public class AllocationController {
 
     @PostMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> createAllocation(@Validated @RequestBody AllocationsDto request){
+    public ResponseEntity<Response> createAllocation(@Validated @RequestBody AllocationsDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        AllocationResponseDto response = service.createAllocation(request);
+        AllocationResponseDto response = service.createAllocation(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -44,10 +45,10 @@ public class AllocationController {
 
     @PutMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> updateAllocation(@Validated @RequestBody  AllocationsDto request){
+    public ResponseEntity<Response> updateAllocation(@Validated @RequestBody  AllocationsDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        AllocationResponseDto response = service.updateAllocations(request);
+        AllocationResponseDto response = service.updateAllocations(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -93,10 +94,10 @@ public class AllocationController {
 
 
     @PutMapping("/enabledisenable")
-    public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request){
+    public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.enableDisEnable(request);
+        service.enableDisEnable(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;

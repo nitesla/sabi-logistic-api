@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @SuppressWarnings("All")
@@ -33,10 +34,10 @@ public class AssetTypePropertiesController {
 
     @PostMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> createAssetType(@Validated @RequestBody AssetTypePropertiesDto request){
+    public ResponseEntity<Response> createAssetType(@Validated @RequestBody AssetTypePropertiesDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        AssetTypePropertiesResponseDto response = service.createAssetTypeProperties(request);
+        AssetTypePropertiesResponseDto response = service.createAssetTypeProperties(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -47,10 +48,10 @@ public class AssetTypePropertiesController {
 
     @PutMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> updateAssetType(@Validated @RequestBody  AssetTypePropertiesDto request){
+    public ResponseEntity<Response> updateAssetType(@Validated @RequestBody  AssetTypePropertiesDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        AssetTypePropertiesResponseDto response = service.updateAssetTypeProperties(request);
+        AssetTypePropertiesResponseDto response = service.updateAssetTypeProperties(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -92,10 +93,10 @@ public class AssetTypePropertiesController {
 
 
     @PutMapping("/enabledisenable")
-    public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request){
+    public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.enableDisEnable(request);
+        service.enableDisEnable(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;

@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @SuppressWarnings("All")
@@ -30,10 +31,10 @@ public class ClientController {
 
     @PostMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> createClient(@Validated @RequestBody ClientDto request){
+    public ResponseEntity<Response> createClient(@Validated @RequestBody ClientDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        ClientResponseDto response = service.createClient(request);
+        ClientResponseDto response = service.createClient(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -44,10 +45,10 @@ public class ClientController {
 
     @PutMapping("")
     // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
-    public ResponseEntity<Response> updateClient(@Validated @RequestBody  ClientDto request){
+    public ResponseEntity<Response> updateClient(@Validated @RequestBody  ClientDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        ClientResponseDto response = service.updateClient(request);
+        ClientResponseDto response = service.updateClient(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -88,10 +89,10 @@ public class ClientController {
 
 
     @PutMapping("/enabledisenable")
-    public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request){
+    public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.enableDisEnable(request);
+        service.enableDisEnable(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;
