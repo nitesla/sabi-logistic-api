@@ -66,6 +66,27 @@ public class PartnerController {
     }
 
 
+//    @GetMapping("/details/{supplierId}")
+//    // @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_CREATE_USER')")
+//    public ResponseEntity<Response> externalDetails(@PathVariable Long supplierId){
+//        HttpStatus httpCode ;
+//        Response resp = new Response();
+//        ExternalDetailsResponse response = externalSignUpService.externalDetails(supplierId);
+//        resp.setCode(CustomResponseCode.SUCCESS);
+//        resp.setDescription("Record fetched successfully !");
+//        resp.setData(response);
+//        httpCode = HttpStatus.OK;
+//        return new ResponseEntity<>(resp, httpCode);
+//    }
+
+
+    @GetMapping("/details/{supplierId}")
+    public ExternalDetailsResponse externalDetails (@PathVariable Long supplierId) throws Exception {
+        ExternalDetailsResponse response= externalSignUpService.externalDetails(supplierId);
+        return response;
+    }
+
+
     @PutMapping("/completesignup")
     public ResponseEntity<Response> completeSignUp(@Validated @RequestBody CompleteSignupRequest request){
         HttpStatus httpCode ;
