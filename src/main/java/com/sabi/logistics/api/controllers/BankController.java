@@ -2,6 +2,7 @@ package com.sabi.logistics.api.controllers;
 
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
+import com.sabi.framework.service.WhatsAppService;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.BankDto;
@@ -24,9 +25,11 @@ public class BankController {
 
 
     private final BankService service;
+    private final WhatsAppService whatsAppService;
 
-    public BankController(BankService service) {
+    public BankController(BankService service,WhatsAppService whatsAppService) {
         this.service = service;
+        this.whatsAppService = whatsAppService;
     }
 
 
@@ -47,6 +50,17 @@ public class BankController {
         httpCode = HttpStatus.CREATED;
         return new ResponseEntity<>(resp, httpCode);
     }
+
+
+
+//    @PostMapping("/whatsapp")
+//    public WhatsAppResponse whatsApp (@Validated @RequestBody WhatsAppRequest whatsAppRequest){
+//
+//        WhatsAppResponse response = whatsAppService.whatsAppNotification(whatsAppRequest);
+//
+//        return response;
+//
+//    }
 
 
     /** <summary>
