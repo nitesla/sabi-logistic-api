@@ -102,7 +102,7 @@ public class AuthenticationController {
                 if (user.getLoginAttempts() >= loginAttempts || user.getLockedDate() != null) {
                     // lock account after x failed attempts or locked date is not null
                     userService.lockLogin(user.getId());
-                    throw new LockedException(CustomResponseCode.LOCKED_EXCEPTION, "Your account has been locked, kindly contact System Administrator");
+                    throw new LockedException(CustomResponseCode.LOCKED_EXCEPTION, "This account has been locked, Kindly contact support");
                 }
 //                userService.validateGeneratedPassword(user.getId());
             } else {
