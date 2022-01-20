@@ -6,6 +6,7 @@ import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.DropOffRequestDto;
+import com.sabi.logistics.core.dto.request.DropOffStatusDto;
 import com.sabi.logistics.core.dto.response.DropOffResponseDto;
 import com.sabi.logistics.core.models.DropOff;
 import com.sabi.logistics.service.services.DropOffService;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -63,6 +65,18 @@ public class DropOffController {
         HttpStatus httpCode ;
         Response resp = new Response();
         DropOffResponseDto response = service.updateDropOff(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Update Successful");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    @PutMapping("/updatestatus")
+    public ResponseEntity<Response> updateDropOffStatus(@Validated @RequestBody DropOffStatusDto request, HttpServletRequest request1){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        DropOffResponseDto response = service.updateDropOffStatus(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
