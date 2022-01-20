@@ -5,6 +5,7 @@ import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
+import com.sabi.logistics.core.dto.request.ShipmentTripRequest;
 import com.sabi.logistics.core.dto.request.TripMasterRequestDto;
 import com.sabi.logistics.core.dto.request.TripRequestDto;
 import com.sabi.logistics.core.dto.response.TripMasterResponseDto;
@@ -193,6 +194,20 @@ public class TripRequestController {
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+
+
+
+    @PostMapping("/shipmenttrip")
+    public ResponseEntity<Response> shipmentTripRequest(@Validated @RequestBody ShipmentTripRequest request){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        service.shipmentTripRequest(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("successfully");
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
