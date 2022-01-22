@@ -78,7 +78,7 @@ public class PartnerUserController {
         HttpStatus httpCode ;
         Response resp = new Response();
         if(userType !=null ){
-            Page<PartnerUser> response = partnerUserService.findPartnerUsers(userType, PageRequest.of(page, pageSize));
+            Page<PartnerUser> response = partnerUserService.findPartnerUsers(userType,isActive, PageRequest.of(page, pageSize));
             resp.setCode(CustomResponseCode.SUCCESS);
             resp.setDescription("Record fetched successfully !");
             resp.setData(response);
@@ -103,7 +103,7 @@ public class PartnerUserController {
         Response resp = new Response();
 
         if(userType !=null ){
-            List<PartnerUser> response = partnerUserService.findPartnerUsersList(userType);
+            List<PartnerUser> response = partnerUserService.findPartnerUsersList(userType,isActive);
             resp.setCode(CustomResponseCode.SUCCESS);
             resp.setDescription("Record fetched successfully !");
             resp.setData(response);
