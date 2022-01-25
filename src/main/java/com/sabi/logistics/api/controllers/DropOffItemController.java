@@ -6,6 +6,7 @@ import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.DropOffItemRequestDto;
+import com.sabi.logistics.core.dto.response.DropOffItemDetailDto;
 import com.sabi.logistics.core.dto.response.DropOffItemResponseDto;
 import com.sabi.logistics.core.models.DropOffItem;
 import com.sabi.logistics.service.services.DropOffItemService;
@@ -83,6 +84,18 @@ public class DropOffItemController {
         HttpStatus httpCode ;
         Response resp = new Response();
         DropOffItemResponseDto response = service.findDropOffItem(id);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    @GetMapping("/details")
+    public ResponseEntity<Response> getDropOffItemDetails(@RequestParam(value = "orderItemId")Long orderItemId){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        DropOffItemDetailDto response = service.findDropOffItemDetails(orderItemId);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
