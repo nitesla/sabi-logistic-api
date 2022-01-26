@@ -4,6 +4,7 @@ package com.sabi.logistics.api.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sabi.framework.dto.requestDto.GeneratePassword;
 import com.sabi.framework.dto.requestDto.LoginRequest;
+import com.sabi.framework.dto.responseDto.AccessListDto;
 import com.sabi.framework.dto.responseDto.AccessTokenWithUserDetails;
 import com.sabi.framework.dto.responseDto.GeneratePasswordResponse;
 import com.sabi.framework.dto.responseDto.Response;
@@ -11,11 +12,9 @@ import com.sabi.framework.exceptions.LockedException;
 import com.sabi.framework.exceptions.UnauthorizedException;
 import com.sabi.framework.loggers.LoggerUtil;
 import com.sabi.framework.models.User;
+import com.sabi.framework.repositories.PermissionRepository;
 import com.sabi.framework.security.AuthenticationWithToken;
-import com.sabi.framework.service.AuditTrailService;
-import com.sabi.framework.service.ExternalTokenService;
-import com.sabi.framework.service.TokenService;
-import com.sabi.framework.service.UserService;
+import com.sabi.framework.service.*;
 import com.sabi.framework.utils.AuditTrailFlag;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
@@ -64,17 +63,22 @@ public class AuthenticationController {
     private final PartnerCategoriesRepository partnerCategoriesRepository;
     private final PartnerUserRepository partnerUserRepository;
     private final AuditTrailService auditTrailService;
+    private final PermissionRepository permissionRepository;
+    private final PermissionService permissionService;
 
 
     public AuthenticationController(PartnerCategoriesService partnerCategoriesService,UserService userService,PartnerRepository partnerRepository,
                                     PartnerCategoriesRepository partnerCategoriesRepository,PartnerUserRepository partnerUserRepository,
-                                    AuditTrailService auditTrailService) {
+                                    AuditTrailService auditTrailService,PermissionRepository permissionRepository,
+                                    PermissionService permissionService) {
         this.partnerCategoriesService = partnerCategoriesService;
         this.userService = userService;
         this.partnerRepository = partnerRepository;
         this.partnerCategoriesRepository = partnerCategoriesRepository;
         this.partnerUserRepository = partnerUserRepository;
         this.auditTrailService = auditTrailService;
+        this.permissionRepository = permissionRepository;
+        this.permissionService = permissionService;
     }
 
     @PostMapping("/login")
@@ -119,7 +123,8 @@ public class AuthenticationController {
             //NO NEED TO update login failed count and failed login date SINCE IT DOES NOT EXIST
             throw new UnauthorizedException(CustomResponseCode.UNAUTHORIZED, "Login details does not exist");
         }
-        //String accessList = roleService.getPermissionsByUserId(user.getId());
+
+
         String accessList = "";
         AuthenticationWithToken authWithToken = new AuthenticationWithToken(user, null,
                 AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER,"+accessList));
@@ -133,6 +138,7 @@ public class AuthenticationController {
         String referralCode="";
         String isEmailVerified="";
         List<com.sabi.framework.dto.responseDto.PartnersCategoryReturn> partnerCategory= null;
+        List<AccessListDto> permissionList= null;
         if (user.getUserCategory().equals(Constants.OTHER_USER)) {
             PartnerUser partner = partnerUserRepository.findByUserId(user.getId());
             if(partner !=null){
@@ -141,8 +147,9 @@ public class AuthenticationController {
 
             }
         }
+        permissionList = permissionService.getPermissionsByUserId(user.getId());
         AccessTokenWithUserDetails details = new AccessTokenWithUserDetails(newToken, user,
-                accessList,userService.getSessionExpiry(),clientId,referralCode,isEmailVerified,partnerCategory);
+                accessList,userService.getSessionExpiry(),clientId,referralCode,isEmailVerified,partnerCategory,permissionList);
         auditTrailService
                 .logEvent(loginRequest.getUsername(), "Login by username : " + loginRequest.getUsername(),
                         AuditTrailFlag.LOGIN, "Successful Login Request by : " + loginRequest.getUsername() , 1, ipAddress);
