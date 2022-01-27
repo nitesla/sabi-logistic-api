@@ -7,3 +7,16 @@ CREATE TABLE shedlock (
 )
 
 
+
+CREATE TABLE UsersRole(
+  	userId BIGINT NOT NULL REFERENCES user (id),
+  	roleId BIGINT NOT NULL REFERENCES role (id),
+    createdOn            DATETIME     NULL ,
+    createdBy            BIGINT NULL  ,
+    lastUpdatedOn        DATETIME     NULL,
+    lastUpdatedBy        BIGINT     NULL,
+    CONSTRAINT PK_UsersRole PRIMARY KEY (userId,roleId)
+
+ );
+
+

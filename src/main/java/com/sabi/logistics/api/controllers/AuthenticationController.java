@@ -23,6 +23,7 @@ import com.sabi.logistics.core.models.PartnerUser;
 import com.sabi.logistics.service.repositories.PartnerCategoriesRepository;
 import com.sabi.logistics.service.repositories.PartnerRepository;
 import com.sabi.logistics.service.repositories.PartnerUserRepository;
+import com.sabi.logistics.service.services.DriverPasswordService;
 import com.sabi.logistics.service.services.PartnerCategoriesService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -65,12 +66,15 @@ public class AuthenticationController {
     private final AuditTrailService auditTrailService;
     private final PermissionRepository permissionRepository;
     private final PermissionService permissionService;
+    private final DriverPasswordService driverPasswordService;
+    private final UserRoleService userRoleService;
 
 
     public AuthenticationController(PartnerCategoriesService partnerCategoriesService,UserService userService,PartnerRepository partnerRepository,
                                     PartnerCategoriesRepository partnerCategoriesRepository,PartnerUserRepository partnerUserRepository,
                                     AuditTrailService auditTrailService,PermissionRepository permissionRepository,
-                                    PermissionService permissionService) {
+                                    PermissionService permissionService,DriverPasswordService driverPasswordService,
+                                    UserRoleService userRoleService) {
         this.partnerCategoriesService = partnerCategoriesService;
         this.userService = userService;
         this.partnerRepository = partnerRepository;
@@ -79,6 +83,9 @@ public class AuthenticationController {
         this.auditTrailService = auditTrailService;
         this.permissionRepository = permissionRepository;
         this.permissionService = permissionService;
+        this.driverPasswordService = driverPasswordService;
+        this.userRoleService = userRoleService;
+
     }
 
     @PostMapping("/login")
@@ -124,8 +131,7 @@ public class AuthenticationController {
             throw new UnauthorizedException(CustomResponseCode.UNAUTHORIZED, "Login details does not exist");
         }
 
-
-        String accessList = "";
+        String accessList = permissionService.getPermissionsByUserId(user.getId());
         AuthenticationWithToken authWithToken = new AuthenticationWithToken(user, null,
                 AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER,"+accessList));
         String newToken = "Bearer" +" "+this.tokenService.generateNewToken();
@@ -147,7 +153,7 @@ public class AuthenticationController {
 
             }
         }
-        permissionList = permissionService.getPermissionsByUserId(user.getId());
+//        permissionList = permissionService.getPermissionsByUserId(user.getId());
         AccessTokenWithUserDetails details = new AccessTokenWithUserDetails(newToken, user,
                 accessList,userService.getSessionExpiry(),clientId,referralCode,isEmailVerified,partnerCategory,permissionList);
         auditTrailService
@@ -187,7 +193,7 @@ public class AuthenticationController {
     public ResponseEntity<Response> generatePassword(@Validated @RequestBody GeneratePassword request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        GeneratePasswordResponse response=userService.generatePassword(request);
+        GeneratePasswordResponse response=driverPasswordService.generatePassword(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Password generated successfully");
         resp.setData(response);
