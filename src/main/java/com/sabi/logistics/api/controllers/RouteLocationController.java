@@ -8,10 +8,13 @@ import com.sabi.framework.helpers.ResponseHelper;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.RouteLocationRequest;
+import com.sabi.logistics.core.dto.request.RouteLocationTollPriceRequest;
+import com.sabi.logistics.core.dto.response.RouteLocationTollPriceResponse;
 import com.sabi.logistics.service.services.RouteLocationService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,6 +34,18 @@ public class RouteLocationController {
     @PostMapping
     public ResponseEntity<Response> createrouteLocation(@RequestBody @Valid RouteLocationRequest request) {
         return responseHelper.buildResponse(routeLocationService.createrouteLocation(request), HttpStatus.CREATED, "Successful");
+    }
+
+    @PostMapping("tollprice")
+    public ResponseEntity<Response> createShipments(@Validated @RequestBody RouteLocationTollPriceRequest request){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        RouteLocationTollPriceResponse response = routeLocationService.createrouteLocationTollPrice(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Successful");
+        resp.setData(response);
+        httpCode = HttpStatus.CREATED;
+        return new ResponseEntity<>(resp, httpCode);
     }
 
     @PutMapping
