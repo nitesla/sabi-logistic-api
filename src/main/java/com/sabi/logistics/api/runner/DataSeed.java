@@ -421,7 +421,7 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
         appleUser.setPhone("01156548654");
         appleUser.setEmail("appleUser@sabi.com");
         appleUser.setUsername("appleUser@sabi.com");
-        appleUser.setLoginAttempts(0l);
+        appleUser.setLoginAttempts(0);
         appleUser.setUserCategory(Constants.OTHER_USER);
         appleUser.setIsActive(true);
         appleUser.setPasswordChangedOn(LocalDateTime.now());
@@ -448,7 +448,7 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
         sabiUser.setPhone("02163976228");
         sabiUser.setEmail("sabi@sabi.com");
         sabiUser.setUsername("sabi@sabi.com");
-        sabiUser.setLoginAttempts(0l);
+        sabiUser.setLoginAttempts(0);
         sabiUser.setUserCategory(Constants.ADMIN_USER);
         sabiUser.setIsActive(true);
         sabiUser.setPasswordChangedOn(LocalDateTime.now());

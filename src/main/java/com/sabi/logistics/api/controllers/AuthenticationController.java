@@ -4,7 +4,6 @@ package com.sabi.logistics.api.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sabi.framework.dto.requestDto.GeneratePassword;
 import com.sabi.framework.dto.requestDto.LoginRequest;
-import com.sabi.framework.dto.responseDto.AccessListDto;
 import com.sabi.framework.dto.responseDto.AccessTokenWithUserDetails;
 import com.sabi.framework.dto.responseDto.GeneratePasswordResponse;
 import com.sabi.framework.dto.responseDto.Response;
@@ -144,7 +143,6 @@ public class AuthenticationController {
         String referralCode="";
         String isEmailVerified="";
         List<com.sabi.framework.dto.responseDto.PartnersCategoryReturn> partnerCategory= null;
-        List<AccessListDto> permissionList= null;
         if (user.getUserCategory().equals(Constants.OTHER_USER)) {
             PartnerUser partner = partnerUserRepository.findByUserId(user.getId());
             if(partner !=null){
@@ -153,9 +151,8 @@ public class AuthenticationController {
 
             }
         }
-//        permissionList = permissionService.getPermissionsByUserId(user.getId());
         AccessTokenWithUserDetails details = new AccessTokenWithUserDetails(newToken, user,
-                accessList,userService.getSessionExpiry(),clientId,referralCode,isEmailVerified,partnerCategory,permissionList);
+                accessList,userService.getSessionExpiry(),clientId,referralCode,isEmailVerified,partnerCategory);
         auditTrailService
                 .logEvent(loginRequest.getUsername(), "Login by username : " + loginRequest.getUsername(),
                         AuditTrailFlag.LOGIN, "Successful Login Request by : " + loginRequest.getUsername() , 1, ipAddress);
