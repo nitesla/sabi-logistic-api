@@ -60,6 +60,11 @@ public class RouteLocationController {
         return responseHelper.buildResponse(routeLocationService.findrouteLocation(id), HttpStatus.OK, "Record fetched successfully !");
     }
 
+    @GetMapping("stateId/{stateId}")
+    public ResponseEntity<Response> getrouteLocationByStateId(@PathVariable Long stateId) {
+        return responseHelper.buildResponse(routeLocationService.findrouteLocationByStateId(stateId), HttpStatus.OK, "Record fetched successfully !");
+    }
+
     @GetMapping
     public ResponseEntity<Response> getAllrouteLocations(@RequestParam(value = "name",required = false) String name,
                                                          @RequestParam(value = "stateId",required = false) Long stateId,
