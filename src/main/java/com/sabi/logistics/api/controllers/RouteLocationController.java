@@ -8,10 +8,13 @@ import com.sabi.framework.helpers.ResponseHelper;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.RouteLocationRequest;
+import com.sabi.logistics.core.dto.request.RouteLocationTollPriceRequest;
+import com.sabi.logistics.core.dto.response.RouteLocationTollPriceResponse;
 import com.sabi.logistics.service.services.RouteLocationService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,6 +36,18 @@ public class RouteLocationController {
         return responseHelper.buildResponse(routeLocationService.createrouteLocation(request), HttpStatus.CREATED, "Successful");
     }
 
+    @PostMapping("tollprice")
+    public ResponseEntity<Response> createShipments(@Validated @RequestBody RouteLocationTollPriceRequest request){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        RouteLocationTollPriceResponse response = routeLocationService.createrouteLocationTollPrice(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Successful");
+        resp.setData(response);
+        httpCode = HttpStatus.CREATED;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
     @PutMapping
     public ResponseEntity<Response> updaterouteLocation(@RequestBody @Valid RouteLocationRequest request) {
         if (request.getId() == null || request.getId() < 0)
@@ -43,6 +58,11 @@ public class RouteLocationController {
     @GetMapping("/{id}")
     public ResponseEntity<Response> getrouteLocationById(@PathVariable long id) {
         return responseHelper.buildResponse(routeLocationService.findrouteLocation(id), HttpStatus.OK, "Record fetched successfully !");
+    }
+
+    @GetMapping("stateId/{stateId}")
+    public ResponseEntity<Response> getrouteLocationByStateId(@PathVariable Long stateId) {
+        return responseHelper.buildResponse(routeLocationService.findrouteLocationByStateId(stateId), HttpStatus.OK, "Record fetched successfully !");
     }
 
     @GetMapping

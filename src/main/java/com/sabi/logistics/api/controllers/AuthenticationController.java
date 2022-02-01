@@ -11,11 +11,9 @@ import com.sabi.framework.exceptions.LockedException;
 import com.sabi.framework.exceptions.UnauthorizedException;
 import com.sabi.framework.loggers.LoggerUtil;
 import com.sabi.framework.models.User;
+import com.sabi.framework.repositories.PermissionRepository;
 import com.sabi.framework.security.AuthenticationWithToken;
-import com.sabi.framework.service.AuditTrailService;
-import com.sabi.framework.service.ExternalTokenService;
-import com.sabi.framework.service.TokenService;
-import com.sabi.framework.service.UserService;
+import com.sabi.framework.service.*;
 import com.sabi.framework.utils.AuditTrailFlag;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
@@ -24,6 +22,7 @@ import com.sabi.logistics.core.models.PartnerUser;
 import com.sabi.logistics.service.repositories.PartnerCategoriesRepository;
 import com.sabi.logistics.service.repositories.PartnerRepository;
 import com.sabi.logistics.service.repositories.PartnerUserRepository;
+import com.sabi.logistics.service.services.DriverPasswordService;
 import com.sabi.logistics.service.services.PartnerCategoriesService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -64,17 +63,28 @@ public class AuthenticationController {
     private final PartnerCategoriesRepository partnerCategoriesRepository;
     private final PartnerUserRepository partnerUserRepository;
     private final AuditTrailService auditTrailService;
+    private final PermissionRepository permissionRepository;
+    private final PermissionService permissionService;
+    private final DriverPasswordService driverPasswordService;
+    private final UserRoleService userRoleService;
 
 
     public AuthenticationController(PartnerCategoriesService partnerCategoriesService,UserService userService,PartnerRepository partnerRepository,
                                     PartnerCategoriesRepository partnerCategoriesRepository,PartnerUserRepository partnerUserRepository,
-                                    AuditTrailService auditTrailService) {
+                                    AuditTrailService auditTrailService,PermissionRepository permissionRepository,
+                                    PermissionService permissionService,DriverPasswordService driverPasswordService,
+                                    UserRoleService userRoleService) {
         this.partnerCategoriesService = partnerCategoriesService;
         this.userService = userService;
         this.partnerRepository = partnerRepository;
         this.partnerCategoriesRepository = partnerCategoriesRepository;
         this.partnerUserRepository = partnerUserRepository;
         this.auditTrailService = auditTrailService;
+        this.permissionRepository = permissionRepository;
+        this.permissionService = permissionService;
+        this.driverPasswordService = driverPasswordService;
+        this.userRoleService = userRoleService;
+
     }
 
     @PostMapping("/login")
@@ -119,8 +129,8 @@ public class AuthenticationController {
             //NO NEED TO update login failed count and failed login date SINCE IT DOES NOT EXIST
             throw new UnauthorizedException(CustomResponseCode.UNAUTHORIZED, "Login details does not exist");
         }
-        //String accessList = roleService.getPermissionsByUserId(user.getId());
-        String accessList = "";
+
+        String accessList = permissionService.getPermissionsByUserId(user.getId());
         AuthenticationWithToken authWithToken = new AuthenticationWithToken(user, null,
                 AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER,"+accessList));
         String newToken = "Bearer" +" "+this.tokenService.generateNewToken();
@@ -180,7 +190,7 @@ public class AuthenticationController {
     public ResponseEntity<Response> generatePassword(@Validated @RequestBody GeneratePassword request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        GeneratePasswordResponse response=userService.generatePassword(request);
+        GeneratePasswordResponse response=driverPasswordService.generatePassword(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Password generated successfully");
         resp.setData(response);
