@@ -448,7 +448,7 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
         sabiUser.setPhone("02163976228");
         sabiUser.setEmail("sabi@sabi.com");
         sabiUser.setUsername("sabi@sabi.com");
-        sabiUser.setLoginAttempts(0L);
+        sabiUser.setLoginAttempts(0);
         sabiUser.setUserCategory(Constants.ADMIN_USER);
         sabiUser.setIsActive(true);
         sabiUser.setPasswordChangedOn(LocalDateTime.now());
