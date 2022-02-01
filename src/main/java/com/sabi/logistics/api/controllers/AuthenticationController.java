@@ -46,7 +46,6 @@ import java.util.List;
 @RestController
 @RequestMapping(Constants.APP_CONTENT+"authenticate")
 public class AuthenticationController {
-    private  static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
     @Value("${login.attempts}")
     private int loginAttempts;
@@ -170,8 +169,8 @@ public class AuthenticationController {
             AuthenticationWithToken auth = (AuthenticationWithToken) SecurityContextHolder.getContext().getAuthentication();
             return tokenService.remove(auth.getToken());
         } catch (Exception ex) {
-            logger.error(ex.getMessage());
-            LoggerUtil.logError(logger, ex);
+            log.error(ex.getMessage());
+            LoggerUtil.logError(log, ex);
         }
         return false;
     }
