@@ -7,6 +7,7 @@ import com.sabi.framework.dto.requestDto.LoginRequest;
 import com.sabi.framework.dto.responseDto.AccessTokenWithUserDetails;
 import com.sabi.framework.dto.responseDto.GeneratePasswordResponse;
 import com.sabi.framework.dto.responseDto.Response;
+import com.sabi.framework.dto.responseDto.TokenResponse;
 import com.sabi.framework.exceptions.LockedException;
 import com.sabi.framework.exceptions.UnauthorizedException;
 import com.sabi.framework.loggers.LoggerUtil;
@@ -179,8 +180,8 @@ public class AuthenticationController {
 
 
     @PostMapping("/externaltoken")
-    public void externalToken() throws Exception {
-       externalTokenService.externalTokenRequest();
+    public ResponseEntity<TokenResponse> externalToken() throws Exception {
+       return new ResponseEntity<>(externalTokenService.externalTokenRequest(),HttpStatus.OK);
     }
 
 
