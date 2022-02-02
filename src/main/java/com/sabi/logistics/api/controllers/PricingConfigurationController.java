@@ -55,6 +55,8 @@ public class PricingConfigurationController {
                                                                 @RequestParam(value = "routeType", required = false)String routeType,
                                                                 @RequestParam(value = "stateId", required = false)Long stateId,
                                                                 @RequestParam(value = "locationPreference", required = false)String locationPreference,
+                                                                @RequestParam(value = "startingLocation", required = false)String startingLocation,
+                                                                @RequestParam(value = "destinationLocations", required = false)String destinationLocations,
                                                                 @RequestParam(value = "pricePerParameter", required = false)BigDecimal pricePerParameter,
                                                                 @RequestParam(value = "pricePerWeight", required = false)BigDecimal pricePerWeight,
                                                                 @RequestParam(value = "pricePerDistance", required = false)BigDecimal pricePerDistance,
@@ -63,7 +65,7 @@ public class PricingConfigurationController {
                                                  @RequestParam(value = "page") int page,
                                                  @RequestParam(value = "pageSize") int pageSize){
         return responseHelper
-                .buildResponse(pricingConfigurationService.findAll(partnerId, routeType, stateId, locationPreference, pricePerParameter, pricePerWeight,
+                .buildResponse(pricingConfigurationService.findAll(partnerId, routeType, stateId, locationPreference, startingLocation, destinationLocations, pricePerParameter, pricePerWeight,
                                 pricePerDistance, pricePerTime, hasPreferentialPricing, PageRequest.of(page, pageSize)),
                         HttpStatus.OK, "Record fetched successfully !");
     }
