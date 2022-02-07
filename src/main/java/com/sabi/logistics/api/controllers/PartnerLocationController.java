@@ -102,10 +102,11 @@ public class PartnerLocationController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
+    public ResponseEntity<Response> getAll(@RequestParam(value = "partnerId") Long partnerId,
+                                           @RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<PartnerLocation> response = service.getAll(isActive);
+        List<PartnerLocation> response = service.getAll(partnerId, isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
