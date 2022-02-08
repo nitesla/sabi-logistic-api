@@ -84,7 +84,44 @@ public class DropOffController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+    @PutMapping("/paidstatus")
+    public ResponseEntity<Response> updatePaidStatus(@RequestParam(value = "paidStatus")String paidStatus,
+                                                     @RequestParam(value = "dropOffId") Long dropOffId){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        DropOffResponseDto response = service.updatePaidStatus(paidStatus, dropOffId);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Update Successful");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
 
+    @PutMapping("/returnstatus")
+    public ResponseEntity<Response> updateReturnStatus(@RequestParam(value = "returnStatus")String returnStatus,
+                                                     @RequestParam(value = "dropOffId") Long dropOffId){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        DropOffResponseDto response = service.updateReturnStatus(returnStatus, dropOffId);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Update Successful");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    @GetMapping("/getalldropoffs")
+    public ResponseEntity<Response> getAllDropOffs(@RequestParam(value = "paidStatus")String paidStatus,
+                                                   @RequestParam(value = "tripRequestId")Long tripRequestId){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        List<DropOff> response = service.getAllDropOffs(paidStatus, tripRequestId);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
 
     /** <summary>
      * Get single record endpoint
