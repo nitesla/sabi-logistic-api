@@ -7,6 +7,7 @@ import com.sabi.framework.dto.requestDto.LoginRequest;
 import com.sabi.framework.dto.responseDto.AccessTokenWithUserDetails;
 import com.sabi.framework.dto.responseDto.GeneratePasswordResponse;
 import com.sabi.framework.dto.responseDto.Response;
+import com.sabi.framework.dto.responseDto.TokenResponse;
 import com.sabi.framework.exceptions.LockedException;
 import com.sabi.framework.exceptions.UnauthorizedException;
 import com.sabi.framework.loggers.LoggerUtil;
@@ -46,7 +47,6 @@ import java.util.List;
 @RestController
 @RequestMapping(Constants.APP_CONTENT+"authenticate")
 public class AuthenticationController {
-    private  static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
     @Value("${login.attempts}")
     private int loginAttempts;
@@ -170,8 +170,8 @@ public class AuthenticationController {
             AuthenticationWithToken auth = (AuthenticationWithToken) SecurityContextHolder.getContext().getAuthentication();
             return tokenService.remove(auth.getToken());
         } catch (Exception ex) {
-            logger.error(ex.getMessage());
-            LoggerUtil.logError(logger, ex);
+            log.error(ex.getMessage());
+            LoggerUtil.logError(log, ex);
         }
         return false;
     }
@@ -180,8 +180,8 @@ public class AuthenticationController {
 
 
     @PostMapping("/externaltoken")
-    public void externalToken() throws Exception {
-       externalTokenService.externalTokenRequest();
+    public ResponseEntity<TokenResponse> externalToken() throws Exception {
+       return new ResponseEntity<>(externalTokenService.externalTokenRequest(),HttpStatus.OK);
     }
 
 
