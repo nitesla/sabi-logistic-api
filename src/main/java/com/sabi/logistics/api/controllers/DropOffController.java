@@ -85,7 +85,7 @@ public class DropOffController {
     }
 
     @PutMapping("/paidstatus")
-    public ResponseEntity<Response> updatePaidStatus(@RequestParam(value = "paidStatus")String paidStatus,
+    public ResponseEntity<Response> updatePaidStatus(@RequestParam(value = "paidStatus") String paidStatus,
                                                      @RequestParam(value = "dropOffId") Long dropOffId){
         HttpStatus httpCode ;
         Response resp = new Response();
@@ -98,7 +98,7 @@ public class DropOffController {
     }
 
     @PutMapping("/returnstatus")
-    public ResponseEntity<Response> updateReturnStatus(@RequestParam(value = "returnStatus")String returnStatus,
+    public ResponseEntity<Response> updateReturnStatus(@RequestParam(value = "returnStatus") String returnStatus,
                                                      @RequestParam(value = "dropOffId") Long dropOffId){
         HttpStatus httpCode ;
         Response resp = new Response();
