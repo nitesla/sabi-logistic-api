@@ -7,7 +7,6 @@ import com.sabi.framework.dto.requestDto.LoginRequest;
 import com.sabi.framework.dto.responseDto.AccessTokenWithUserDetails;
 import com.sabi.framework.dto.responseDto.GeneratePasswordResponse;
 import com.sabi.framework.dto.responseDto.Response;
-import com.sabi.framework.dto.responseDto.TokenResponse;
 import com.sabi.framework.exceptions.LockedException;
 import com.sabi.framework.exceptions.UnauthorizedException;
 import com.sabi.framework.loggers.LoggerUtil;
@@ -26,8 +25,6 @@ import com.sabi.logistics.service.repositories.PartnerUserRepository;
 import com.sabi.logistics.service.services.DriverPasswordService;
 import com.sabi.logistics.service.services.PartnerCategoriesService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -180,8 +177,8 @@ public class AuthenticationController {
 
 
     @PostMapping("/externaltoken")
-    public ResponseEntity<TokenResponse> externalToken() throws Exception {
-       return new ResponseEntity<>(externalTokenService.externalTokenRequest(),HttpStatus.OK);
+    public void externalToken() throws Exception {
+        externalTokenService.externalTokenRequest();
     }
 
 

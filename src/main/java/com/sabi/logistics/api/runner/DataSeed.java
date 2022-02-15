@@ -57,6 +57,7 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
         seedBanks();
         seedAppleUsers();
         seedSabiUsers();
+        seedAdminUsers();
 
     }
 
@@ -460,4 +461,29 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
     }
 
 
+    private void seedAdminUsers() {
+        User user = userRepo.findByEmail("admin@sabi.com");
+        if (user == null) {
+            createAdminUser();
+        }
+    }
+
+    private User createAdminUser() {
+        User user = new User();
+        user.setFirstName("adminUser");
+        user.setLastName("adminUser2");
+        user.setPassword(passwordEncoder.encode("1111111"));
+        user.setPhone("08136529363");
+        user.setEmail("admin@sabi.com");
+        user.setUsername("admin@sabi.com");
+        user.setLoginAttempts(0);
+        user.setUserCategory(Constants.ADMIN_USER);
+        user.setIsActive(true);
+        user.setPasswordChangedOn(LocalDateTime.now());
+        user.setCreatedBy(0L);
+        user.setCreatedDate(LocalDateTime.now());
+        user.setUpdatedDate(LocalDateTime.now());
+        userRepo.save(user);
+        return user;
+    }
 }
