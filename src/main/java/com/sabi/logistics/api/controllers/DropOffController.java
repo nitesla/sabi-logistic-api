@@ -86,7 +86,7 @@ public class DropOffController {
     }
 
     @PutMapping("/paidstatus")
-    public ResponseEntity<Response> updatePaidStatus(@RequestParam(value = "paidStatus") String paidStatus,
+    public ResponseEntity<Response> updatePaidStatus(@RequestParam(value = "paidStatus")String paidStatus,
                                                      @RequestParam(value = "dropOffId") Long dropOffId){
         HttpStatus httpCode ;
         Response resp = new Response();
