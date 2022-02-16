@@ -111,8 +111,8 @@ public class DropOffController {
     }
 
     @GetMapping("/getalldropoffs")
-    public ResponseEntity<Response> getAllDropOffs(@RequestParam(value = "returnedStatus")String returnedStatus,
-                                                   @RequestParam(value = "tripRequestId")Long driverUserId){
+    public ResponseEntity<Response> getAllDropOffs(@RequestParam(value = "returnedStatus", required = false)String returnedStatus,
+                                                   @RequestParam(value = "driverUserId", required = false)Long driverUserId){
         HttpStatus httpCode ;
         Response resp = new Response();
         List<DropOff> response = service.getAlLDropOffsOfADriver(driverUserId,returnedStatus);
