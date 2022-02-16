@@ -7,6 +7,7 @@ import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.DropOffRequestDto;
 import com.sabi.logistics.core.dto.request.DropOffStatusDto;
+import com.sabi.logistics.core.dto.request.DropOffUpdateRequestDto;
 import com.sabi.logistics.core.dto.response.DropOffResponseDto;
 import com.sabi.logistics.core.models.DropOff;
 import com.sabi.logistics.service.services.DropOffService;
@@ -98,11 +99,10 @@ public class DropOffController {
     }
 
     @PutMapping("/returnstatus")
-    public ResponseEntity<Response> updateReturnStatus(@RequestParam(value = "returnStatus") String returnStatus,
-                                                     @RequestParam(value = "dropOffId") Long dropOffId){
+    public ResponseEntity<Response> updateReturnStatus(DropOffUpdateRequestDto dropOffUpdateRequestDto){
         HttpStatus httpCode ;
         Response resp = new Response();
-        DropOffResponseDto response = service.updateReturnStatus(returnStatus, dropOffId);
+        DropOffResponseDto response = service.updateReturnStatus(dropOffUpdateRequestDto);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -112,10 +112,11 @@ public class DropOffController {
 
     @GetMapping("/getalldropoffs")
     public ResponseEntity<Response> getAllDropOffs(@RequestParam(value = "paidStatus")String paidStatus,
+                                                   @RequestParam(value = "returnedStatus")String returnedStatus,
                                                    @RequestParam(value = "tripRequestId")Long tripRequestId){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<DropOff> response = service.getAllDropOffs(paidStatus, tripRequestId);
+        List<DropOff> response = service.getAllDropOffs(paidStatus,returnedStatus, tripRequestId);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
