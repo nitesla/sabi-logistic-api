@@ -7,6 +7,7 @@ import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.DropOffRequestDto;
 import com.sabi.logistics.core.dto.request.DropOffStatusDto;
+import com.sabi.logistics.core.dto.request.DropOffUpdatePaidDto;
 import com.sabi.logistics.core.dto.request.DropOffUpdateRequestDto;
 import com.sabi.logistics.core.dto.response.DropOffResponseDto;
 import com.sabi.logistics.core.models.DropOff;
@@ -86,11 +87,10 @@ public class DropOffController {
     }
 
     @PutMapping("/paidstatus")
-    public ResponseEntity<Response> updatePaidStatus(@RequestParam(value = "paidStatus")String paidStatus,
-                                                     @RequestParam(value = "dropOffId") Long dropOffId){
+    public ResponseEntity<Response> updatePaidStatus(@Validated @RequestBody DropOffUpdatePaidDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        DropOffResponseDto response = service.updatePaidStatus(paidStatus, dropOffId);
+        DropOffResponseDto response = service.updatePaidStatus(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -99,7 +99,7 @@ public class DropOffController {
     }
 
     @PutMapping("/returnstatus")
-    public ResponseEntity<Response> updateReturnStatus(DropOffUpdateRequestDto dropOffUpdateRequestDto){
+    public ResponseEntity<Response> updateReturnStatus(@Validated @RequestBody DropOffUpdateRequestDto dropOffUpdateRequestDto){
         HttpStatus httpCode ;
         Response resp = new Response();
         DropOffResponseDto response = service.updateReturnStatus(dropOffUpdateRequestDto);
@@ -111,12 +111,11 @@ public class DropOffController {
     }
 
     @GetMapping("/getalldropoffs")
-    public ResponseEntity<Response> getAllDropOffs(@RequestParam(value = "paidStatus")String paidStatus,
-                                                   @RequestParam(value = "returnedStatus")String returnedStatus,
-                                                   @RequestParam(value = "tripRequestId")Long tripRequestId){
+    public ResponseEntity<Response> getAllDropOffs(@RequestParam(value = "returnedStatus", required = false)String returnedStatus,
+                                                   @RequestParam(value = "driverUserId", required = false)Long driverUserId){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<DropOff> response = service.getAllDropOffs(paidStatus,returnedStatus, tripRequestId);
+        List<DropOff> response = service.getAlLDropOffsOfADriver(driverUserId,returnedStatus);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
