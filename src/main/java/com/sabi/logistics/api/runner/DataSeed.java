@@ -54,10 +54,10 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
 //        seedCountries();
 //        seedStates();
 //        seedLocalGovernments();
-//        seedBanks();
-//        seedAppleUsers();
-//        seedSabiUsers();
-//        seedAdminUsers();
+        seedBanks();
+        seedAppleUsers();
+        seedSabiUsers();
+        seedAdminUsers();
 
     }
 
