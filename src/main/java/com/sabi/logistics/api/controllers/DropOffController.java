@@ -7,6 +7,7 @@ import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.DropOffRequestDto;
 import com.sabi.logistics.core.dto.request.DropOffStatusDto;
+import com.sabi.logistics.core.dto.request.DropOffUpdatePaidDto;
 import com.sabi.logistics.core.dto.request.DropOffUpdateRequestDto;
 import com.sabi.logistics.core.dto.response.DropOffResponseDto;
 import com.sabi.logistics.core.models.DropOff;
@@ -86,11 +87,10 @@ public class DropOffController {
     }
 
     @PutMapping("/paidstatus")
-    public ResponseEntity<Response> updatePaidStatus(@RequestParam(value = "paidStatus")String paidStatus,
-                                                     @RequestParam(value = "dropOffId") Long dropOffId){
+    public ResponseEntity<Response> updatePaidStatus(@Validated @RequestBody DropOffUpdatePaidDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        DropOffResponseDto response = service.updatePaidStatus(paidStatus, dropOffId);
+        DropOffResponseDto response = service.updatePaidStatus(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);

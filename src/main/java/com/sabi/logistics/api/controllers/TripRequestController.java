@@ -122,13 +122,14 @@ public class TripRequestController {
                                                     @RequestParam(value = "wareHouseId",required = false)Long wareHouseId,
                                                     @RequestParam(value = "wareHouseAddress",required = false)String wareHouseAddress,
                                                     @RequestParam(value = "partnerAssetId",required = false)Long partnerAssetId,
-                                                    @RequestParam(value = "unassigned", required = false) Boolean unassigned,
+                                                    @RequestParam(value = "unassignedPartner", required = false) Boolean unassignedPartner,
                                                     @RequestParam(value = "deliveryStatus",required = false)String deliveryStatus,
+                                                    @RequestParam(value = "unassignedDriver", required = false) Boolean unassignedDriver,
                                                     @RequestParam(value = "page") int page,
                                                     @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<TripRequest> response = service.findAll(partnerId, status, referenceNo, driverUserId, driverAssistantUserId, wareHouseId, wareHouseAddress, partnerAssetId, unassigned, deliveryStatus, PageRequest.of(page, pageSize));
+        Page<TripRequest> response = service.findAll(partnerId, status, referenceNo, driverUserId, driverAssistantUserId, wareHouseId, wareHouseAddress, partnerAssetId, unassignedPartner, deliveryStatus, unassignedDriver, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);

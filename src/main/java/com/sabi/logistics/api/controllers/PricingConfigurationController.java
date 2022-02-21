@@ -8,6 +8,7 @@ import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.logistics.core.dto.request.PricingConfigMasterRequest;
 import com.sabi.logistics.core.dto.request.PricingConfigurationRequest;
+import com.sabi.logistics.core.enums.DynamicType;
 import com.sabi.logistics.service.services.PricingConfigurationService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -55,17 +56,18 @@ public class PricingConfigurationController {
                                                                 @RequestParam(value = "routeType", required = false)String routeType,
                                                                 @RequestParam(value = "arrivalStateId", required = false)Long arrivalStateId,
                                                                 @RequestParam(value = "locationPreference", required = false)String locationPreference,
-                                                                @RequestParam(value = "startingLocation", required = false)String startingLocation,
                                                                 @RequestParam(value = "pricePerParameter", required = false)BigDecimal pricePerParameter,
                                                                 @RequestParam(value = "pricePerWeight", required = false)BigDecimal pricePerWeight,
                                                                 @RequestParam(value = "pricePerDistance", required = false)BigDecimal pricePerDistance,
                                                                 @RequestParam(value = "pricePerTime", required = false)BigDecimal pricePerTime,
                                                                 @RequestParam(value = "hasPreferentialPricing", required = false) Boolean hasPreferentialPricing,
-                                                 @RequestParam(value = "page") int page,
-                                                 @RequestParam(value = "pageSize") int pageSize){
+                                                                @RequestParam(value = "dynamicType", required = false)DynamicType dynamicType,
+                                                                @RequestParam(value = "tripType", required = false)String tripType,
+                                                                @RequestParam(value = "page") int page,
+                                                                @RequestParam(value = "pageSize") int pageSize){
         return responseHelper
-                .buildResponse(pricingConfigurationService.findAll(partnerId, routeType, arrivalStateId, locationPreference, startingLocation, pricePerParameter, pricePerWeight,
-                                pricePerDistance, pricePerTime, hasPreferentialPricing, PageRequest.of(page, pageSize)),
+                .buildResponse(pricingConfigurationService.findAll(partnerId, routeType, arrivalStateId, locationPreference, pricePerParameter, pricePerWeight,
+                                pricePerDistance, pricePerTime, hasPreferentialPricing, dynamicType, tripType, PageRequest.of(page, pageSize)),
                         HttpStatus.OK, "Record fetched successfully !");
     }
 

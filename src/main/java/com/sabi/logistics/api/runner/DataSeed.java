@@ -51,13 +51,13 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
-        seedCountries();
-        seedStates();
-        seedLocalGovernments();
-        seedBanks();
-        seedAppleUsers();
-        seedSabiUsers();
-        seedAdminUsers();
+//        seedCountries();
+//        seedStates();
+//        seedLocalGovernments();
+//        seedBanks();
+//        seedAppleUsers();
+//        seedSabiUsers();
+//        seedAdminUsers();
 
     }
 
