@@ -84,12 +84,11 @@ public class WarehousePictureController {
 
     @GetMapping("")
     public ResponseEntity<Response> getWarehousePictures(@RequestParam(value = "warehouseId",required = false)Long warehouseId,
-                                                     @RequestParam(value = "pictureType",required = false)String pictureType,
                                                      @RequestParam(value = "page") int page,
                                                      @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<WarehousePicture> response = service.findAll(warehouseId,pictureType, PageRequest.of(page, pageSize));
+        Page<WarehousePicture> response = service.findAll(warehouseId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
