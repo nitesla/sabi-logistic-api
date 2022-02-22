@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "remote.web.service.baseUrl",
+      "type": "java.lang.String",
+      "description": "Description for remote.web.service.baseUrl."
+  }
+] }
