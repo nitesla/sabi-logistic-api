@@ -2,6 +2,9 @@ package com.sabi.logistics.api.helper;
 
 
 import com.sabi.logistics.service.integrations.SyncOrderService;
+import com.sabi.logistics.service.repositories.TripRequestRepository;
+import com.sabi.logistics.service.repositories.TripRequestResponseRepository;
+import com.sabi.logistics.service.services.TripRequestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,9 +31,7 @@ public class ScheduledTasks {
 @Value("${remote.web.service.url}")
 private String requestUrl;
 private final SyncOrderService syncOrderService;
-
-
-
+private final TripRequestService tripRequestService;
 //    @Autowired
 //    private AsyncService asyncService;
 //
@@ -49,9 +50,13 @@ private final SyncOrderService syncOrderService;
     public void syncExternalDB() throws Exception{
         log.info("Scheduler for syncing orders with sabi called");
         //syncOrderService.syncAndPullExternalOrders(requestUrl);
-
     }
 
+    @Scheduled(fixedDelayString = "${trip.request.expired.time}")
+    private void expireAcceptedAndExpiredTrips() throws Exception{
+        log.info("Getting ready to expire unaccepted trips.");
+        tripRequestService.expireUnAcceptedTrips();
+    }
 
 
 }
