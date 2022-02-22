@@ -1,8 +1,19 @@
 package com.sabi.logistics.api.helper;
 
 
+import com.sabi.logistics.service.integrations.SyncOrderService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalField;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -10,8 +21,13 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class ScheduledTasks {
 
+
+@Value("${remote.web.service.url}")
+private String requestUrl;
+private final SyncOrderService syncOrderService;
 
 
 
@@ -29,7 +45,12 @@ public class ScheduledTasks {
 //    }
 
 
+    @Scheduled(fixedDelayString = "${sync-interval-in-miliseconds}")
+    public void syncExternalDB() throws Exception{
+        log.info("Scheduler for syncing orders with sabi called");
+        //syncOrderService.syncAndPullExternalOrders(requestUrl);
 
+    }
 
 
 
