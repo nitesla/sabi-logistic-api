@@ -78,8 +78,9 @@ public class PricingConfigurationController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
-        return responseHelper.buildResponse(pricingConfigurationService.getAll(isActive), HttpStatus.OK, "Record fetched successfully !");
+    public ResponseEntity<Response> getAll(@RequestParam(value = "partnerId") Long partnerId,
+                                           @RequestParam(value = "isActive")Boolean isActive){
+        return responseHelper.buildResponse(pricingConfigurationService.getAll(partnerId, isActive), HttpStatus.OK, "Record fetched successfully !");
     }
 
 }
