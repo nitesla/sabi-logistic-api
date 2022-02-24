@@ -2,6 +2,7 @@ package com.sabi.logistics.api.controllers;
 
 import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
+import com.sabi.framework.globaladminintegration.GlobalService;
 import com.sabi.framework.service.WhatsAppService;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
@@ -26,10 +27,12 @@ public class BankController {
 
     private final BankService service;
     private final WhatsAppService whatsAppService;
+    private final GlobalService globalService;
 
-    public BankController(BankService service,WhatsAppService whatsAppService) {
+    public BankController(BankService service,WhatsAppService whatsAppService,GlobalService globalService) {
         this.service = service;
         this.whatsAppService = whatsAppService;
+        this.globalService = globalService;
     }
 
 
@@ -38,7 +41,6 @@ public class BankController {
      * </summary>
      * <remarks>this endpoint is responsible for creation of new bank</remarks>
      */
-
     @PostMapping("")
     public ResponseEntity<Response> createBank(@Validated @RequestBody BankDto request){
         HttpStatus httpCode ;
@@ -152,4 +154,26 @@ public class BankController {
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
     }
+
+
+
+
+//    @PostMapping("")
+//    public SingleResponse getBank (SingleRequest request) throws Exception {
+//        SingleResponse response= globalService.getSingleBank(request);
+//        return response;
+//    }
+//
+//
+//    @PostMapping("/page")
+//    public PageResponse getBanks (BankRequest request) throws Exception {
+//        PageResponse response= globalService.getBankPagination(request);
+//        return response;
+//    }
+//
+//    @PostMapping("/list")
+//    public ListResponse getAll (BankRequest request) throws Exception {
+//        ListResponse response= globalService.getBankList(request);
+//        return response;
+//    }
 }
