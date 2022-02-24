@@ -49,7 +49,7 @@ private final TripRequestService tripRequestService;
     @Scheduled(fixedDelayString = "${sync-interval-in-miliseconds}")
     public void syncExternalDB() throws Exception{
         log.info("Scheduler for syncing orders with sabi called");
-        //syncOrderService.syncAndPullExternalOrders(requestUrl);
+        syncOrderService.syncAndPullExternalOrders(requestUrl);
     }
 
     @Scheduled(fixedDelayString = "${trip.request.expired.time}")
