@@ -58,12 +58,12 @@ public class PartnerUserController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
-    @PutMapping("")
-    public ResponseEntity<Response> uploadPartnerUserPicture(@Validated @RequestBody PartnerUserRequestDto partnerUserRequestDto){
-        Response response = new Response(CustomResponseCode.SUCCESS,"Update Successful");
-        response.setData(partnerUserService.uploadPartnerUserPicture(partnerUserRequestDto));
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+//    @PutMapping("")
+//    public ResponseEntity<Response> uploadPartnerUserPicture(@Validated @RequestBody PartnerUserRequestDto partnerUserRequestDto){
+//        Response response = new Response(CustomResponseCode.SUCCESS,"Update Successful");
+//        response.setData(partnerUserService.uploadPartnerUserPicture(partnerUserRequestDto));
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 
     @GetMapping("/page")
     public ResponseEntity<Response> getPartnerUser(@RequestParam(value = "firstName",required = false)String firstName,
