@@ -35,8 +35,6 @@ public class PartnerUserController {
 
     }
 
-
-
     @PostMapping("")
     public ResponseEntity<Response> createPartnerUser(@Validated @RequestBody PartnerUserRequestDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
@@ -49,8 +47,6 @@ public class PartnerUserController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
-
-
     @PostMapping("/activatepartneruser")
     public ResponseEntity<Response> activatePartnerUser(@Validated @RequestBody PartnerUserActivation request){
         HttpStatus httpCode ;
@@ -62,7 +58,12 @@ public class PartnerUserController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
-
+//    @PutMapping("")
+//    public ResponseEntity<Response> uploadPartnerUserPicture(@Validated @RequestBody PartnerUserRequestDto partnerUserRequestDto){
+//        Response response = new Response(CustomResponseCode.SUCCESS,"Update Successful");
+//        response.setData(partnerUserService.uploadPartnerUserPicture(partnerUserRequestDto));
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 
     @GetMapping("/page")
     public ResponseEntity<Response> getPartnerUser(@RequestParam(value = "firstName",required = false)String firstName,
