@@ -67,7 +67,7 @@ public class PricingItemsController {
         return responseHelper.buildResponse(pricingItemsService.getAll(isActive), HttpStatus.OK, "Record fetched successfully !");
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Response> deletePricingItemById(@PathVariable long id){
 
         HttpStatus httpCode ;
