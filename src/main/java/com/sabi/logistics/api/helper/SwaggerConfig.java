@@ -28,9 +28,9 @@ public class SwaggerConfig {
 
                 .apis(RequestHandlerSelectors.basePackage("com.sabi.logistics.api"))
                 .paths(regex("/*.*")).build()
+                .apiInfo(metaData())
                 .securitySchemes(Arrays.asList(apiKey()))
-                .securityContexts(Arrays.asList(securityContext()))
-                .apiInfo(metaData());
+                .securityContexts(Arrays.asList(securityContext()));
     }
 
     private ApiInfo metaData() {
@@ -51,16 +51,9 @@ public class SwaggerConfig {
     private List<SecurityReference> defaultAuth(){
         AuthorizationScope authorizationScope = new AuthorizationScope("global","have access to every endpoint");
         AuthorizationScope [] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
         return  Arrays.asList(new SecurityReference("JWT",authorizationScopes));
     }
-
-
-
-
-
-
-
-
 
 }
 
