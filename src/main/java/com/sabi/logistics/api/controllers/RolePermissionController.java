@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Slf4j
@@ -37,13 +36,12 @@ public class RolePermissionController {
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createRolePermission(@Validated @RequestBody RolePermissionDto request,HttpServletRequest request1){
+    public ResponseEntity<Response> assignPermission(@Validated @RequestBody RolePermissionDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        RolePermissionResponseDto response = service.createRolePermission(request,request1);
+        service.assignPermission(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
-        resp.setData(response);
         httpCode = HttpStatus.CREATED;
         return new ResponseEntity<>(resp, httpCode);
     }
@@ -55,17 +53,17 @@ public class RolePermissionController {
      * <remarks>this endpoint is responsible for updating RolePermission</remarks>
      */
 
-    @PutMapping("")
-    public ResponseEntity<Response> updateRolePermission(@Validated @RequestBody  RolePermissionDto request,HttpServletRequest request1){
-        HttpStatus httpCode ;
-        Response resp = new Response();
-        RolePermissionResponseDto response = service.updateRolePermission(request,request1);
-        resp.setCode(CustomResponseCode.SUCCESS);
-        resp.setDescription("Update Successful");
-        resp.setData(response);
-        httpCode = HttpStatus.OK;
-        return new ResponseEntity<>(resp, httpCode);
-    }
+//    @PutMapping("")
+//    public ResponseEntity<Response> updateRolePermission(@Validated @RequestBody  RolePermissionDto request,HttpServletRequest request1){
+//        HttpStatus httpCode ;
+//        Response resp = new Response();
+//        RolePermissionResponseDto response = service.updateRolePermission(request,request1);
+//        resp.setCode(CustomResponseCode.SUCCESS);
+//        resp.setDescription("Update Successful");
+//        resp.setData(response);
+//        httpCode = HttpStatus.OK;
+//        return new ResponseEntity<>(resp, httpCode);
+//    }
 
 
     /** <summary>
@@ -122,16 +120,15 @@ public class RolePermissionController {
 
 
 
-//    @GetMapping("/permission/{roleId}")
-//    public ResponseEntity<Response> getPermissionsByRole(@PathVariable Long roleId){
-//        HttpStatus httpCode ;
-//        Response resp = new Response();
-//        List<RolePermission> response = service.getPermissionsByRole(roleId);
-//        resp.setCode(CustomResponseCode.SUCCESS);
-//        resp.setDescription("Record fetched successfully !");
-//        resp.setData(response);
-//        httpCode = HttpStatus.OK;
-//        return new ResponseEntity<>(resp, httpCode);
-//    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Response> removePermission(@PathVariable Long id){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        service.removePermission(id);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Permission removed successfully !");
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
 
 }
