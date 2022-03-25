@@ -94,12 +94,13 @@ public class PaymentTermsController {
     @GetMapping("")
     public ResponseEntity<Response> getPaymentTerms(@RequestParam(value = "partnerAssetTypeId",required = false)Long partnerAssetTypeId,
                                                     @RequestParam(value = "days",required = false)Integer days,
+                                                    @RequestParam(value = "isActive", required = false)Boolean isActive,
                                                     @RequestParam(value = "partnerId",required = false)Long partnerId,
                                                     @RequestParam(value = "page") int page,
                                                     @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<PaymentTerms> response = service.findAll(partnerAssetTypeId, days, partnerId, PageRequest.of(page, pageSize));
+        Page<PaymentTerms> response = service.findAll(partnerAssetTypeId, days,isActive, partnerId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
