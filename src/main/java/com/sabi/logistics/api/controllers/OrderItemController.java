@@ -11,11 +11,13 @@ import com.sabi.logistics.core.models.OrderItem;
 import com.sabi.logistics.service.services.OrderItemService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -92,9 +94,15 @@ public class OrderItemController {
 
 
     /** <summary>
-     * Get all records endpoint
+     * Get/search all records endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
+     * <remarks>this endpoint is responsible for getting all records and its searchable
+     * For  the dateRanges,  startDate and endDate should be in this  format
+     *      startDate=YYYY-MM-DDTHH:mm:ss
+     *      Example:
+     *      startDate=2022-03-18T12:08:06
+     *      endDate=2022-03-18T12:08:06
+     * </remarks>
      */
     @GetMapping("")
     public ResponseEntity<Response> getOrderItems(@RequestParam(value = "wareHouseId",required = false)Long wareHouseId,
@@ -102,11 +110,13 @@ public class OrderItemController {
                                                   @RequestParam(value = "hasInventory",required = false) Boolean hasInventory,
                                                   @RequestParam(value = "productName",required = false) String productName,
                                                   @RequestParam(value = "qty",required = false)Integer qty,
+                                                  @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                                                  @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
                                                   @RequestParam(value = "page") int page,
-                                              @RequestParam(value = "pageSize") int pageSize){
+                                                  @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<OrderItem> response = service.findAll(wareHouseId, deliveryStatus, hasInventory, productName, qty,PageRequest.of(page, pageSize));
+        Page<OrderItem> response = service.findAll(wareHouseId, deliveryStatus, hasInventory, productName, qty, startDate,endDate,PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
