@@ -112,11 +112,12 @@ public class OrderItemController {
                                                   @RequestParam(value = "qty",required = false)Integer qty,
                                                   @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                                                   @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+                                                  @RequestParam(value = "customerName",required = false) String customerName,
                                                   @RequestParam(value = "page") int page,
                                                   @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<OrderItem> response = service.findAll(wareHouseId, deliveryStatus, hasInventory, productName, qty, startDate,endDate,PageRequest.of(page, pageSize));
+        Page<OrderItem> response = service.findAll(wareHouseId, deliveryStatus, hasInventory, productName, qty, startDate,endDate,customerName,PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
