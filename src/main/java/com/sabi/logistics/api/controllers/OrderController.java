@@ -104,6 +104,18 @@ public class OrderController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+    @GetMapping("/orderNumber")
+    public ResponseEntity<Response> getOrderByOrderNumber(@RequestParam(value = "orderNumber") String orderNumber){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        OrderResponseDto response = service.findOrderNumber(orderNumber);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
 
 
     /** <summary>
