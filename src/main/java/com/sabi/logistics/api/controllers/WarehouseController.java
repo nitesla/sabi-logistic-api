@@ -53,7 +53,8 @@ public class WarehouseController {
     public ResponseEntity<Response> getAllWarehouses(@RequestParam(value = "owner",required = false)String owner,
                                                  @RequestParam(value = "name", required = false) String name,
                                                  @RequestParam(value = "partnerId", required = false) Long partnerId,
-                                                     @RequestParam(value = "isActive", required = false) Boolean isActive,
+                                                 @RequestParam(value = "state", required = false) String state,
+                                                 @RequestParam(value = "isActive", required = false) Boolean isActive,
                                                  @RequestParam(value = "lgaId", required = false) Long lgaId,
                                                  @RequestParam(value = "page") int page,
                                                  @RequestParam(value = "pageSize") int pageSize){
@@ -61,7 +62,7 @@ public class WarehouseController {
         HttpStatus httpCode ;
         Response resp = new Response();
 
-        Page<Warehouse> response = warehouseService.findAll(owner, name, partnerId,isActive, lgaId, PageRequest.of(page, pageSize));
+        Page<Warehouse> response = warehouseService.findAll(owner, name, partnerId, state,isActive, lgaId, PageRequest.of(page, pageSize));
 
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
