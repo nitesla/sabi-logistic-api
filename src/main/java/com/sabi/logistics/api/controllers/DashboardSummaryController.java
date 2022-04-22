@@ -12,10 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -54,6 +51,19 @@ public class DashboardSummaryController {
 
     }
 
+    /**
+     * @Description: Endpoint to get driver trips deliveryStatus
+     * @Author: Afam Okonkwo
+     * @Date: 21/04/2022
+     * @param driverId
+     * @return
+     */
+    @GetMapping("/driver/{driverId}")
+    public ResponseEntity<Response> driverTripsDeliveryInfo(@PathVariable(value = "driverId") Long driverId){
+        Response response = new Response("200","Successfull");
+        response.setData(service.getDriverTripsStatistics(driverId));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
 
     @GetMapping("")
