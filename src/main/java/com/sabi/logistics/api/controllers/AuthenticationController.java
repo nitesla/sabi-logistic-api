@@ -128,6 +128,7 @@ public class AuthenticationController {
         }
 
         String accessList = permissionService.getPermissionsByUserId(user.getId());
+        log.info("Permission Access List =={}",accessList);
         AuthenticationWithToken authWithToken = new AuthenticationWithToken(user, null,
                 AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER,"+accessList));
         String newToken = "Bearer" +" "+this.tokenService.generateNewToken();

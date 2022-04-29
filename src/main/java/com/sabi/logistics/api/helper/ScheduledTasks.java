@@ -57,6 +57,4 @@ private final TripRequestService tripRequestService;
         log.info("Getting ready to expire unaccepted trips.");
         tripRequestService.expireUnAcceptedTrips();
     }
-
-
 }
