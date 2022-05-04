@@ -18,10 +18,12 @@ import com.sabi.framework.utils.AuditTrailFlag;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
 import com.sabi.framework.utils.Utility;
+import com.sabi.logistics.core.dto.request.AdminAuthDto;
 import com.sabi.logistics.core.models.PartnerUser;
 import com.sabi.logistics.service.repositories.PartnerCategoriesRepository;
 import com.sabi.logistics.service.repositories.PartnerRepository;
 import com.sabi.logistics.service.repositories.PartnerUserRepository;
+import com.sabi.logistics.service.services.AdminUserService;
 import com.sabi.logistics.service.services.DriverPasswordService;
 import com.sabi.logistics.service.services.PartnerCategoriesService;
 import lombok.extern.slf4j.Slf4j;
@@ -64,13 +66,14 @@ public class AuthenticationController {
     private final PermissionService permissionService;
     private final DriverPasswordService driverPasswordService;
     private final UserRoleService userRoleService;
+    private final AdminUserService adminUserService;
 
 
-    public AuthenticationController(PartnerCategoriesService partnerCategoriesService,UserService userService,PartnerRepository partnerRepository,
-                                    PartnerCategoriesRepository partnerCategoriesRepository,PartnerUserRepository partnerUserRepository,
-                                    AuditTrailService auditTrailService,PermissionRepository permissionRepository,
-                                    PermissionService permissionService,DriverPasswordService driverPasswordService,
-                                    UserRoleService userRoleService) {
+    public AuthenticationController(PartnerCategoriesService partnerCategoriesService, UserService userService, PartnerRepository partnerRepository,
+                                    PartnerCategoriesRepository partnerCategoriesRepository, PartnerUserRepository partnerUserRepository,
+                                    AuditTrailService auditTrailService, PermissionRepository permissionRepository,
+                                    PermissionService permissionService, DriverPasswordService driverPasswordService,
+                                    UserRoleService userRoleService, AdminUserService adminUserService) {
         this.partnerCategoriesService = partnerCategoriesService;
         this.userService = userService;
         this.partnerRepository = partnerRepository;
@@ -82,6 +85,12 @@ public class AuthenticationController {
         this.driverPasswordService = driverPasswordService;
         this.userRoleService = userRoleService;
 
+        this.adminUserService = adminUserService;
+    }
+
+    @PostMapping("/admin/login")
+    public ResponseEntity<?> authenticateAdmin(@RequestBody AdminAuthDto adminAuthDto, HttpServletRequest httpServletRequest){
+        return  adminUserService.createOrLoginAdmin(adminAuthDto,httpServletRequest);
     }
 
     @PostMapping("/login")
