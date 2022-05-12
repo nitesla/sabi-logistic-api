@@ -58,10 +58,10 @@ public class DashboardSummaryController {
      * @param driverId
      * @return
      */
-    @GetMapping("/driver/{driverId}")
-    public ResponseEntity<Response> driverTripsDeliveryInfo(@PathVariable(value = "driverId") Long driverId){
+    @GetMapping("/driver/{driverUserId}")
+    public ResponseEntity<Response> driverTripsDeliveryInfo(@PathVariable(value = "driverUserId") Long driverUserId){
         Response response = new Response("200","Successfull");
-        response.setData(service.getDriverTripsStatistics(driverId));
+        response.setData(service.getDriverTripsStatistics(driverUserId));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
