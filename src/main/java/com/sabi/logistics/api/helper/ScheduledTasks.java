@@ -52,9 +52,16 @@ private final TripRequestService tripRequestService;
         syncOrderService.syncAndPullExternalOrders(requestUrl);
     }
 
-    @Scheduled(fixedDelayString = "${trip.request.expired.time}")
-    private void expireAcceptedAndExpiredTrips() throws Exception{
+    @Scheduled(cron = "${tripExpiryInterval}")
+    private void expireAcceptedAndExpiredTrips() throws Exception {
         log.info("Getting ready to expire unaccepted trips.");
         tripRequestService.expireUnAcceptedTrips();
     }
+
+    @Scheduled(fixedDelayString= "${trip-request-due-for-expiry-db-load-time}")
+    private void loadTripsQualifiedForExpiration() throws Exception{
+        log.info("Loading Trips Qualified for expiration.");
+        tripRequestService.loadTripsQualifiedForExpiration();
+    }
+
 }
