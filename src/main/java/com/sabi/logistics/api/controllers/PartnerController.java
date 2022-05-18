@@ -171,6 +171,20 @@ public class PartnerController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+    @GetMapping("/category")
+    public ResponseEntity<Response> getPartnersByActegories(@RequestParam(value = "categoryId")Long categoryId,
+                                                            @RequestParam(value = "page") int page,
+                                                            @RequestParam(value = "pageSize") int pageSize){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        Page<Partner> response = service.getAllPartnersByCategory(categoryId, PageRequest.of(page, pageSize));
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
 
     @PutMapping("/enabledisenable")
     public ResponseEntity<Response> enableDisEnable(@Validated @RequestBody EnableDisEnableDto request,HttpServletRequest request1){
