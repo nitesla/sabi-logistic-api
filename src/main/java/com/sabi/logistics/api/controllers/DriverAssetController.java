@@ -69,6 +69,16 @@ public class DriverAssetController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+    @GetMapping("/byUserId/{driverUserId}")
+    public ResponseEntity<Response> getDriverAssetsByUserId(@PathVariable Long driverUserId){
+
+        Response resp = new Response();
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(service.getDriverAssetsByUserId(driverUserId));
+        return new ResponseEntity<>(resp,HttpStatus.OK);
+    }
+
 
     @GetMapping("")
     public ResponseEntity<Response> getDriversAssets(
