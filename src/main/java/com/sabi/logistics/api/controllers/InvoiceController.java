@@ -5,12 +5,12 @@ import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabi.logistics.core.dto.request.OrderOrderItemDto;
-import com.sabi.logistics.core.dto.request.OrderRequestDto;
-import com.sabi.logistics.core.dto.response.OrderOrderItemResponseDto;
-import com.sabi.logistics.core.dto.response.OrderResponseDto;
-import com.sabi.logistics.core.models.Order;
-import com.sabi.logistics.service.services.OrderService;
+import com.sabi.logistics.core.dto.request.InvoiceInvoiceItemDto;
+import com.sabi.logistics.core.dto.request.InvoiceRequestDto;
+import com.sabi.logistics.core.dto.response.InvoiceInvoiceItemResponseDto;
+import com.sabi.logistics.core.dto.response.InvoiceResponseDto;
+import com.sabi.logistics.core.models.Invoice;
+import com.sabi.logistics.service.services.InvoiceService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -25,28 +25,28 @@ import java.util.List;
 
 @SuppressWarnings("All")
 @RestController
-@RequestMapping(Constants.APP_CONTENT+"order")
-public class OrderController {
+@RequestMapping(Constants.APP_CONTENT+"invoice")
+public class InvoiceController {
 
 
-    private final OrderService service;
+    private final InvoiceService service;
 
-    public OrderController(OrderService service) {
+    public InvoiceController(InvoiceService service) {
         this.service = service;
     }
 
 
     /** <summary>
-     * Order creation endpoint
+     * Invoice creation endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for creation of new Orders</remarks>
+     * <remarks>this endpoint is responsible for creation of new Invoices</remarks>
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createOrder(@Validated @RequestBody OrderRequestDto request,HttpServletRequest request1){
+    public ResponseEntity<Response> createInvoice(@Validated @RequestBody InvoiceRequestDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        OrderResponseDto response = service.createOrder(request,request1);
+        InvoiceResponseDto response = service.createInvoice(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -54,11 +54,11 @@ public class OrderController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
-    @PostMapping("/orderOrderItems")
-    public ResponseEntity<Response> createOrderOrderItems(@Validated @RequestBody OrderOrderItemDto request,HttpServletRequest request1){
+    @PostMapping("/invoiceInvoiceItems")
+    public ResponseEntity<Response> createInvoiceInvoiceItems(@Validated @RequestBody InvoiceInvoiceItemDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        OrderOrderItemResponseDto response = service.createOrderOrderItems(request,request1);
+        InvoiceInvoiceItemResponseDto response = service.createInvoiceInvoiceItems(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
@@ -69,16 +69,16 @@ public class OrderController {
 
 
     /** <summary>
-     * Order update endpoint
+     * Invoice update endpoint
      * </summary>
-     * <remarks>this endpoint is responsible for updating orders</remarks>
+     * <remarks>this endpoint is responsible for updating invoices</remarks>
      */
 
     @PutMapping("")
-    public ResponseEntity<Response> updateOrder(@Validated @RequestBody  OrderRequestDto request,HttpServletRequest request1){
+    public ResponseEntity<Response> updateInvoice(@Validated @RequestBody  InvoiceRequestDto request,HttpServletRequest request1){
         HttpStatus httpCode ;
         Response resp = new Response();
-        OrderResponseDto response = service.updateOrder(request,request1);
+        InvoiceResponseDto response = service.updateInvoice(request,request1);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Update Successful");
         resp.setData(response);
@@ -94,10 +94,10 @@ public class OrderController {
      * <remarks>this endpoint is responsible for getting a single record</remarks>
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Response> getOrder(@PathVariable Long id){
+    public ResponseEntity<Response> getInvoice(@PathVariable Long id){
         HttpStatus httpCode ;
         Response resp = new Response();
-        OrderResponseDto response = service.findOrder(id);
+        InvoiceResponseDto response = service.findInvoice(id);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -105,11 +105,11 @@ public class OrderController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
-    @GetMapping("/orderNumber")
-    public ResponseEntity<Response> getOrderByOrderNumber(@RequestParam(value = "orderNumber") String orderNumber){
+    @GetMapping("/invoiceNumber")
+    public ResponseEntity<Response> getInvoiceByInvoiceNumber(@RequestParam(value = "invoiceNumber") String invoiceNumber){
         HttpStatus httpCode ;
         Response resp = new Response();
-        OrderResponseDto response = service.findOrderNumber(orderNumber);
+        InvoiceResponseDto response = service.findInvoiceNumber(invoiceNumber);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -125,7 +125,7 @@ public class OrderController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getOrders(@RequestParam(value = "referenceNo",required = false)String referenceNo,
+    public ResponseEntity<Response> getInvoices(@RequestParam(value = "referenceNo",required = false)String referenceNo,
                                               @RequestParam(value = "deliveryStatus",required = false) String deliveryStatus,
                                               @RequestParam(value = "customerName",required = false)String customerName,
                                               @RequestParam(value = "customerPhone",required = false)String customerPhone,
@@ -136,7 +136,7 @@ public class OrderController {
                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<Order> response = service.findAll(referenceNo, deliveryStatus, customerName, customerPhone, deliveryAddress, barCode, QRcode,PageRequest.of(page, pageSize));
+        Page<Invoice> response = service.findAll(referenceNo, deliveryStatus, customerName, customerPhone, deliveryAddress, barCode, QRcode,PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -148,7 +148,7 @@ public class OrderController {
     /** <summary>
      * Enable disable
      * </summary>
-     * <remarks>this endpoint is responsible for enabling and disabling a Orders</remarks>
+     * <remarks>this endpoint is responsible for enabling and disabling a Invoices</remarks>
      */
 
     @PutMapping("/enabledisable")
@@ -167,7 +167,7 @@ public class OrderController {
     public ResponseEntity<Response> getAll(@RequestParam(value = "isActive")Boolean isActive){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<Order> response = service.getAll(isActive);
+        List<Invoice> response = service.getAll(isActive);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
@@ -176,10 +176,10 @@ public class OrderController {
     }
 
 //    @GetMapping("/page")
-//    public ResponseEntity<Response> getRecordByDateRange(@RequestParam(value = "date",required = false)String startDate, String endDate,String status,Long orderId){
+//    public ResponseEntity<Response> getRecordByDateRange(@RequestParam(value = "date",required = false)String startDate, String endDate,String status,Long invoiceId){
 //        HttpStatus httpCode ;
 //        Response resp = new Response();
-//        List<Order> response = service.findRecordByDateRange(startDate,endDate,status);
+//        List<Invoice> response = service.findRecordByDateRange(startDate,endDate,status);
 //        resp.setCode(CustomResponseCode.SUCCESS);
 //        resp.setDescription("Record fetched successfully !");
 //        resp.setData(response);
