@@ -1,7 +1,7 @@
 package com.sabi.logistics.api.helper;
 
 
-import com.sabi.logistics.service.integrations.SyncOrderService;
+//import com.sabi.logistics.service.integrations.SyncOrderService;
 import com.sabi.logistics.service.repositories.TripRequestRepository;
 import com.sabi.logistics.service.repositories.TripRequestResponseRepository;
 import com.sabi.logistics.service.services.TripRequestService;
@@ -30,7 +30,7 @@ public class ScheduledTasks {
 
 @Value("${remote.web.service.url}")
 private String requestUrl;
-private final SyncOrderService syncOrderService;
+//private final SyncOrderService syncOrderService;
 private final TripRequestService tripRequestService;
 //    @Autowired
 //    private AsyncService asyncService;
@@ -45,12 +45,15 @@ private final TripRequestService tripRequestService;
 //        this.asyncService.moveTripRecordToDashBoard();
 //    }
 
-
+    /**
+     * Disables it for now in this Invoice feature since it's not clear this will be available(in the partner remote service) and is probably not needed going forward
+     * @throws Exception
     @Scheduled(fixedDelayString = "${sync-interval-in-miliseconds}")
     public void syncExternalDB() throws Exception{
         log.info("Scheduler for syncing orders with sabi called");
-        syncOrderService.syncAndPullExternalOrders(requestUrl);
+        //syncOrderService.syncAndPullExternalOrders(requestUrl);
     }
+     */
 
     @Scheduled(cron = "${tripExpiryInterval}")
     private void expireAcceptedAndExpiredTrips() throws Exception {
