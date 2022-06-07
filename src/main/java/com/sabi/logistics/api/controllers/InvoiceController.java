@@ -43,30 +43,16 @@ public class InvoiceController {
      */
 
     @PostMapping("")
-    public ResponseEntity<Response> createInvoice(@Validated @RequestBody InvoiceRequestDto request,HttpServletRequest request1){
+    public ResponseEntity<Response> createInvoice(@Validated @RequestBody InvoiceInvoiceItemDto request,HttpServletRequest httpServletRequest){
         HttpStatus httpCode ;
         Response resp = new Response();
-        InvoiceResponseDto response = service.createInvoice(request,request1);
+        InvoiceInvoiceItemResponseDto response = service.createInvoiceAndItsItems(request,httpServletRequest);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         resp.setData(response);
         httpCode = HttpStatus.CREATED;
         return new ResponseEntity<>(resp, httpCode);
     }
-
-    @PostMapping("/invoiceInvoiceItems")
-    public ResponseEntity<Response> createInvoiceInvoiceItems(@Validated @RequestBody InvoiceInvoiceItemDto request,HttpServletRequest request1){
-        HttpStatus httpCode ;
-        Response resp = new Response();
-        InvoiceInvoiceItemResponseDto response = service.createInvoiceInvoiceItems(request,request1);
-        resp.setCode(CustomResponseCode.SUCCESS);
-        resp.setDescription("Successful");
-        resp.setData(response);
-        httpCode = HttpStatus.CREATED;
-        return new ResponseEntity<>(resp, httpCode);
-    }
-
-
 
     /** <summary>
      * Invoice update endpoint
