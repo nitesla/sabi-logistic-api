@@ -5,14 +5,14 @@ import com.sabi.framework.dto.requestDto.EnableDisEnableDto;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
-import com.sabi.logistics.core.dto.request.OrderItemVerificationDto;
+import com.sabi.logistics.core.dto.request.InvoiceItemVerificationDto;
 import com.sabi.logistics.core.dto.request.ShipmentTripRequest;
 import com.sabi.logistics.core.dto.request.TripMasterRequestDto;
 import com.sabi.logistics.core.dto.request.TripRequestDto;
 import com.sabi.logistics.core.dto.response.TripMasterResponseDto;
 import com.sabi.logistics.core.dto.response.TripRequestStatusCountResponse;
 import com.sabi.logistics.core.dto.response.TripResponseDto;
-import com.sabi.logistics.core.models.OrderItem;
+import com.sabi.logistics.core.models.InvoiceItem;
 import com.sabi.logistics.core.models.TripRequest;
 import com.sabi.logistics.service.services.TripRequestService;
 import org.springframework.data.domain.Page;
@@ -217,11 +217,11 @@ public class TripRequestController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
-    @PostMapping("/orderitemverificationstatus")
-    public ResponseEntity<Response> updateVerificationStatus(@Validated @RequestBody OrderItemVerificationDto request){
+    @PostMapping("/invoiceitemverificationstatus")
+    public ResponseEntity<Response> updateVerificationStatus(@Validated @RequestBody InvoiceItemVerificationDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        List<OrderItem> response = service.updateVerificationStatus(request);
+        List<InvoiceItem> response = service.updateVerificationStatus(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("successfully");
         resp.setData(response);
