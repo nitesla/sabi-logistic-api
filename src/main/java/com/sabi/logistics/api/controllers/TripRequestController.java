@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ import java.util.List;
 @SuppressWarnings("All")
 @RestController
 @RequestMapping(Constants.APP_CONTENT+"triprequest")
+@EnableAsync
 public class TripRequestController {
 
 
