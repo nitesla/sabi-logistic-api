@@ -204,28 +204,28 @@ public class UserController {
 
 
 
-//    @PutMapping("/pinotp")
-//    public ResponseEntity<Response> transactionPinOtp(@Validated @RequestBody CreateTransactionPinDto request){
-//        HttpStatus httpCode ;
-//        Response resp = new Response();
-//        service.changePinOTP(request);
-//        resp.setCode(CustomResponseCode.SUCCESS);
-//        resp.setDescription("Successful");
-//        httpCode = HttpStatus.OK;
-//        return new ResponseEntity<>(resp, httpCode);
-//    }
-//
-//
-//    @PutMapping("/changepin")
-//    public ResponseEntity<Response> changeTransactionPin(@Validated @RequestBody CreateTransactionPinDto request){
-//        HttpStatus httpCode ;
-//        Response resp = new Response();
-//        service.changePin(request);
-//        resp.setCode(CustomResponseCode.SUCCESS);
-//        resp.setDescription("Successful");
-//        httpCode = HttpStatus.OK;
-//        return new ResponseEntity<>(resp, httpCode);
-//    }
+    @PutMapping("/pinotp")
+    public ResponseEntity<Response> transactionPinOtp(@Validated @RequestBody CreateTransactionPinDto request){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        service.resetPinOTP(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Successful");
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+
+    @PutMapping("/resetPin")
+    public ResponseEntity<Response> changeTransactionPin(@Validated @RequestBody CreateTransactionPinDto request){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        service.resetPin(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Successful");
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
 
     @PutMapping("/enabledisable")
     public ResponseEntity<Response> enableDisable(@Validated @RequestBody EnableDisEnableDto enableDisEnableDto, HttpServletRequest httpServletRequest){
