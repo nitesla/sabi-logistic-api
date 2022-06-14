@@ -227,6 +227,17 @@ public class UserController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+    @PutMapping("/enabledisable")
+    public ResponseEntity<Response> enableDisable(@Validated @RequestBody EnableDisEnableDto enableDisEnableDto, HttpServletRequest httpServletRequest){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        service.enableDisEnableUser(enableDisEnableDto, httpServletRequest);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Successful");
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
 
 
     @GetMapping("/list")
