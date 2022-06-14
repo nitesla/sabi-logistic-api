@@ -208,7 +208,7 @@ public class UserController {
     public ResponseEntity<Response> transactionPinOtp(@Validated @RequestBody CreateTransactionPinDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.changePinOTP(request);
+        service.resetPinOTP(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;
@@ -216,11 +216,22 @@ public class UserController {
     }
 
 
-    @PutMapping("/changepin")
+    @PutMapping("/resetPin")
     public ResponseEntity<Response> changeTransactionPin(@Validated @RequestBody CreateTransactionPinDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.changePin(request);
+        service.resetPin(request);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Successful");
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+    @PutMapping("/enabledisable")
+    public ResponseEntity<Response> enableDisable(@Validated @RequestBody EnableDisEnableDto enableDisEnableDto, HttpServletRequest httpServletRequest){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        service.enableDisEnableUser(enableDisEnableDto, httpServletRequest);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;
