@@ -172,7 +172,7 @@ public class PartnerController {
     }
 
     @GetMapping("/category")
-    public ResponseEntity<Response> getPartnersByActegories(@RequestParam(value = "categoryId")Long categoryId,
+    public ResponseEntity<Response> getPartnersByCategories(@RequestParam(value = "categoryId")Long categoryId,
                                                             @RequestParam(value = "page") int page,
                                                             @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
