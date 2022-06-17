@@ -6,6 +6,7 @@ import com.sabi.framework.dto.responseDto.ActivateUserResponse;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.dto.responseDto.UserResponse;
 import com.sabi.framework.models.User;
+import com.sabi.framework.repositories.UserRepository;
 import com.sabi.framework.service.UserService;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
@@ -31,10 +32,12 @@ public class UserController {
 
     private final UserService service;
     private final ModelMapper mapper;
+    private final UserRepository userRepository;
 
-    public UserController(UserService service,ModelMapper mapper) {
+    public UserController(UserService service,ModelMapper mapper,UserRepository userRepository) {
         this.service = service;
         this.mapper = mapper;
+        this.userRepository = userRepository;
     }
 
     /** <summary>
@@ -85,6 +88,20 @@ public class UserController {
         HttpStatus httpCode ;
         Response resp = new Response();
         UserResponse response = service.findUser(id);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+
+
+    @GetMapping("/findbyemail")
+    public ResponseEntity<Response> getUserByEmail(String email){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        User response = userRepository.findByEmail(email);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
