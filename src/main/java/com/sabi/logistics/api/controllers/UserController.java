@@ -102,15 +102,9 @@ public class UserController {
 
 
     @GetMapping("/findbyemail")
-    public ResponseEntity<Response> getUserByEmail(String email){
-        HttpStatus httpCode ;
-        Response resp = new Response();
+    public PartnerSupplierResponse getUserByEmail(String email){
         PartnerSupplierResponse response = partnerService.getUserByEmail(email);
-        resp.setCode(CustomResponseCode.SUCCESS);
-        resp.setDescription("Record fetched successfully !");
-        resp.setData(response);
-        httpCode = HttpStatus.OK;
-        return new ResponseEntity<>(resp, httpCode);
+        return response;
     }
 
 
