@@ -10,6 +10,8 @@ import com.sabi.framework.repositories.UserRepository;
 import com.sabi.framework.service.UserService;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
+import com.sabi.logistics.core.dto.response.PartnerSupplierResponse;
+import com.sabi.logistics.service.services.PartnerService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,11 +35,13 @@ public class UserController {
     private final UserService service;
     private final ModelMapper mapper;
     private final UserRepository userRepository;
+    private final PartnerService partnerService;
 
-    public UserController(UserService service,ModelMapper mapper,UserRepository userRepository) {
+    public UserController(UserService service,ModelMapper mapper,UserRepository userRepository,PartnerService partnerService) {
         this.service = service;
         this.mapper = mapper;
         this.userRepository = userRepository;
+        this.partnerService = partnerService;
     }
 
     /** <summary>
@@ -98,15 +102,9 @@ public class UserController {
 
 
     @GetMapping("/findbyemail")
-    public ResponseEntity<Response> getUserByEmail(String email){
-        HttpStatus httpCode ;
-        Response resp = new Response();
-        User response = userRepository.findByEmail(email);
-        resp.setCode(CustomResponseCode.SUCCESS);
-        resp.setDescription("Record fetched successfully !");
-        resp.setData(response);
-        httpCode = HttpStatus.OK;
-        return new ResponseEntity<>(resp, httpCode);
+    public PartnerSupplierResponse getUserByEmail(String email){
+        PartnerSupplierResponse response = partnerService.getUserByEmail(email);
+        return response;
     }
 
 
