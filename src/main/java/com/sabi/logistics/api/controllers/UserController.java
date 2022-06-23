@@ -6,9 +6,12 @@ import com.sabi.framework.dto.responseDto.ActivateUserResponse;
 import com.sabi.framework.dto.responseDto.Response;
 import com.sabi.framework.dto.responseDto.UserResponse;
 import com.sabi.framework.models.User;
+import com.sabi.framework.repositories.UserRepository;
 import com.sabi.framework.service.UserService;
 import com.sabi.framework.utils.Constants;
 import com.sabi.framework.utils.CustomResponseCode;
+import com.sabi.logistics.core.dto.response.PartnerSupplierResponse;
+import com.sabi.logistics.service.services.PartnerService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,10 +34,14 @@ public class UserController {
 
     private final UserService service;
     private final ModelMapper mapper;
+    private final UserRepository userRepository;
+    private final PartnerService partnerService;
 
-    public UserController(UserService service,ModelMapper mapper) {
+    public UserController(UserService service,ModelMapper mapper,UserRepository userRepository,PartnerService partnerService) {
         this.service = service;
         this.mapper = mapper;
+        this.userRepository = userRepository;
+        this.partnerService = partnerService;
     }
 
     /** <summary>
@@ -90,6 +97,14 @@ public class UserController {
         resp.setData(response);
         httpCode = HttpStatus.OK;
         return new ResponseEntity<>(resp, httpCode);
+    }
+
+
+
+    @GetMapping("/findbyemail")
+    public PartnerSupplierResponse getUserByEmail(String email){
+        PartnerSupplierResponse response = partnerService.getUserByEmail(email);
+        return response;
     }
 
 
@@ -208,7 +223,7 @@ public class UserController {
     public ResponseEntity<Response> transactionPinOtp(@Validated @RequestBody CreateTransactionPinDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.changePinOTP(request);
+        service.resetPinOTP(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;
@@ -216,11 +231,11 @@ public class UserController {
     }
 
 
-    @PutMapping("/changepin")
+    @PutMapping("/resetPin")
     public ResponseEntity<Response> changeTransactionPin(@Validated @RequestBody CreateTransactionPinDto request){
         HttpStatus httpCode ;
         Response resp = new Response();
-        service.changePin(request);
+        service.resetPin(request);
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Successful");
         httpCode = HttpStatus.OK;
