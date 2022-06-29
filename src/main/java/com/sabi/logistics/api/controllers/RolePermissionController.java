@@ -131,4 +131,16 @@ public class RolePermissionController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+
+    @DeleteMapping("")
+    public ResponseEntity<Response> removeMultiplePermission(@RequestParam("ids") List<Long> ids){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        service.deleteAllBYIds(ids);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Permission removed successfully !");
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
 }
