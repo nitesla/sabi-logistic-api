@@ -195,5 +195,23 @@ public class DropOffController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+    @PostMapping("/generateDeliveryOverrideCode")
+    public ResponseEntity<Response> generateDeliveryOverrideCode(@RequestParam(value = "id")Long id){
+        Response resp = new Response();
+        service.generateDeliveryOverrideCode(id);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Delivery Override Code Generated Successfully");
+        return new ResponseEntity<>(resp, HttpStatus.OK);
+    }
+
+    @PostMapping("/validateDeliveryOverrideCode")
+    public ResponseEntity<Response> validateDeliveryOverrideCode(@RequestParam(value = "id")Long id,
+                                                                 @RequestParam(value = "deliveryOverrideCode")String deliveryOverrideCode){
+        Response resp = new Response();
+        service.validateDeliveryOverrideCode(id, deliveryOverrideCode);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Delivery Override Code Validation Successful");
+        return new ResponseEntity<>(resp, HttpStatus.OK);
+    }
 
 }

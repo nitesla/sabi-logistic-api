@@ -4,14 +4,9 @@ package com.sabi.logistics.api.runner;
 import com.sabi.framework.models.User;
 import com.sabi.framework.repositories.UserRepository;
 import com.sabi.framework.utils.Constants;
-import com.sabi.logistics.core.models.Bank;
-import com.sabi.logistics.core.models.Country;
-import com.sabi.logistics.core.models.LGA;
-import com.sabi.logistics.core.models.State;
-import com.sabi.logistics.service.repositories.BankRepository;
-import com.sabi.logistics.service.repositories.CountryRepository;
-import com.sabi.logistics.service.repositories.LGARepository;
-import com.sabi.logistics.service.repositories.StateRepository;
+import com.sabi.logistics.core.enums.SlaName;
+import com.sabi.logistics.core.models.*;
+import com.sabi.logistics.service.repositories.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +35,8 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
     private UserRepository userRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
+    @Autowired
+    private SLARepository slaRepository;
 
 
 
@@ -58,6 +54,7 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
         seedAppleUsers();
         seedSabiUsers();
         seedAdminUsers();
+        seedSLA();
 
     }
 
@@ -127,6 +124,21 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
             if (fetchCountry == null) {
                 countryRepository.saveAndFlush(country);
             }
+        });
+    }
+
+    private void seedSLA() {
+        List<SLA> slaList = new ArrayList<SLA>(){
+            {
+                add(new SLA(SlaName.ACCEPT_TRIP_REQUEST,5l,3l));
+                add(new SLA(SlaName.ASSIGN_TRIP_TO_DRIVER,5L,3L));
+                add(new SLA(SlaName.START_TRIP,5l,3l));
+            }
+        };
+        slaList.forEach(sla -> {
+            SLA fetchedSLA = slaRepository.findBySlaName(sla.getSlaName());
+            if (fetchedSLA == null)
+                slaRepository.saveAndFlush(sla);
         });
     }
 

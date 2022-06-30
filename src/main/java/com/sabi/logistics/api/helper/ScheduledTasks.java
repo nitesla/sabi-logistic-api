@@ -48,7 +48,7 @@ private final TripRequestService tripRequestService;
     /**
      * Disables it for now in this Invoice feature since it's not clear this will be available(in the partner remote service) and is probably not needed going forward
      * @throws Exception
-    @Scheduled(fixedDelayString = "${sync-interval-in-miliseconds}")
+    @Scheduled(fixedDelayString = "${sync-interval-in-milliseconds}")
     public void syncExternalDB() throws Exception{
         log.info("Scheduler for syncing orders with sabi called");
         //syncOrderService.syncAndPullExternalOrders(requestUrl);
@@ -58,7 +58,7 @@ private final TripRequestService tripRequestService;
     @Scheduled(cron = "${tripExpiryInterval}")
     private void expireAcceptedAndExpiredTrips() throws Exception {
         log.info("Getting ready to expire unaccepted trips.");
-        tripRequestService.expireUnAcceptedTrips();
+        tripRequestService.expireTripsOrPushNotifications();
     }
 
     @Scheduled(fixedDelayString= "${trip-request-due-for-expiry-db-load-time}")
