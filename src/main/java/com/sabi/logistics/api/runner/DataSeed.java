@@ -1,7 +1,9 @@
 package com.sabi.logistics.api.runner;
 
 
+import com.sabi.framework.models.Role;
 import com.sabi.framework.models.User;
+import com.sabi.framework.repositories.RoleRepository;
 import com.sabi.framework.repositories.UserRepository;
 import com.sabi.framework.utils.Constants;
 import com.sabi.logistics.core.enums.SlaName;
@@ -37,6 +39,8 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private SLARepository slaRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
 
 
@@ -55,9 +59,32 @@ public class DataSeed implements ApplicationListener<ContextRefreshedEvent> {
         seedSabiUsers();
         seedAdminUsers();
         seedSLA();
+        seedDefaultRoles();
 
     }
 
+
+
+
+
+
+
+
+    private void seedDefaultRoles() {
+        List<Role> roles = new ArrayList<Role>() {
+            {
+                add(new Role("PARTNER_ADMIN_ROLE","Partner admin role"));
+
+            }
+        };
+
+        roles.forEach(role -> {
+            Role fetchRole = roleRepository.findByName(role.getName());
+            if (fetchRole == null) {
+                roleRepository.saveAndFlush(role);
+            }
+        });
+    }
 
     private void seedCountries() {
         List<Country> countries = new ArrayList<Country>() {
