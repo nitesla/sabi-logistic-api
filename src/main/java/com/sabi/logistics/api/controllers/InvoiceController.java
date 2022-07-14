@@ -162,6 +162,20 @@ public class InvoiceController {
         return new ResponseEntity<>(resp, httpCode);
     }
 
+    @GetMapping("/customerphone")
+    public ResponseEntity<Response> getInvoiceByCustomerPhone(@RequestParam(value = "customerPhone")String customerPhone,
+                                                              @RequestParam(value = "deliveryStatus", required = false)String deliveryStatus){
+        HttpStatus httpCode ;
+        Response resp = new Response();
+        List<Invoice> response = service.findInvoiceByCustomerPhone(customerPhone, deliveryStatus);
+        resp.setCode(CustomResponseCode.SUCCESS);
+        resp.setDescription("Record fetched successfully !");
+        resp.setData(response);
+        httpCode = HttpStatus.OK;
+        return new ResponseEntity<>(resp, httpCode);
+    }
+
+
 //    @GetMapping("/page")
 //    public ResponseEntity<Response> getRecordByDateRange(@RequestParam(value = "date",required = false)String startDate, String endDate,String status,Long invoiceId){
 //        HttpStatus httpCode ;
