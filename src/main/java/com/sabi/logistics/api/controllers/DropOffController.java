@@ -20,7 +20,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.URI;
 import java.util.List;
 
 
@@ -155,7 +154,7 @@ public class DropOffController {
                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
         Response resp = new Response();
-        Page<DropOff> response = service.findAll(orderId, tripRequestId, PageRequest.of(page, pageSize));
+        Page<DropOff> response = service.findAll(tripRequestId, PageRequest.of(page, pageSize));
         resp.setCode(CustomResponseCode.SUCCESS);
         resp.setDescription("Record fetched successfully !");
         resp.setData(response);
