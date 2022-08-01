@@ -148,8 +148,7 @@ public class DropOffController {
      * <remarks>this endpoint is responsible for getting all records and its searchable</remarks>
      */
     @GetMapping("")
-    public ResponseEntity<Response> getDropOffs(@RequestParam(value = "orderId",required = false)Long orderId,
-                                              @RequestParam(value = "tripRequestId",required = false) Long tripRequestId,
+    public ResponseEntity<Response> getDropOffs(@RequestParam(value = "tripRequestId",required = false) Long tripRequestId,
                                               @RequestParam(value = "page") int page,
                                               @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
