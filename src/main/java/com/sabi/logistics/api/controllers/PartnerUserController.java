@@ -12,12 +12,14 @@ import com.sabi.logistics.core.models.PartnerUser;
 import com.sabi.logistics.service.services.PartnerUserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -71,9 +73,12 @@ public class PartnerUserController {
                                                    @RequestParam(value = "email",required = false)String email,
                                                    @RequestParam(value = "username",required = false)String username,
                                                    @RequestParam(value = "roleId",required = false)Long roleId,
+                                                   @RequestParam(value = "role",required = false)String role,
                                                    @RequestParam(value = "isActive",required = false)Boolean isActive,
                                                    @RequestParam(value = "lastName",required = false)String lastName,
                                                    @RequestParam(value = "userType",required = false)String userType,
+                                                   @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                                                   @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
                                                   @RequestParam(value = "page") int page,
                                                   @RequestParam(value = "pageSize") int pageSize){
         HttpStatus httpCode ;
@@ -86,7 +91,7 @@ public class PartnerUserController {
             httpCode = HttpStatus.OK;
             return new ResponseEntity<>(resp, httpCode);
         }else {
-            Page<User> response = partnerUserService.findByClientId(firstName, phone, email, username, roleId,isActive, lastName, PageRequest.of(page, pageSize));
+            Page<User> response = partnerUserService.findByClientId(firstName, phone, email, username,role,roleId,isActive,startDate,endDate, lastName, PageRequest.of(page, pageSize));
             resp.setCode(CustomResponseCode.SUCCESS);
             resp.setDescription("Record fetched successfully !");
             resp.setData(response);
